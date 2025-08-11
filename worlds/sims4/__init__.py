@@ -102,13 +102,15 @@ class Sims4World(World):
         return Sims4Item(event, ItemClassification.progression, None, self.player)
 
     def create_items(self) -> None:
+        used_dlc = set(self.options.expansion_packs.value | self.options.game_packs.value | self.options.stuff_packs.value)
         pool = []
 
         unfilled_locations = len(self.multiworld.get_unfilled_locations(self.player))
-        for item in item_table.values():
-            for i in range(item["count"]):
-                sims4_item = self.create_item(item["name"])
-                pool.append(sims4_item)
+        for item_data in item_table.values():
+            if item_data['expansion'] == 'base' or item_data['expansion'] in used_dlc:
+                for i in range(item_data["count"]):
+                    sims4_item = self.create_item(item_data["name"])
+                    pool.append(sims4_item)
 
         filler_needed = unfilled_locations - len(pool)
 
@@ -142,11 +144,13 @@ class Sims4World(World):
             menu.locations.append(
                 Sims4Location(self.player, aspiration, self.location_name_to_id.get(aspiration), menu)
             )
+        used_dlc = set(self.options.expansion_packs.value | self.options.game_packs.value | self.options.stuff_packs.value)
         for skill in skill_locations_table.values():
             skill_name = skill["name"]
-            menu.locations.append(
-                Sims4Location(self.player, skill_name, self.location_name_to_id.get(skill_name), menu)
-            )
+            if skill['expansion'] == 'base' or skill['expansion'] in used_dlc:
+                menu.locations.append(
+                    Sims4Location(self.player, skill_name, self.location_name_to_id.get(skill_name), menu)
+                )
         self.multiworld.regions.append(menu)
 
     def set_rules(self) -> None:
