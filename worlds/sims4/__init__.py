@@ -9,7 +9,7 @@ from BaseClasses import Tutorial, Item, ItemClassification, Region, Entrance
 from Options import OptionError
 from worlds.AutoWorld import World, WebWorld
 from .Names import CareerNames
-from .Names.DLC import ExpansionNames
+from .Names.DLC import ExpansionNames, GamePackNames
 from ..LauncherComponents import Component, components, Type, icon_paths
 
 # TS4 specific imports
@@ -113,6 +113,22 @@ class Sims4World(World):
             if self.options.career.__contains__(CareerNames.cl_career_socialmedia):
                 raise OptionError(
                     f"The Sims 4 - {self.player_name} cannot choose the {CareerNames.cl_career_socialmedia} Career without enabling {ExpansionNames.city_living} in the YAML.")
+        if not self.options.expansion_packs.__contains__(ExpansionNames.seasons):
+            if self.options.career.__contains__(CareerNames.se_career_gardening):
+                raise OptionError(
+                    f"The Sims 4 - {self.player_name} cannot choose the {CareerNames.se_career_gardening} Career without enabling {ExpansionNames.seasons} in the YAML.")
+        if not self.options.expansion_packs.__contains__(ExpansionNames.get_famous):
+            if self.options.career.__contains__(CareerNames.gf_career_actor):
+                raise OptionError(
+                    f"The Sims 4 - {self.player_name} cannot choose the {CareerNames.gf_career_actor} Career without enabling {ExpansionNames.get_famous} in the YAML.")
+        if not self.options.expansion_packs.__contains__(GamePackNames.stranger_ville):
+            if self.options.career.__contains__(CareerNames.sv_career_military):
+                raise OptionError(
+                    f"The Sims 4 - {self.player_name} cannot choose the {CareerNames.sv_career_military} Career without enabling {GamePackNames.stranger_ville} in the YAML.")
+        if not self.options.expansion_packs.__contains__(ExpansionNames.island_living):
+            if self.options.career.__contains__(CareerNames.il_career_conservationist):
+                raise OptionError(
+                    f"The Sims 4 - {self.player_name} cannot choose the {CareerNames.il_career_conservationist} Career without enabling {ExpansionNames.island_living} in the YAML.")
 
 
 
