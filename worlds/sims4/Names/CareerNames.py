@@ -228,8 +228,13 @@ lnd_career_undertaker = "Undertaker"
 ebn_career_naturopath = "Naturopath"
 
 # DLC Part Time Jobs
-il_diver_ptj = "Diver Part Time Job"
-il_fisherman_ptj = "Fisherman Part Time Job"
-il_lifeguard_ptj = "Lifeguard Part Time Job"
-hsy_simfluencer_ptj = "Simfluencer Part Time Job"
-hsy_videogamestreamer_ptj = "Video Game Streamer Part Time Job"
+
+# Island Living
+il_ptj_diver = "Diver"
+il_ptj_fisherman = "Fisherman"
+il_ptj_lifeguard = "Lifeguard"
+# High School Years
+hsy_ptj_simfluencer = "Simfluencer"
+hsy_ptj_videogamestreamer = "Video Game Streamer"
+# For Rent
+fr_ptj_handyperson = "Handyperson"
