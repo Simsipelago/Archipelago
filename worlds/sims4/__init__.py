@@ -129,6 +129,44 @@ class Sims4World(World):
             if self.options.career.__contains__(CareerNames.il_career_conservationist):
                 raise OptionError(
                     f"The Sims 4 - {self.player_name} cannot choose the {CareerNames.il_career_conservationist} Career without enabling {ExpansionNames.island_living} in the YAML.")
+        if not self.options.expansion_packs.__contains__(ExpansionNames.discover_university):
+            if self.options.career.__contains__(CareerNames.du_career_education):
+                raise OptionError(
+                    f"The Sims 4 - {self.player_name} cannot choose the {CareerNames.du_career_education} Career without enabling {ExpansionNames.discover_university} in the YAML.")
+            if self.options.career.__contains__(CareerNames.du_career_engineer):
+                raise OptionError(
+                    f"The Sims 4 - {self.player_name} cannot choose the {CareerNames.du_career_engineer} Career without enabling {ExpansionNames.discover_university} in the YAML.")
+            if self.options.career.__contains__(CareerNames.du_career_law):
+                raise OptionError(
+                    f"The Sims 4 - {self.player_name} cannot choose the {CareerNames.du_career_law} Career without enabling {ExpansionNames.discover_university} in the YAML.")
+        if not self.options.expansion_packs.__contains__(ExpansionNames.eco_lifestyle):
+            if self.options.career.__contains__(CareerNames.el_career_civildesigner):
+                raise OptionError(
+                    f"The Sims 4 - {self.player_name} cannot choose the {CareerNames.el_career_civildesigner} Career without enabling {ExpansionNames.eco_lifestyle} in the YAML.")
+        if not self.options.expansion_packs.__contains__(ExpansionNames.snowy_escape):
+            if self.options.career.__contains__(CareerNames.sne_career_salaryperson):
+                raise OptionError(
+                    f"The Sims 4 - {self.player_name} cannot choose the {CareerNames.sne_career_salaryperson} Career without enabling {ExpansionNames.snowy_escape} in the YAML.")
+        if not self.options.expansion_packs.__contains__(GamePackNames.dream_home_decorator):
+            if self.options.career.__contains__(CareerNames.dhd_career_interiordecorator):
+                raise OptionError(
+                    f"The Sims 4 - {self.player_name} cannot choose the {CareerNames.dhd_career_interiordecorator} Career without enabling {GamePackNames.dream_home_decorator} in the YAML.")
+        if not self.options.expansion_packs.__contains__(ExpansionNames.lovestruck):
+            if self.options.career.__contains__(CareerNames.lv_career_romanceconsultant):
+                raise OptionError(
+                    f"The Sims 4 - {self.player_name} cannot choose the {CareerNames.lv_career_romanceconsultant} Career without enabling {ExpansionNames.lovestruck} in the YAML.")
+        if not self.options.expansion_packs.__contains__(ExpansionNames.life_and_death):
+            if self.options.career.__contains__(CareerNames.lnd_career_reaper):
+                raise OptionError(
+                    f"The Sims 4 - {self.player_name} cannot choose the {CareerNames.lnd_career_reaper} Career without enabling {ExpansionNames.life_and_death} in the YAML.")
+            if self.options.career.__contains__(CareerNames.lnd_career_undertaker):
+                raise OptionError(
+                    f"The Sims 4 - {self.player_name} cannot choose the {CareerNames.lnd_career_undertaker} Career without enabling {ExpansionNames.life_and_death} in the YAML.")
+        if not self.options.expansion_packs.__contains__(ExpansionNames.enchanted_by_nature):
+            if self.options.career.__contains__(CareerNames.ebn_career_naturopath):
+                raise OptionError(
+                    f"The Sims 4 - {self.player_name} cannot choose the {CareerNames.ebn_career_naturopath} Career without enabling {ExpansionNames.enchanted_by_nature} in the YAML.")
+
 
 
 
