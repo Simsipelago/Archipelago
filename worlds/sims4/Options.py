@@ -52,7 +52,11 @@ class Career(OptionSet):
                   CareerNames.base_career_tech_guru, CareerNames.base_career_writer, CareerNames.gtw_career_doctor,
                   CareerNames.gtw_career_detective, CareerNames.gtw_career_scientist, CareerNames.cl_career_critic,
                   CareerNames.cl_career_socialmedia, CareerNames.cl_career_politician, CareerNames.se_career_gardening,
-                  CareerNames.gf_career_actor, CareerNames.sv_career_military, CareerNames.il_career_conservationist}
+                  CareerNames.gf_career_actor, CareerNames.sv_career_military, CareerNames.il_career_conservationist,
+                  CareerNames.du_career_education, CareerNames.du_career_engineer, CareerNames.du_career_law,
+                  CareerNames.el_career_civildesigner, CareerNames.sne_career_salaryperson, CareerNames.dhd_career_interiordecorator,
+                  CareerNames.lv_career_romanceconsultant, CareerNames.lnd_career_reaper, CareerNames.lnd_career_undertaker,
+                  CareerNames.ebn_career_naturopath}
     default = sorted({CareerNames.base_career_athlete})
 
 
