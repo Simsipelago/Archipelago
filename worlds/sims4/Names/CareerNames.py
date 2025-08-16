@@ -175,18 +175,23 @@ base_career_writer_10B = "Scribe of History (Writer / Journalist 10)"
 
 
 # Base Game Part Time Jobs
+base_ptj_babysitter = "Babysitter"
 base_ptj_babysitter_2 = "Nanny (Babysitter 2)"
 base_ptj_babysitter_3 = "Daycare Assistant (Babysitter 3)"
 
+base_ptj_barista = "Barista"
 base_ptj_barista_2 = "Bean Blender (Barista 2)"
 base_ptj_barista_3 = "Latte Artiste (Barista 3)"
 
+base_ptj_fastfood_employee = "Fastfood Employee"
 base_ptj_fastfood_employee_2 = "Fry Cook (Fastfood Employee 2)"
 base_ptj_fastfood_employee_3 = "Food Service Cashier (Fastfood Employee 3)"
 
+base_ptj_manual_laborer = "Manual Laborer"
 base_ptj_manual_laborer_2 = "Landscaper (Manual Laborer 2)"
 base_ptj_manual_laborer_3 = "Backhoe Operator (Manual Laborer 3)"
 
+base_ptj_retail_employee = "Retail Employee"
 base_ptj_retail_employee_2 = "Sales Floor Clerk (Retail Employee 2)"
 base_ptj_retail_employee_3 = "Customer Support (Retail Employee 3)"
 
