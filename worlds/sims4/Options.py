@@ -49,7 +49,9 @@ class Career(OptionSet):
     valid_keys = {CareerNames.base_career_astronaut, CareerNames.base_career_athlete, CareerNames.base_career_business,
                   CareerNames.base_career_criminal, CareerNames.base_career_culinary, CareerNames.base_career_entertainer,
                   CareerNames.base_career_painter, CareerNames.base_career_secret_agent, CareerNames.base_career_style_influencer,
-                  CareerNames.base_career_tech_guru, CareerNames.base_career_writer}
+                  CareerNames.base_career_tech_guru, CareerNames.base_career_writer, CareerNames.gtw_career_doctor,
+                  CareerNames.gtw_career_detective, CareerNames.gtw_career_scientist, CareerNames.cl_career_critic,
+                  CareerNames.cl_career_socialmedia, CareerNames.cl_career_politician}
     default = sorted({CareerNames.base_career_athlete})
 
 

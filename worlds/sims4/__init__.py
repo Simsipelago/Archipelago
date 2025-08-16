@@ -6,7 +6,10 @@ from multiprocessing import Process
 # ap imports
 import settings
 from BaseClasses import Tutorial, Item, ItemClassification, Region, Entrance
+from Options import OptionError
 from worlds.AutoWorld import World, WebWorld
+from .Names import CareerNames
+from .Names.DLC import ExpansionNames
 from ..LauncherComponents import Component, components, Type, icon_paths
 
 # TS4 specific imports
@@ -90,6 +93,28 @@ class Sims4World(World):
                 self.options.stuff_packs.value = self.passthrough["stuff_packs"]
                 self.options.cas_kits.value = self.passthrough["cas_kits"]
                 self.options.build_kits.value = self.passthrough["build_kits"]
+
+        if not self.options.expansion_packs.__contains__(ExpansionNames.get_to_work):
+            if self.options.career.__contains__(CareerNames.gtw_career_doctor):
+                raise OptionError(f"The Sims 4 - {self.player_name} cannot choose the {CareerNames.gtw_career_doctor} Career without enabling {ExpansionNames.get_to_work} in the YAML.")
+            if self.options.career.__contains__(CareerNames.gtw_career_detective):
+                raise OptionError(
+                    f"The Sims 4 - {self.player_name} cannot choose the {CareerNames.gtw_career_detective} Career without enabling {ExpansionNames.get_to_work} in the YAML.")
+            if self.options.career.__contains__(CareerNames.gtw_career_scientist):
+                raise OptionError(
+                    f"The Sims 4 - {self.player_name} cannot choose the {CareerNames.gtw_career_scientist} Career without enabling {ExpansionNames.get_to_work} in the YAML.")
+        if not self.options.expansion_packs.__contains__(ExpansionNames.city_living):
+            if self.options.career.__contains__(CareerNames.cl_career_critic):
+                raise OptionError(
+                    f"The Sims 4 - {self.player_name} cannot choose the {CareerNames.cl_career_critic} Career without enabling {ExpansionNames.city_living} in the YAML.")
+            if self.options.career.__contains__(CareerNames.cl_career_politician):
+                raise OptionError(
+                    f"The Sims 4 - {self.player_name} cannot choose the {CareerNames.cl_career_politician} Career without enabling {ExpansionNames.city_living} in the YAML.")
+            if self.options.career.__contains__(CareerNames.cl_career_socialmedia):
+                raise OptionError(
+                    f"The Sims 4 - {self.player_name} cannot choose the {CareerNames.cl_career_socialmedia} Career without enabling {ExpansionNames.city_living} in the YAML.")
+
+
 
     def create_item(self, name: str) -> Item:
         item_id: int = self.item_name_to_id[name]
