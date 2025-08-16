@@ -192,22 +192,40 @@ base_ptj_retail_employee_3 = "Customer Support (Retail Employee 3)"
 
 
 # DLC careers
-gtw_detective_career = "Detective Career"
-gtw_doctor_career = "Doctor Career"
-gtw_scientist_career = "Scientist Career"
-cl_critic_career = "Critic Career"
-cl_politician_career = "Polititian Career"
-cl_socialmedia_career = "Social Media Career"
-se_gardening_career = "Gardening Career"
-gf_actor_career = "Actor/Actress Career"
-sv_military_career = "Military Career"
-il_conservationist_career = "Conservationist Career"
-du_education_career = "Education Career"
-du_engineer_career = "Engineer Career"
-du_law_career = "Law Career"
-el_civildesigner_career = "Civil Designer Career"
-sne_salaryperson_career = "Salary Person Career"
-dhd_interiordecorator_career = "Interior Decorator Career"
+
+# Get to Work
+gtw_career_detective = "Detective"
+gtw_career_doctor = "Doctor"
+gtw_career_scientist = "Scientist"
+# City Living
+cl_career_critic = "Critic"
+cl_career_politician = "Polititian"
+cl_career_socialmedia = "Social Media"
+# Seasons
+se_career_gardening = "Gardening"
+# Get Famous
+gf_career_actor = "Actor/Actress"
+# Strangerville
+sv_career_military = "Military"
+# Island Living
+il_career_conservationist = "Conservationist"
+# Discover University
+du_career_education = "Education"
+du_career_engineer = "Engineer"
+du_career_law = "Law"
+# Eco Lifestyle
+el_career_civildesigner = "Civil Designer"
+# Snowy Escape
+sne_career_salaryperson = "Salary Person"
+# Dream Home Decorator
+dhd_career_interiordecorator = "Interior Decorator"
+# Lovestruck
+lv_career_romanceconsultant = "Romance Consultant"
+# Life & Death
+lnd_career_reaper = "Reaper"
+lnd_career_undertaker = "Undertaker"
+# Enchanted by Nature
+ebn_career_naturopath = "Naturopath"
 
 # DLC Part Time Jobs
 il_diver_ptj = "Diver Part Time Job"
