@@ -31,6 +31,7 @@ aspiration_chief_of_mischief = "Chief of Mischief"
 base_aspiration_artful_trickster = "Artful Trickster (Chief of Mischief 2)"
 base_aspiration_professional_prankster = "Professional Prankster (Chief of Mischief 3)"
 base_aspiration_chief_of_mischief = "Chief of Mischief (Chief of Mischief 4)"
+aspiration_villainous_valentine = "Villainous Valentine"
 base_aspiration_villainous_valentine = "Villainous Valentine (Villainous Valentine 1)"
 # Family Aspirations (Successful Lineage, Big Happy Family)
 aspiration_successful_lineage = "Successful Lineage"
