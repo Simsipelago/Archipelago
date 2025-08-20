@@ -2,7 +2,7 @@ from dataclasses import dataclass
 
 from Options import Choice, PerGameCommonOptions, OptionSet, StartInventoryPool, Visibility
 
-from .Names import CareerNames
+from .Names import CareerNames, AspirationNames
 from .Names.DLC import ExpansionNames, GamePackNames, StuffNames, CASKitNames, BuildKitNames
 
 class AspirationGoal(Choice):
@@ -51,6 +51,46 @@ class Career(OptionSet):
                   CareerNames.base_career_painter, CareerNames.base_career_secret_agent, CareerNames.base_career_style_influencer,
                   CareerNames.base_career_tech_guru, CareerNames.base_career_writer}
     default = sorted({CareerNames.base_career_athlete})
+
+class Aspiration(OptionSet):
+    """The aspirations that will be included in the shuffling, in addition to the goal aspiration.
+    Valid Aspirations include:
+    - Bodybuilder
+    - Painter Extraordinaire
+    - Bestselling Author
+    - Musical Genius
+    - Public Enemy
+    - Chief of Mischief
+    - Villainous Valentine
+    - Successful Lineage
+    - Big Happy Family
+    - Master Chef
+    - Master Mixologist
+    - Fabulously Wealthy
+    - Mansion Baron
+    - Renaissance Sim
+    - Nerd Brain
+    - Computer Whiz
+    - Serial Romantic
+    - Soulmate
+    - Freelance Botanist
+    - The Curator
+    - Angling Ace
+    - Joke Star
+    - Party Animal
+    - Friend of the World
+    - Neighborhood Confidante"""
+    display_name = "aspiration"
+    valid_keys = {AspirationNames.aspiration_bodybuilder, AspirationNames.aspiration_painter_extraordinaire, AspirationNames.aspiration_bestselling_author,
+                  AspirationNames.aspiration_musical_genius, AspirationNames.aspiration_public_enemy, AspirationNames.aspiration_chief_of_mischief,
+                  AspirationNames.aspiration_villainous_valentine, AspirationNames.aspiration_successful_lineage, AspirationNames.aspiration_big_happy_family,
+                  AspirationNames.aspiration_master_chef, AspirationNames.aspiration_master_mixologist, AspirationNames.aspiration_fabulously_wealthy,
+                  AspirationNames.aspiration_mansion_baron, AspirationNames.aspiration_renaissance_sim, AspirationNames.aspiration_nerd_brain,
+                  AspirationNames.aspiration_computer_whiz, AspirationNames.aspiration_serial_romantic, AspirationNames.aspiration_soulmate,
+                  AspirationNames.aspiration_freelance_botanist, AspirationNames.aspiration_the_curator, AspirationNames.aspiration_angling_ace,
+                  AspirationNames.aspiration_joke_star, AspirationNames.aspiration_party_animal, AspirationNames.aspiration_friend_of_the_world,
+                  AspirationNames.aspiration_neighborhood_confidante}
+    default = sorted(set())
 
 
 class ExpansionPacks(OptionSet):
@@ -110,6 +150,7 @@ class BuildKits(OptionSet):
 class Sims4Options(PerGameCommonOptions):
     goal: AspirationGoal
     career: Career
+    aspiration: Aspiration
     expansion_packs: ExpansionPacks
     game_packs: GamePacks
     stuff_packs: StuffPacks
