@@ -174,3 +174,6 @@ class Sims4World(World):
     def interpret_slot_data(slot_data: Dict[str, Any]) -> Dict[str, Any]:
         # returns slot data to be used in UT regen
         return slot_data
+
+    def get_filler_item_name(self) -> str:
+        return self.random.choice(junk_table)
