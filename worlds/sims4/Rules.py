@@ -453,7 +453,7 @@ def set_rules(sims4_world: Sims4World):
                  lambda state: state.has(SkillNames.base_skill_guitar, player, count=8)
                                or state.has(SkillNames.base_skill_violin, player, count=8)
                                or state.has(SkillNames.base_skill_piano, player, count=8))
-    elif options.goal.value == options.goal.option_public_enemy or or AspirationNames.aspiration_public_enemy in options.aspiration:
+    elif options.goal.value == options.goal.option_public_enemy or AspirationNames.aspiration_public_enemy in options.aspiration:
         set_rule(world.get_location(AspirationNames.base_aspiration_criminal_mind, player),
                  lambda state: state.has(SkillNames.base_skill_mischief, player, count=1))
         set_rule(world.get_location(AspirationNames.base_aspiration_public_enemy, player),
