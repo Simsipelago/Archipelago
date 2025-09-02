@@ -24,6 +24,7 @@ def set_rules(sims4_world: Sims4World):
     options: Sims4Options = sims4_world.options
 
     # Career Rules
+    # TODO relearn how the career locations send, and then refactor this to use has_skill
 
     # Athlete
     if CareerNames.base_career_athlete in options.career:
