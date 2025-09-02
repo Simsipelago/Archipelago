@@ -176,4 +176,4 @@ class Sims4World(World):
         return slot_data
 
     def get_filler_item_name(self) -> str:
-        return self.random.choice(junk_table)
+        return self.random.choice([entry['name'] for entry in junk_table.values()])
