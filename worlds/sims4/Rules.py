@@ -419,28 +419,28 @@ def set_rules(sims4_world: Sims4World):
     # Part Time Jobs
 
     # Aspirations
-    if options.goal.value == options.goal.option_bodybuilder:
+    if options.goal.value == options.goal.option_bodybuilder or AspirationNames.aspiration_bodybuilder in options.aspiration:
         set_rule(world.get_location(AspirationNames.base_aspiration_exercise_demon, player),
                  lambda state: state.has(SkillNames.base_skill_fitness, player, count=2))
         set_rule(world.get_location(AspirationNames.base_aspiration_fit_to_a_t, player),
                  lambda state: state.has(SkillNames.base_skill_fitness, player, count=4))
         set_rule(world.get_location(AspirationNames.base_aspiration_bodybuilder, player),
                  lambda state: state.has(SkillNames.base_skill_fitness, player, count=8))
-    elif options.goal.value == options.goal.option_painter_extraordinaire:
+    elif options.goal.value == options.goal.option_painter_extraordinaire or AspirationNames.aspiration_painter_extraordinaire in options.aspiration:
         set_rule(world.get_location(AspirationNames.base_aspiration_fine_artist, player),
                  lambda state: state.has(SkillNames.base_skill_painting, player, count=2))
         set_rule(world.get_location(AspirationNames.base_aspiration_brushing_with_greatness, player),
                  lambda state: state.has(SkillNames.base_skill_painting, player, count=4))
         set_rule(world.get_location(AspirationNames.base_aspiration_painter_extraordinaire, player),
                  lambda state: state.has(SkillNames.base_skill_painting, player, count=8))
-    elif options.goal.value == options.goal.option_bestselling_author:
+    elif options.goal.value == options.goal.option_bestselling_author or AspirationNames.aspiration_bestselling_author in options.aspiration:
         set_rule(world.get_location(AspirationNames.base_aspiration_competent_wordsmith, player),
                  lambda state: state.has(SkillNames.base_skill_writing, player, count=2))
         set_rule(world.get_location(AspirationNames.base_aspiration_novelest_novelist, player),
                  lambda state: state.has(SkillNames.base_skill_writing, player, count=4))
         set_rule(world.get_location(AspirationNames.base_aspiration_bestselling_author, player),
                  lambda state: state.has(SkillNames.base_skill_writing, player, count=8))
-    elif options.goal.value == options.goal.option_musical_genius:
+    elif options.goal.value == options.goal.option_musical_genius or AspirationNames.aspiration_musical_genius in options.aspiration:
         set_rule(world.get_location(AspirationNames.base_aspiration_fine_tuned, player),
                  lambda state: state.has(SkillNames.base_skill_guitar, player, count=2)
                                or state.has(SkillNames.base_skill_violin, player, count=2)
@@ -453,21 +453,21 @@ def set_rules(sims4_world: Sims4World):
                  lambda state: state.has(SkillNames.base_skill_guitar, player, count=8)
                                or state.has(SkillNames.base_skill_violin, player, count=8)
                                or state.has(SkillNames.base_skill_piano, player, count=8))
-    elif options.goal.value == options.goal.option_public_enemy:
+    elif options.goal.value == options.goal.option_public_enemy or or AspirationNames.aspiration_public_enemy in options.aspiration:
         set_rule(world.get_location(AspirationNames.base_aspiration_criminal_mind, player),
                  lambda state: state.has(SkillNames.base_skill_mischief, player, count=1))
         set_rule(world.get_location(AspirationNames.base_aspiration_public_enemy, player),
                  lambda state: state.has(SkillNames.base_skill_mischief, player, count=6)
                                and state.has(SkillNames.base_skill_programming, player, count=2))
 
-    elif options.goal.value == options.goal.option_chief_of_mischief:
+    elif options.goal.value == options.goal.option_chief_of_mischief or AspirationNames.aspiration_chief_of_mischief in options.aspiration:
         set_rule(world.get_location(AspirationNames.base_aspiration_artful_trickster, player),
                  lambda state: state.has(SkillNames.base_skill_mischief, player, count=1))
         set_rule(world.get_location(AspirationNames.base_aspiration_professional_prankster, player),
                  lambda state: state.has(SkillNames.base_skill_mischief, player, count=4))
         set_rule(world.get_location(AspirationNames.base_aspiration_chief_of_mischief, player),
                  lambda state: state.has(SkillNames.base_skill_mischief, player, count=8))
-    elif options.goal.value == options.goal.option_master_chef:
+    elif options.goal.value == options.goal.option_master_chef or AspirationNames.aspiration_master_chef in options.aspiration:
         set_rule(world.get_location(AspirationNames.base_aspiration_captain_cook, player),
                  lambda state: state.has(SkillNames.base_skill_cooking, player, count=3))
         set_rule(world.get_location(AspirationNames.base_aspiration_culinary_artist, player),
@@ -478,7 +478,7 @@ def set_rules(sims4_world: Sims4World):
                                or (state.has(SkillNames.base_skill_gourmet, player, count=3)
                                    and state.has(SkillNames.base_skill_mixology, player, count=5)
                                    and state.has(SkillNames.base_skill_charisma, player, count=2)))
-    elif options.goal.value == options.goal.option_master_mixologist:
+    elif options.goal.value == options.goal.option_master_mixologist or AspirationNames.aspiration_master_mixologist in options.aspiration:
         set_rule(world.get_location(AspirationNames.base_aspiration_electric_mixer, player),
                  lambda state: state.has(SkillNames.base_skill_mixology, player, count=2))
         set_rule(world.get_location(AspirationNames.base_aspiration_beverage_boss, player),
@@ -487,7 +487,7 @@ def set_rules(sims4_world: Sims4World):
         set_rule(world.get_location(AspirationNames.base_aspiration_master_mixologist, player),
                  lambda state: state.has(SkillNames.base_skill_mixology, player, count=8)
                                and state.has(SkillNames.base_skill_cooking, player, count=2))
-    elif options.goal.value == options.goal.option_renaissance_sim:
+    elif options.goal.value == options.goal.option_renaissance_sim or AspirationNames.aspiration_renaissance_sim in options.aspiration:
         set_rule(world.get_location(AspirationNames.base_aspiration_prudent_student, player),
                  lambda state: state.has(SkillNames.base_skill_logic, player, count=1))
         set_rule(world.get_location(AspirationNames.base_aspiration_jack_of_some_trades, player),
@@ -496,7 +496,7 @@ def set_rules(sims4_world: Sims4World):
                  lambda state: count_skills_over(3, state, player) >= 5)
         set_rule(world.get_location(AspirationNames.base_aspiration_renaissance_sim, player),
                  lambda state: count_skills_over(6, state, player) >= 6)
-    elif options.goal.value == options.goal.option_nerd_brain:
+    elif options.goal.value == options.goal.option_nerd_brain or AspirationNames.aspiration_nerd_brain in options.aspiration:
         set_rule(world.get_location(AspirationNames.base_aspiration_prudent_student, player),
                  lambda state: state.has(SkillNames.base_skill_logic, player, count=1))
         set_rule(world.get_location(AspirationNames.base_aspiration_erudite, player),
@@ -506,7 +506,7 @@ def set_rules(sims4_world: Sims4World):
         set_rule(world.get_location(AspirationNames.base_aspiration_nerd_brain, player),
                  lambda state: state.has(SkillNames.base_skill_logic, player, count=8)
                                and state.has(SkillNames.base_skill_handiness, player, count=3))
-    elif options.goal.value == options.goal.option_computer_whiz:
+    elif options.goal.value == options.goal.option_computer_whiz or AspirationNames.aspiration_computer_whiz in options.aspiration:
         set_rule(world.get_location(AspirationNames.base_aspiration_technically_adept, player),
                  lambda state: state.has(SkillNames.base_skill_programming, player, count=1))
         set_rule(world.get_location(AspirationNames.base_aspiration_computer_geek, player),
@@ -514,28 +514,28 @@ def set_rules(sims4_world: Sims4World):
         set_rule(world.get_location(AspirationNames.base_aspiration_computer_whiz, player),
                  lambda state: state.has(SkillNames.base_skill_programming, player, count=5)
                                and state.has(SkillNames.base_skill_video_gaming, player, count=1))
-    elif options.goal.value == options.goal.option_serial_romantic:
+    elif options.goal.value == options.goal.option_serial_romantic or AspirationNames.aspiration_serial_romantic in options.aspiration:
         set_rule(world.get_location(AspirationNames.base_aspiration_up_to_date, player),
                  lambda state: state.has(SkillNames.base_skill_charisma, player, count=2))
         set_rule(world.get_location(AspirationNames.base_aspiration_romance_juggler, player),
                  lambda state: state.has(SkillNames.base_skill_charisma, player, count=4))
         set_rule(world.get_location(AspirationNames.base_aspiration_serial_romantic, player),
                  lambda state: state.has(SkillNames.base_skill_charisma, player, count=4))
-    elif options.goal.value == options.goal.option_freelance_botanist:
+    elif options.goal.value == options.goal.option_freelance_botanist or AspirationNames.aspiration_freelance_botanist in options.aspiration:
         set_rule(world.get_location(AspirationNames.base_aspiration_garden_variety, player),
                  lambda state: state.has(SkillNames.base_skill_gardening, player, count=2))
         set_rule(world.get_location(AspirationNames.base_aspiration_nature_nurturer, player),
                  lambda state: state.has(SkillNames.base_skill_gardening, player, count=4))
         set_rule(world.get_location(AspirationNames.base_aspiration_freelance_botanist, player),
                  lambda state: state.has(SkillNames.base_skill_gardening, player, count=8))
-    elif options.goal.value == options.goal.option_angling_ace:
+    elif options.goal.value == options.goal.option_angling_ace or AspirationNames.aspiration_angling_ace in options.aspiration:
         set_rule(world.get_location(AspirationNames.base_aspiration_hooked, player),
                  lambda state: state.has(SkillNames.base_skill_fishing, player, count=2))
         set_rule(world.get_location(AspirationNames.base_aspiration_reel_smart, player),
                  lambda state: state.has(SkillNames.base_skill_fishing, player, count=4))
         set_rule(world.get_location(AspirationNames.base_aspiration_angling_ace, player),
                  lambda state: state.has(SkillNames.base_skill_fishing, player, count=8))
-    elif options.goal.value == options.goal.option_joke_star:
+    elif options.goal.value == options.goal.option_joke_star or AspirationNames.aspiration_joke_star in options.aspiration:
         set_rule(world.get_location(AspirationNames.base_aspiration_practical_joker, player),
                  lambda state: state.has(SkillNames.base_skill_comedy, player, count=1))
         set_rule(world.get_location(AspirationNames.base_aspiration_standup_startup, player),
@@ -546,14 +546,14 @@ def set_rules(sims4_world: Sims4World):
                                     or state.has(SkillNames.base_skill_violin, player, count=1)))
         set_rule(world.get_location(AspirationNames.base_aspiration_joke_star, player),
                  lambda state: state.has(SkillNames.base_skill_comedy, player, count=8))
-    elif options.goal.value == options.goal.option_friend_of_the_world:
+    elif options.goal.value == options.goal.option_friend_of_the_world or AspirationNames.aspiration_friend_of_the_world in options.aspiration:
         set_rule(world.get_location(AspirationNames.base_aspiration_well_liked, player),
                  lambda state: state.has(SkillNames.base_skill_charisma, player, count=2))
         set_rule(world.get_location(AspirationNames.base_aspiration_super_friend, player),
                  lambda state: state.has(SkillNames.base_skill_charisma, player, count=4))
         set_rule(world.get_location(AspirationNames.base_aspiration_friend_of_the_world, player),
                  lambda state: state.has(SkillNames.base_skill_charisma, player, count=8))
-    elif options.goal.value == options.goal.option_neighborly_advisor:
+    elif options.goal.value == options.goal.option_neighborly_advisor or AspirationNames.aspiration_neighborhood_confidante in options.aspiration:
         set_rule(world.get_location(AspirationNames.base_aspiration_neighborly_advisor, player),
                  lambda state: state.has(SkillNames.base_skill_charisma, player, count=5))
 
