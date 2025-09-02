@@ -424,72 +424,72 @@ def set_rules(sims4_world: Sims4World):
     # Aspirations
     if options.goal.value == options.goal.option_bodybuilder:
         set_rule(world.get_location(AspirationNames.base_aspiration_exercise_demon, player),
-                 lambda state: state.has_skill(SkillNames.base_skill_fitness, player, 4))
+                 lambda state: has_skill(state, SkillNames.base_skill_fitness, player, 4))
         set_rule(world.get_location(AspirationNames.base_aspiration_fit_to_a_t, player),
-                 lambda state: state.has_skill(SkillNames.base_skill_fitness, player, 6))
+                 lambda state: has_skill(state, SkillNames.base_skill_fitness, player, 6))
         set_rule(world.get_location(AspirationNames.base_aspiration_bodybuilder, player),
-                 lambda state: state.has_skill(SkillNames.base_skill_fitness, player, 10))
+                 lambda state: has_skill(state, SkillNames.base_skill_fitness, player, 10))
     elif options.goal.value == options.goal.option_painter_extraordinaire:
         set_rule(world.get_location(AspirationNames.base_aspiration_fine_artist, player),
-                 lambda state: state.has_skill(SkillNames.base_skill_painting, player, 4))
+                 lambda state: has_skill(state, SkillNames.base_skill_painting, player, 4))
         set_rule(world.get_location(AspirationNames.base_aspiration_brushing_with_greatness, player),
-                 lambda state: state.has_skill(SkillNames.base_skill_painting, player, 6))
+                 lambda state: has_skill(state, SkillNames.base_skill_painting, player, 6))
         set_rule(world.get_location(AspirationNames.base_aspiration_painter_extraordinaire, player),
-                 lambda state: state.has_skill(SkillNames.base_skill_painting, player, 10))
+                 lambda state: has_skill(state, SkillNames.base_skill_painting, player, 10))
     elif options.goal.value == options.goal.option_bestselling_author:
         set_rule(world.get_location(AspirationNames.base_aspiration_competent_wordsmith, player),
-                 lambda state: state.has_skill(SkillNames.base_skill_writing, player, 4))
+                 lambda state: has_skill(state, SkillNames.base_skill_writing, player, 4))
         set_rule(world.get_location(AspirationNames.base_aspiration_novelest_novelist, player),
-                 lambda state: state.has_skill(SkillNames.base_skill_writing, player, 6))
+                 lambda state: has_skill(state, SkillNames.base_skill_writing, player, 6))
         set_rule(world.get_location(AspirationNames.base_aspiration_bestselling_author, player),
-                 lambda state: state.has_skill(SkillNames.base_skill_writing, player, 10))
+                 lambda state: has_skill(state, SkillNames.base_skill_writing, player, 10))
     elif options.goal.value == options.goal.option_musical_genius:
         set_rule(world.get_location(AspirationNames.base_aspiration_fine_tuned, player),
-                 lambda state: state.has_skill(SkillNames.base_skill_guitar, player, 4)
-                               or state.has_skill(SkillNames.base_skill_violin, player, 4)
-                               or state.has_skill(SkillNames.base_skill_piano, player, 4))
+                 lambda state: has_skill(state, SkillNames.base_skill_guitar, player, 4)
+                               or has_skill(state, SkillNames.base_skill_violin, player, 4)
+                               or has_skill(state, SkillNames.base_skill_piano, player, 4))
         set_rule(world.get_location(AspirationNames.base_aspiration_harmonious, player),
-                 lambda state: state.has_skill(SkillNames.base_skill_guitar, player, 8)
-                               or state.has_skill(SkillNames.base_skill_violin, player, 8)
-                               or state.has_skill(SkillNames.base_skill_piano, player, 8))
+                 lambda state: has_skill(state, SkillNames.base_skill_guitar, player, 8)
+                               or has_skill(state, SkillNames.base_skill_violin, player, 8)
+                               or has_skill(state, SkillNames.base_skill_piano, player, 8))
         set_rule(world.get_location(AspirationNames.base_aspiration_musical_genius, player),
-                 lambda state: state.has_skill(SkillNames.base_skill_guitar, player, 10)
-                               or state.has_skill(SkillNames.base_skill_violin, player, 10)
-                               or state.has_skill(SkillNames.base_skill_piano, player, 10))
+                 lambda state: has_skill(state, SkillNames.base_skill_guitar, player, 10)
+                               or has_skill(state, SkillNames.base_skill_violin, player, 10)
+                               or has_skill(state, SkillNames.base_skill_piano, player, 10))
     elif options.goal.value == options.goal.option_public_enemy:
         set_rule(world.get_location(AspirationNames.base_aspiration_criminal_mind, player),
-                 lambda state: state.has_skill(SkillNames.base_skill_mischief, player, 3))
+                 lambda state: has_skill(state, SkillNames.base_skill_mischief, player, 3))
         set_rule(world.get_location(AspirationNames.base_aspiration_public_enemy, player),
-                 lambda state: state.has_skill(SkillNames.base_skill_mischief, player, 8)
-                               and state.has_skill(SkillNames.base_skill_programming, player, 4))
+                 lambda state: has_skill(state, SkillNames.base_skill_mischief, player, 8)
+                               and has_skill(state, SkillNames.base_skill_programming, player, 4))
 
     elif options.goal.value == options.goal.option_chief_of_mischief:
         set_rule(world.get_location(AspirationNames.base_aspiration_artful_trickster, player),
-                 lambda state: state.has_skill(SkillNames.base_skill_mischief, player, 3))
+                 lambda state: has_skill(state, SkillNames.base_skill_mischief, player, 3))
         set_rule(world.get_location(AspirationNames.base_aspiration_professional_prankster, player),
-                 lambda state: state.has_skill(SkillNames.base_skill_mischief, player, 6))
+                 lambda state: has_skill(state, SkillNames.base_skill_mischief, player, 6))
         set_rule(world.get_location(AspirationNames.base_aspiration_chief_of_mischief, player),
-                 lambda state: state.has_skill(SkillNames.base_skill_mischief, player, 10))
+                 lambda state: has_skill(state, SkillNames.base_skill_mischief, player, 10))
     elif options.goal.value == options.goal.option_master_chef:
         set_rule(world.get_location(AspirationNames.base_aspiration_captain_cook, player),
-                 lambda state: state.has_skill(SkillNames.base_skill_cooking, player, 5))
+                 lambda state: has_skill(state, SkillNames.base_skill_cooking, player, 5))
         set_rule(world.get_location(AspirationNames.base_aspiration_culinary_artist, player),
-                 lambda state: state.has_skill(SkillNames.base_skill_cooking, player, 5))
+                 lambda state: has_skill(state, SkillNames.base_skill_cooking, player, 5))
         set_rule(world.get_location(AspirationNames.base_aspiration_master_chef, player),
-                 lambda state: (state.has_skill(SkillNames.base_skill_gourmet, player, 6)
-                                and state.has_skill(SkillNames.base_skill_cooking, player, 8))
-                               or (state.has_skill(SkillNames.base_skill_gourmet, player, 5)
-                                   and state.has_skill(SkillNames.base_skill_mixology, player, 7)
-                                   and state.has_skill(SkillNames.base_skill_charisma, player, 4)))
+                 lambda state: (has_skill(state, SkillNames.base_skill_gourmet, player, 6)
+                                and has_skill(state, SkillNames.base_skill_cooking, player, 8))
+                               or (has_skill(state, SkillNames.base_skill_gourmet, player, 5)
+                                   and has_skill(state, SkillNames.base_skill_mixology, player, 7)
+                                   and has_skill(state, SkillNames.base_skill_charisma, player, 4)))
     elif options.goal.value == options.goal.option_master_mixologist:
         set_rule(world.get_location(AspirationNames.base_aspiration_electric_mixer, player),
-                 lambda state: state.has_skill(SkillNames.base_skill_mixology, player, 4))
+                 lambda state: has_skill(state, SkillNames.base_skill_mixology, player, 4))
         set_rule(world.get_location(AspirationNames.base_aspiration_beverage_boss, player),
-                 lambda state: state.has_skill(SkillNames.base_skill_mixology, player, 7)
-                               and state.has_skill(SkillNames.base_skill_cooking, player, 4))
+                 lambda state: has_skill(state, SkillNames.base_skill_mixology, player, 7)
+                               and has_skill(state, SkillNames.base_skill_cooking, player, 4))
         set_rule(world.get_location(AspirationNames.base_aspiration_master_mixologist, player),
-                 lambda state: state.has_skill(SkillNames.base_skill_mixology, player, 10)
-                               and state.has_skill(SkillNames.base_skill_cooking, player, 4))
+                 lambda state: has_skill(state, SkillNames.base_skill_mixology, player, 10)
+                               and has_skill(state, SkillNames.base_skill_cooking, player, 4))
     elif options.goal.value == options.goal.option_renaissance_sim:
         set_rule(world.get_location(AspirationNames.base_aspiration_prudent_student, player),
                  lambda state: state.has(SkillNames.base_skill_logic, player, count=1))
@@ -501,398 +501,398 @@ def set_rules(sims4_world: Sims4World):
                  lambda state: count_skills_over(6, state, player) >= 6)
     elif options.goal.value == options.goal.option_nerd_brain:
         set_rule(world.get_location(AspirationNames.base_aspiration_prudent_student, player),
-                 lambda state: state.has_skill(SkillNames.base_skill_logic, player, 3))
+                 lambda state: has_skill(state, SkillNames.base_skill_logic, player, 3))
         set_rule(world.get_location(AspirationNames.base_aspiration_erudite, player),
-                 lambda state: state.has_skill(SkillNames.base_skill_logic, player, 6))
+                 lambda state: has_skill(state, SkillNames.base_skill_logic, player, 6))
         set_rule(world.get_location(AspirationNames.base_aspiration_rocket_scientist, player),
-                 lambda state: state.has_skill(SkillNames.base_skill_handiness, player, 5))
+                 lambda state: has_skill(state, SkillNames.base_skill_handiness, player, 5))
         set_rule(world.get_location(AspirationNames.base_aspiration_nerd_brain, player),
-                 lambda state: state.has_skill(SkillNames.base_skill_logic, player, 10)
-                               and state.has_skill(SkillNames.base_skill_handiness, player, 5))
+                 lambda state: has_skill(state, SkillNames.base_skill_logic, player, 10)
+                               and has_skill(state, SkillNames.base_skill_handiness, player, 5))
     elif options.goal.value == options.goal.option_computer_whiz:
         set_rule(world.get_location(AspirationNames.base_aspiration_technically_adept, player),
-                 lambda state: state.has_skill(SkillNames.base_skill_programming, player, 3))
+                 lambda state: has_skill(state, SkillNames.base_skill_programming, player, 3))
         set_rule(world.get_location(AspirationNames.base_aspiration_computer_geek, player),
-                 lambda state: state.has_skill(SkillNames.base_skill_programming, player, 7))
+                 lambda state: has_skill(state, SkillNames.base_skill_programming, player, 7))
         set_rule(world.get_location(AspirationNames.base_aspiration_computer_whiz, player),
-                 lambda state: state.has_skill(SkillNames.base_skill_programming, player, 7)
-                               and state.has_skill(SkillNames.base_skill_video_gaming, player, 4))
+                 lambda state: has_skill(state, SkillNames.base_skill_programming, player, 7)
+                               and has_skill(state, SkillNames.base_skill_video_gaming, player, 4))
     elif options.goal.value == options.goal.option_serial_romantic:
         set_rule(world.get_location(AspirationNames.base_aspiration_up_to_date, player),
-                 lambda state: state.has_skill(SkillNames.base_skill_charisma, player, 4))
+                 lambda state: has_skill(state, SkillNames.base_skill_charisma, player, 4))
         set_rule(world.get_location(AspirationNames.base_aspiration_romance_juggler, player),
-                 lambda state: state.has_skill(SkillNames.base_skill_charisma, player, 6))
+                 lambda state: has_skill(state, SkillNames.base_skill_charisma, player, 6))
         set_rule(world.get_location(AspirationNames.base_aspiration_serial_romantic, player),
-                 lambda state: state.has_skill(SkillNames.base_skill_charisma, player, 6))
+                 lambda state: has_skill(state, SkillNames.base_skill_charisma, player, 6))
     elif options.goal.value == options.goal.option_freelance_botanist:
         set_rule(world.get_location(AspirationNames.base_aspiration_garden_variety, player),
-                 lambda state: state.has_skill(SkillNames.base_skill_gardening, player, 4))
+                 lambda state: has_skill(state, SkillNames.base_skill_gardening, player, 4))
         set_rule(world.get_location(AspirationNames.base_aspiration_nature_nurturer, player),
-                 lambda state: state.has_skill(SkillNames.base_skill_gardening, player, 6))
+                 lambda state: has_skill(state, SkillNames.base_skill_gardening, player, 6))
         set_rule(world.get_location(AspirationNames.base_aspiration_freelance_botanist, player),
-                 lambda state: state.has_skill(SkillNames.base_skill_gardening, player, 10))
+                 lambda state: has_skill(state, SkillNames.base_skill_gardening, player, 10))
     elif options.goal.value == options.goal.option_angling_ace:
         set_rule(world.get_location(AspirationNames.base_aspiration_hooked, player),
-                 lambda state: state.has_skill(SkillNames.base_skill_fishing, player, 4))
+                 lambda state: has_skill(state, SkillNames.base_skill_fishing, player, 4))
         set_rule(world.get_location(AspirationNames.base_aspiration_reel_smart, player),
-                 lambda state: state.has_skill(SkillNames.base_skill_fishing, player, 6))
+                 lambda state: has_skill(state, SkillNames.base_skill_fishing, player, 6))
         set_rule(world.get_location(AspirationNames.base_aspiration_angling_ace, player),
-                 lambda state: state.has_skill(SkillNames.base_skill_fishing, player, 10))
+                 lambda state: has_skill(state, SkillNames.base_skill_fishing, player, 10))
     elif options.goal.value == options.goal.option_joke_star:
         set_rule(world.get_location(AspirationNames.base_aspiration_practical_joker, player),
-                 lambda state: state.has_skill(SkillNames.base_skill_comedy, player, 3))
+                 lambda state: has_skill(state, SkillNames.base_skill_comedy, player, 3))
         set_rule(world.get_location(AspirationNames.base_aspiration_standup_startup, player),
-                 lambda state: state.has_skill(SkillNames.base_skill_comedy, player, 3))
+                 lambda state: has_skill(state, SkillNames.base_skill_comedy, player, 3))
         set_rule(world.get_location(AspirationNames.base_aspiration_funny, player),
-                 lambda state: state.has_skill(SkillNames.base_skill_comedy, player, 6)
-                               and (state.has_skill(SkillNames.base_skill_guitar, player, 3)
-                                    or state.has_skill(SkillNames.base_skill_violin, player, 3)))
+                 lambda state: has_skill(state, SkillNames.base_skill_comedy, player, 6)
+                               and (has_skill(state, SkillNames.base_skill_guitar, player, 3)
+                                    or has_skill(state, SkillNames.base_skill_violin, player, 3)))
         set_rule(world.get_location(AspirationNames.base_aspiration_joke_star, player),
-                 lambda state: state.has_skill(SkillNames.base_skill_comedy, player, 10)
-                               and (state.has_skill(SkillNames.base_skill_guitar, player, 3)
-                                    or state.has_skill(SkillNames.base_skill_violin, player, 3)))
+                 lambda state: has_skill(state, SkillNames.base_skill_comedy, player, 10)
+                               and (has_skill(state, SkillNames.base_skill_guitar, player, 3)
+                                    or has_skill(state, SkillNames.base_skill_violin, player, 3)))
     elif options.goal.value == options.goal.option_friend_of_the_world:
         set_rule(world.get_location(AspirationNames.base_aspiration_well_liked, player),
-                 lambda state: state.has_skill(SkillNames.base_skill_charisma, player, 4))
+                 lambda state: has_skill(state, SkillNames.base_skill_charisma, player, 4))
         set_rule(world.get_location(AspirationNames.base_aspiration_super_friend, player),
-                 lambda state: state.has_skill(SkillNames.base_skill_charisma, player, 6))
+                 lambda state: has_skill(state, SkillNames.base_skill_charisma, player, 6))
         set_rule(world.get_location(AspirationNames.base_aspiration_friend_of_the_world, player),
-                 lambda state: state.has_skill(SkillNames.base_skill_charisma, player, 10))
+                 lambda state: has_skill(state, SkillNames.base_skill_charisma, player, 10))
     elif options.goal.value == options.goal.option_neighborly_advisor:
         set_rule(world.get_location(AspirationNames.base_aspiration_neighborly_advisor, player),
-                 lambda state: state.has_skill(SkillNames.base_skill_charisma, player, 7))
+                 lambda state: has_skill(state, SkillNames.base_skill_charisma, player, 7))
 
     # Skillchecks
 
     set_rule(world.get_location(f"{SkillNames.base_skill_comedy} 3", player),
-             lambda state: state.has_skill(SkillNames.base_skill_comedy, player, 3))
+             lambda state: has_skill(state, SkillNames.base_skill_comedy, player, 3))
     set_rule(world.get_location(f"{SkillNames.base_skill_comedy} 4", player),
-             lambda state: state.has_skill(SkillNames.base_skill_comedy, player, 4))
+             lambda state: has_skill(state, SkillNames.base_skill_comedy, player, 4))
     set_rule(world.get_location(f"{SkillNames.base_skill_comedy} 5", player),
-             lambda state: state.has_skill(SkillNames.base_skill_comedy, player, 5))
+             lambda state: has_skill(state, SkillNames.base_skill_comedy, player, 5))
     set_rule(world.get_location(f"{SkillNames.base_skill_comedy} 6", player),
-             lambda state: state.has_skill(SkillNames.base_skill_comedy, player, 6))
+             lambda state: has_skill(state, SkillNames.base_skill_comedy, player, 6))
     set_rule(world.get_location(f"{SkillNames.base_skill_comedy} 7", player),
-             lambda state: state.has_skill(SkillNames.base_skill_comedy, player, 7))
+             lambda state: has_skill(state, SkillNames.base_skill_comedy, player, 7))
     set_rule(world.get_location(f"{SkillNames.base_skill_comedy} 8", player),
-             lambda state: state.has_skill(SkillNames.base_skill_comedy, player, 8))
+             lambda state: has_skill(state, SkillNames.base_skill_comedy, player, 8))
     set_rule(world.get_location(f"{SkillNames.base_skill_comedy} 9", player),
-             lambda state: state.has_skill(SkillNames.base_skill_comedy, player, 9))
+             lambda state: has_skill(state, SkillNames.base_skill_comedy, player, 9))
     set_rule(world.get_location(f"{SkillNames.base_skill_comedy} 10", player),
-             lambda state: state.has_skill(SkillNames.base_skill_comedy, player, 10))
+             lambda state: has_skill(state, SkillNames.base_skill_comedy, player, 10))
 
     set_rule(world.get_location(f"{SkillNames.base_skill_charisma} 3", player),
-             lambda state: state.has_skill(SkillNames.base_skill_charisma, player, 3))
+             lambda state: has_skill(state, SkillNames.base_skill_charisma, player, 3))
     set_rule(world.get_location(f"{SkillNames.base_skill_charisma} 4", player),
-             lambda state: state.has_skill(SkillNames.base_skill_charisma, player, 4))
+             lambda state: has_skill(state, SkillNames.base_skill_charisma, player, 4))
     set_rule(world.get_location(f"{SkillNames.base_skill_charisma} 5", player),
-             lambda state: state.has_skill(SkillNames.base_skill_charisma, player, 5))
+             lambda state: has_skill(state, SkillNames.base_skill_charisma, player, 5))
     set_rule(world.get_location(f"{SkillNames.base_skill_charisma} 6", player),
-             lambda state: state.has_skill(SkillNames.base_skill_charisma, player, 6))
+             lambda state: has_skill(state, SkillNames.base_skill_charisma, player, 6))
     set_rule(world.get_location(f"{SkillNames.base_skill_charisma} 7", player),
-             lambda state: state.has_skill(SkillNames.base_skill_charisma, player, 7))
+             lambda state: has_skill(state, SkillNames.base_skill_charisma, player, 7))
     set_rule(world.get_location(f"{SkillNames.base_skill_charisma} 8", player),
-             lambda state: state.has_skill(SkillNames.base_skill_charisma, player, 8))
+             lambda state: has_skill(state, SkillNames.base_skill_charisma, player, 8))
     set_rule(world.get_location(f"{SkillNames.base_skill_charisma} 9", player),
-             lambda state: state.has_skill(SkillNames.base_skill_charisma, player, 9))
+             lambda state: has_skill(state, SkillNames.base_skill_charisma, player, 9))
     set_rule(world.get_location(f"{SkillNames.base_skill_charisma} 10", player),
-             lambda state: state.has_skill(SkillNames.base_skill_charisma, player, 10))
+             lambda state: has_skill(state, SkillNames.base_skill_charisma, player, 10))
 
     set_rule(world.get_location(f"{SkillNames.base_skill_logic} 3", player),
-             lambda state: state.has_skill(SkillNames.base_skill_logic, player, 3))
+             lambda state: has_skill(state, SkillNames.base_skill_logic, player, 3))
     set_rule(world.get_location(f"{SkillNames.base_skill_logic} 4", player),
-             lambda state: state.has_skill(SkillNames.base_skill_logic, player, 4))
+             lambda state: has_skill(state, SkillNames.base_skill_logic, player, 4))
     set_rule(world.get_location(f"{SkillNames.base_skill_logic} 5", player),
-             lambda state: state.has_skill(SkillNames.base_skill_logic, player, 5))
+             lambda state: has_skill(state, SkillNames.base_skill_logic, player, 5))
     set_rule(world.get_location(f"{SkillNames.base_skill_logic} 6", player),
-             lambda state: state.has_skill(SkillNames.base_skill_logic, player, 6))
+             lambda state: has_skill(state, SkillNames.base_skill_logic, player, 6))
     set_rule(world.get_location(f"{SkillNames.base_skill_logic} 7", player),
-             lambda state: state.has_skill(SkillNames.base_skill_logic, player, 7))
+             lambda state: has_skill(state, SkillNames.base_skill_logic, player, 7))
     set_rule(world.get_location(f"{SkillNames.base_skill_logic} 8", player),
-             lambda state: state.has_skill(SkillNames.base_skill_logic, player, 8))
+             lambda state: has_skill(state, SkillNames.base_skill_logic, player, 8))
     set_rule(world.get_location(f"{SkillNames.base_skill_logic} 9", player),
-             lambda state: state.has_skill(SkillNames.base_skill_logic, player, 9))
+             lambda state: has_skill(state, SkillNames.base_skill_logic, player, 9))
     set_rule(world.get_location(f"{SkillNames.base_skill_logic} 10", player),
-             lambda state: state.has_skill(SkillNames.base_skill_logic, player, 10))
+             lambda state: has_skill(state, SkillNames.base_skill_logic, player, 10))
 
     set_rule(world.get_location(f"{SkillNames.base_skill_fitness} 3", player),
-             lambda state: state.has_skill(SkillNames.base_skill_fitness, player, 3))
+             lambda state: has_skill(state, SkillNames.base_skill_fitness, player, 3))
     set_rule(world.get_location(f"{SkillNames.base_skill_fitness} 4", player),
-             lambda state: state.has_skill(SkillNames.base_skill_fitness, player, 4))
+             lambda state: has_skill(state, SkillNames.base_skill_fitness, player, 4))
     set_rule(world.get_location(f"{SkillNames.base_skill_fitness} 5", player),
-             lambda state: state.has_skill(SkillNames.base_skill_fitness, player, 5))
+             lambda state: has_skill(state, SkillNames.base_skill_fitness, player, 5))
     set_rule(world.get_location(f"{SkillNames.base_skill_fitness} 6", player),
-             lambda state: state.has_skill(SkillNames.base_skill_fitness, player, 6))
+             lambda state: has_skill(state, SkillNames.base_skill_fitness, player, 6))
     set_rule(world.get_location(f"{SkillNames.base_skill_fitness} 7", player),
-             lambda state: state.has_skill(SkillNames.base_skill_fitness, player, 7))
+             lambda state: has_skill(state, SkillNames.base_skill_fitness, player, 7))
     set_rule(world.get_location(f"{SkillNames.base_skill_fitness} 8", player),
-             lambda state: state.has_skill(SkillNames.base_skill_fitness, player, 8))
+             lambda state: has_skill(state, SkillNames.base_skill_fitness, player, 8))
     set_rule(world.get_location(f"{SkillNames.base_skill_fitness} 9", player),
-             lambda state: state.has_skill(SkillNames.base_skill_fitness, player, 9))
+             lambda state: has_skill(state, SkillNames.base_skill_fitness, player, 9))
     set_rule(world.get_location(f"{SkillNames.base_skill_fitness} 10", player),
-             lambda state: state.has_skill(SkillNames.base_skill_fitness, player, 10))
+             lambda state: has_skill(state, SkillNames.base_skill_fitness, player, 10))
 
     set_rule(world.get_location(f"{SkillNames.base_skill_writing} 3", player),
-             lambda state: state.has_skill(SkillNames.base_skill_writing, player, 3))
+             lambda state: has_skill(state, SkillNames.base_skill_writing, player, 3))
     set_rule(world.get_location(f"{SkillNames.base_skill_writing} 4", player),
-             lambda state: state.has_skill(SkillNames.base_skill_writing, player, 4))
+             lambda state: has_skill(state, SkillNames.base_skill_writing, player, 4))
     set_rule(world.get_location(f"{SkillNames.base_skill_writing} 5", player),
-             lambda state: state.has_skill(SkillNames.base_skill_writing, player, 5))
+             lambda state: has_skill(state, SkillNames.base_skill_writing, player, 5))
     set_rule(world.get_location(f"{SkillNames.base_skill_writing} 6", player),
-             lambda state: state.has_skill(SkillNames.base_skill_writing, player, 6))
+             lambda state: has_skill(state, SkillNames.base_skill_writing, player, 6))
     set_rule(world.get_location(f"{SkillNames.base_skill_writing} 7", player),
-             lambda state: state.has_skill(SkillNames.base_skill_writing, player, 7))
+             lambda state: has_skill(state, SkillNames.base_skill_writing, player, 7))
     set_rule(world.get_location(f"{SkillNames.base_skill_writing} 8", player),
-             lambda state: state.has_skill(SkillNames.base_skill_writing, player, 8))
+             lambda state: has_skill(state, SkillNames.base_skill_writing, player, 8))
     set_rule(world.get_location(f"{SkillNames.base_skill_writing} 9", player),
-             lambda state: state.has_skill(SkillNames.base_skill_writing, player, 9))
+             lambda state: has_skill(state, SkillNames.base_skill_writing, player, 9))
     set_rule(world.get_location(f"{SkillNames.base_skill_writing} 10", player),
-             lambda state: state.has_skill(SkillNames.base_skill_writing, player, 10))
+             lambda state: has_skill(state, SkillNames.base_skill_writing, player, 10))
 
     set_rule(world.get_location(f"{SkillNames.base_skill_fishing} 3", player),
-             lambda state: state.has_skill(SkillNames.base_skill_fishing, player, 3))
+             lambda state: has_skill(state, SkillNames.base_skill_fishing, player, 3))
     set_rule(world.get_location(f"{SkillNames.base_skill_fishing} 4", player),
-             lambda state: state.has_skill(SkillNames.base_skill_fishing, player, 4))
+             lambda state: has_skill(state, SkillNames.base_skill_fishing, player, 4))
     set_rule(world.get_location(f"{SkillNames.base_skill_fishing} 5", player),
-             lambda state: state.has_skill(SkillNames.base_skill_fishing, player, 5))
+             lambda state: has_skill(state, SkillNames.base_skill_fishing, player, 5))
     set_rule(world.get_location(f"{SkillNames.base_skill_fishing} 6", player),
-             lambda state: state.has_skill(SkillNames.base_skill_fishing, player, 6))
+             lambda state: has_skill(state, SkillNames.base_skill_fishing, player, 6))
     set_rule(world.get_location(f"{SkillNames.base_skill_fishing} 7", player),
-             lambda state: state.has_skill(SkillNames.base_skill_fishing, player, 7))
+             lambda state: has_skill(state, SkillNames.base_skill_fishing, player, 7))
     set_rule(world.get_location(f"{SkillNames.base_skill_fishing} 8", player),
-             lambda state: state.has_skill(SkillNames.base_skill_fishing, player, 8))
+             lambda state: has_skill(state, SkillNames.base_skill_fishing, player, 8))
     set_rule(world.get_location(f"{SkillNames.base_skill_fishing} 9", player),
-             lambda state: state.has_skill(SkillNames.base_skill_fishing, player, 9))
+             lambda state: has_skill(state, SkillNames.base_skill_fishing, player, 9))
     set_rule(world.get_location(f"{SkillNames.base_skill_fishing} 10", player),
-             lambda state: state.has_skill(SkillNames.base_skill_fishing, player, 10))
+             lambda state: has_skill(state, SkillNames.base_skill_fishing, player, 10))
 
     set_rule(world.get_location(f"{SkillNames.base_skill_gardening} 3", player),
-             lambda state: state.has_skill(SkillNames.base_skill_gardening, player, 3))
+             lambda state: has_skill(state, SkillNames.base_skill_gardening, player, 3))
     set_rule(world.get_location(f"{SkillNames.base_skill_gardening} 4", player),
-             lambda state: state.has_skill(SkillNames.base_skill_gardening, player, 4))
+             lambda state: has_skill(state, SkillNames.base_skill_gardening, player, 4))
     set_rule(world.get_location(f"{SkillNames.base_skill_gardening} 5", player),
-             lambda state: state.has_skill(SkillNames.base_skill_gardening, player, 5))
+             lambda state: has_skill(state, SkillNames.base_skill_gardening, player, 5))
     set_rule(world.get_location(f"{SkillNames.base_skill_gardening} 6", player),
-             lambda state: state.has_skill(SkillNames.base_skill_gardening, player, 6))
+             lambda state: has_skill(state, SkillNames.base_skill_gardening, player, 6))
     set_rule(world.get_location(f"{SkillNames.base_skill_gardening} 7", player),
-             lambda state: state.has_skill(SkillNames.base_skill_gardening, player, 7))
+             lambda state: has_skill(state, SkillNames.base_skill_gardening, player, 7))
     set_rule(world.get_location(f"{SkillNames.base_skill_gardening} 8", player),
-             lambda state: state.has_skill(SkillNames.base_skill_gardening, player, 8))
+             lambda state: has_skill(state, SkillNames.base_skill_gardening, player, 8))
     set_rule(world.get_location(f"{SkillNames.base_skill_gardening} 9", player),
-             lambda state: state.has_skill(SkillNames.base_skill_gardening, player, 9))
+             lambda state: has_skill(state, SkillNames.base_skill_gardening, player, 9))
     set_rule(world.get_location(f"{SkillNames.base_skill_gardening} 10", player),
-             lambda state: state.has_skill(SkillNames.base_skill_gardening, player, 10))
+             lambda state: has_skill(state, SkillNames.base_skill_gardening, player, 10))
 
     set_rule(world.get_location(f"{SkillNames.base_skill_video_gaming} 3", player),
-             lambda state: state.has_skill(SkillNames.base_skill_video_gaming, player, 3))
+             lambda state: has_skill(state, SkillNames.base_skill_video_gaming, player, 3))
     set_rule(world.get_location(f"{SkillNames.base_skill_video_gaming} 4", player),
-             lambda state: state.has_skill(SkillNames.base_skill_video_gaming, player, 4))
+             lambda state: has_skill(state, SkillNames.base_skill_video_gaming, player, 4))
     set_rule(world.get_location(f"{SkillNames.base_skill_video_gaming} 5", player),
-             lambda state: state.has_skill(SkillNames.base_skill_video_gaming, player, 5))
+             lambda state: has_skill(state, SkillNames.base_skill_video_gaming, player, 5))
     set_rule(world.get_location(f"{SkillNames.base_skill_video_gaming} 6", player),
-             lambda state: state.has_skill(SkillNames.base_skill_video_gaming, player, 6))
+             lambda state: has_skill(state, SkillNames.base_skill_video_gaming, player, 6))
     set_rule(world.get_location(f"{SkillNames.base_skill_video_gaming} 7", player),
-             lambda state: state.has_skill(SkillNames.base_skill_video_gaming, player, 8))
+             lambda state: has_skill(state, SkillNames.base_skill_video_gaming, player, 8))
     set_rule(world.get_location(f"{SkillNames.base_skill_video_gaming} 8", player),
-             lambda state: state.has_skill(SkillNames.base_skill_video_gaming, player, 8))
+             lambda state: has_skill(state, SkillNames.base_skill_video_gaming, player, 8))
     set_rule(world.get_location(f"{SkillNames.base_skill_video_gaming} 9", player),
-             lambda state: state.has_skill(SkillNames.base_skill_video_gaming, player, 9))
+             lambda state: has_skill(state, SkillNames.base_skill_video_gaming, player, 9))
     set_rule(world.get_location(f"{SkillNames.base_skill_video_gaming} 10", player),
-             lambda state: state.has_skill(SkillNames.base_skill_video_gaming, player, 10))
+             lambda state: has_skill(state, SkillNames.base_skill_video_gaming, player, 10))
 
     set_rule(world.get_location(f"{SkillNames.base_skill_programming} 3", player),
-             lambda state: state.has_skill(SkillNames.base_skill_programming, player, 3))
+             lambda state: has_skill(state, SkillNames.base_skill_programming, player, 3))
     set_rule(world.get_location(f"{SkillNames.base_skill_programming} 4", player),
-             lambda state: state.has_skill(SkillNames.base_skill_programming, player, 4))
+             lambda state: has_skill(state, SkillNames.base_skill_programming, player, 4))
     set_rule(world.get_location(f"{SkillNames.base_skill_programming} 5", player),
-             lambda state: state.has_skill(SkillNames.base_skill_programming, player, 5))
+             lambda state: has_skill(state, SkillNames.base_skill_programming, player, 5))
     set_rule(world.get_location(f"{SkillNames.base_skill_programming} 6", player),
-             lambda state: state.has_skill(SkillNames.base_skill_programming, player, 6))
+             lambda state: has_skill(state, SkillNames.base_skill_programming, player, 6))
     set_rule(world.get_location(f"{SkillNames.base_skill_programming} 7", player),
-             lambda state: state.has_skill(SkillNames.base_skill_programming, player, 7))
+             lambda state: has_skill(state, SkillNames.base_skill_programming, player, 7))
     set_rule(world.get_location(f"{SkillNames.base_skill_programming} 8", player),
-             lambda state: state.has_skill(SkillNames.base_skill_programming, player, 8))
+             lambda state: has_skill(state, SkillNames.base_skill_programming, player, 8))
     set_rule(world.get_location(f"{SkillNames.base_skill_programming} 9", player),
-             lambda state: state.has_skill(SkillNames.base_skill_programming, player, 9))
+             lambda state: has_skill(state, SkillNames.base_skill_programming, player, 9))
     set_rule(world.get_location(f"{SkillNames.base_skill_programming} 10", player),
-             lambda state: state.has_skill(SkillNames.base_skill_programming, player, 10))
+             lambda state: has_skill(state, SkillNames.base_skill_programming, player, 10))
 
     set_rule(world.get_location(f"{SkillNames.base_skill_handiness} 3", player),
-             lambda state: state.has_skill(SkillNames.base_skill_handiness, player, 3))
+             lambda state: has_skill(state, SkillNames.base_skill_handiness, player, 3))
     set_rule(world.get_location(f"{SkillNames.base_skill_handiness} 4", player),
-             lambda state: state.has_skill(SkillNames.base_skill_handiness, player, 4))
+             lambda state: has_skill(state, SkillNames.base_skill_handiness, player, 4))
     set_rule(world.get_location(f"{SkillNames.base_skill_handiness} 5", player),
-             lambda state: state.has_skill(SkillNames.base_skill_handiness, player, 5))
+             lambda state: has_skill(state, SkillNames.base_skill_handiness, player, 5))
     set_rule(world.get_location(f"{SkillNames.base_skill_handiness} 6", player),
-             lambda state: state.has_skill(SkillNames.base_skill_handiness, player, 6))
+             lambda state: has_skill(state, SkillNames.base_skill_handiness, player, 6))
     set_rule(world.get_location(f"{SkillNames.base_skill_handiness} 7", player),
-             lambda state: state.has_skill(SkillNames.base_skill_handiness, player, 7))
+             lambda state: has_skill(state, SkillNames.base_skill_handiness, player, 7))
     set_rule(world.get_location(f"{SkillNames.base_skill_handiness} 8", player),
-             lambda state: state.has_skill(SkillNames.base_skill_handiness, player, 8))
+             lambda state: has_skill(state, SkillNames.base_skill_handiness, player, 8))
     set_rule(world.get_location(f"{SkillNames.base_skill_handiness} 9", player),
-             lambda state: state.has_skill(SkillNames.base_skill_handiness, player, 9))
+             lambda state: has_skill(state, SkillNames.base_skill_handiness, player, 9))
     set_rule(world.get_location(f"{SkillNames.base_skill_handiness} 10", player),
-             lambda state: state.has_skill(SkillNames.base_skill_handiness, player, 10))
+             lambda state: has_skill(state, SkillNames.base_skill_handiness, player, 10))
 
     set_rule(world.get_location(f"{SkillNames.base_skill_cooking} 3", player),
-             lambda state: state.has_skill(SkillNames.base_skill_cooking, player, 3))
+             lambda state: has_skill(state, SkillNames.base_skill_cooking, player, 3))
     set_rule(world.get_location(f"{SkillNames.base_skill_cooking} 4", player),
-             lambda state: state.has_skill(SkillNames.base_skill_cooking, player, 4))
+             lambda state: has_skill(state, SkillNames.base_skill_cooking, player, 4))
     set_rule(world.get_location(f"{SkillNames.base_skill_cooking} 5", player),
-             lambda state: state.has_skill(SkillNames.base_skill_cooking, player, 5))
+             lambda state: has_skill(state, SkillNames.base_skill_cooking, player, 5))
     set_rule(world.get_location(f"{SkillNames.base_skill_cooking} 6", player),
-             lambda state: state.has_skill(SkillNames.base_skill_cooking, player, 6))
+             lambda state: has_skill(state, SkillNames.base_skill_cooking, player, 6))
     set_rule(world.get_location(f"{SkillNames.base_skill_cooking} 7", player),
-             lambda state: state.has_skill(SkillNames.base_skill_cooking, player, 7))
+             lambda state: has_skill(state, SkillNames.base_skill_cooking, player, 7))
     set_rule(world.get_location(f"{SkillNames.base_skill_cooking} 8", player),
-             lambda state: state.has_skill(SkillNames.base_skill_cooking, player, 8))
+             lambda state: has_skill(state, SkillNames.base_skill_cooking, player, 8))
     set_rule(world.get_location(f"{SkillNames.base_skill_cooking} 9", player),
-             lambda state: state.has_skill(SkillNames.base_skill_cooking, player, 9))
+             lambda state: has_skill(state, SkillNames.base_skill_cooking, player, 9))
     set_rule(world.get_location(f"{SkillNames.base_skill_cooking} 10", player),
-             lambda state: state.has_skill(SkillNames.base_skill_cooking, player, 10))
+             lambda state: has_skill(state, SkillNames.base_skill_cooking, player, 10))
 
     set_rule(world.get_location(f"{SkillNames.base_skill_mixology} 3", player),
-             lambda state: state.has_skill(SkillNames.base_skill_mixology, player, 3))
+             lambda state: has_skill(state, SkillNames.base_skill_mixology, player, 3))
     set_rule(world.get_location(f"{SkillNames.base_skill_mixology} 4", player),
-             lambda state: state.has_skill(SkillNames.base_skill_mixology, player, 4))
+             lambda state: has_skill(state, SkillNames.base_skill_mixology, player, 4))
     set_rule(world.get_location(f"{SkillNames.base_skill_mixology} 5", player),
-             lambda state: state.has_skill(SkillNames.base_skill_mixology, player, 5))
+             lambda state: has_skill(state, SkillNames.base_skill_mixology, player, 5))
     set_rule(world.get_location(f"{SkillNames.base_skill_mixology} 6", player),
-             lambda state: state.has_skill(SkillNames.base_skill_mixology, player, 6))
+             lambda state: has_skill(state, SkillNames.base_skill_mixology, player, 6))
     set_rule(world.get_location(f"{SkillNames.base_skill_mixology} 7", player),
-             lambda state: state.has_skill(SkillNames.base_skill_mixology, player, 7))
+             lambda state: has_skill(state, SkillNames.base_skill_mixology, player, 7))
     set_rule(world.get_location(f"{SkillNames.base_skill_mixology} 8", player),
-             lambda state: state.has_skill(SkillNames.base_skill_mixology, player, 8))
+             lambda state: has_skill(state, SkillNames.base_skill_mixology, player, 8))
     set_rule(world.get_location(f"{SkillNames.base_skill_mixology} 9", player),
-             lambda state: state.has_skill(SkillNames.base_skill_mixology, player, 9))
+             lambda state: has_skill(state, SkillNames.base_skill_mixology, player, 9))
     set_rule(world.get_location(f"{SkillNames.base_skill_mixology} 10", player),
-             lambda state: state.has_skill(SkillNames.base_skill_mixology, player, 10))
+             lambda state: has_skill(state, SkillNames.base_skill_mixology, player, 10))
 
     set_rule(world.get_location(f"{SkillNames.base_skill_gourmet} 3", player),
-             lambda state: state.has_skill(SkillNames.base_skill_gourmet, player, 3))
+             lambda state: has_skill(state, SkillNames.base_skill_gourmet, player, 3))
     set_rule(world.get_location(f"{SkillNames.base_skill_gourmet} 4", player),
-             lambda state: state.has_skill(SkillNames.base_skill_gourmet, player, 4))
+             lambda state: has_skill(state, SkillNames.base_skill_gourmet, player, 4))
     set_rule(world.get_location(f"{SkillNames.base_skill_gourmet} 5", player),
-             lambda state: state.has_skill(SkillNames.base_skill_gourmet, player, 5))
+             lambda state: has_skill(state, SkillNames.base_skill_gourmet, player, 5))
     set_rule(world.get_location(f"{SkillNames.base_skill_gourmet} 6", player),
-             lambda state: state.has_skill(SkillNames.base_skill_gourmet, player, 6))
+             lambda state: has_skill(state, SkillNames.base_skill_gourmet, player, 6))
     set_rule(world.get_location(f"{SkillNames.base_skill_gourmet} 7", player),
-             lambda state: state.has_skill(SkillNames.base_skill_gourmet, player, 7))
+             lambda state: has_skill(state, SkillNames.base_skill_gourmet, player, 7))
     set_rule(world.get_location(f"{SkillNames.base_skill_gourmet} 8", player),
-             lambda state: state.has_skill(SkillNames.base_skill_gourmet, player, 8))
+             lambda state: has_skill(state, SkillNames.base_skill_gourmet, player, 8))
     set_rule(world.get_location(f"{SkillNames.base_skill_gourmet} 9", player),
-             lambda state: state.has_skill(SkillNames.base_skill_gourmet, player, 9))
+             lambda state: has_skill(state, SkillNames.base_skill_gourmet, player, 9))
     set_rule(world.get_location(f"{SkillNames.base_skill_gourmet} 10", player),
-             lambda state: state.has_skill(SkillNames.base_skill_gourmet, player, 10))
+             lambda state: has_skill(state, SkillNames.base_skill_gourmet, player, 10))
 
     set_rule(world.get_location(f"{SkillNames.base_skill_mischief} 3", player),
-             lambda state: state.has_skill(SkillNames.base_skill_mischief, player, 3))
+             lambda state: has_skill(state, SkillNames.base_skill_mischief, player, 3))
     set_rule(world.get_location(f"{SkillNames.base_skill_mischief} 4", player),
-             lambda state: state.has_skill(SkillNames.base_skill_mischief, player, 4))
+             lambda state: has_skill(state, SkillNames.base_skill_mischief, player, 4))
     set_rule(world.get_location(f"{SkillNames.base_skill_mischief} 5", player),
-             lambda state: state.has_skill(SkillNames.base_skill_mischief, player, 5))
+             lambda state: has_skill(state, SkillNames.base_skill_mischief, player, 5))
     set_rule(world.get_location(f"{SkillNames.base_skill_mischief} 6", player),
-             lambda state: state.has_skill(SkillNames.base_skill_mischief, player, 6))
+             lambda state: has_skill(state, SkillNames.base_skill_mischief, player, 6))
     set_rule(world.get_location(f"{SkillNames.base_skill_mischief} 7", player),
-             lambda state: state.has_skill(SkillNames.base_skill_mischief, player, 7))
+             lambda state: has_skill(state, SkillNames.base_skill_mischief, player, 7))
     set_rule(world.get_location(f"{SkillNames.base_skill_mischief} 8", player),
-             lambda state: state.has_skill(SkillNames.base_skill_mischief, player, 8))
+             lambda state: has_skill(state, SkillNames.base_skill_mischief, player, 8))
     set_rule(world.get_location(f"{SkillNames.base_skill_mischief} 9", player),
-             lambda state: state.has_skill(SkillNames.base_skill_mischief, player, 9))
+             lambda state: has_skill(state, SkillNames.base_skill_mischief, player, 9))
     set_rule(world.get_location(f"{SkillNames.base_skill_mischief} 10", player),
-             lambda state: state.has_skill(SkillNames.base_skill_mischief, player, 10))
+             lambda state: has_skill(state, SkillNames.base_skill_mischief, player, 10))
 
     set_rule(world.get_location(f"{SkillNames.base_skill_piano} 3", player),
-             lambda state: state.has_skill(SkillNames.base_skill_piano, player, 3))
+             lambda state: has_skill(state, SkillNames.base_skill_piano, player, 3))
     set_rule(world.get_location(f"{SkillNames.base_skill_piano} 4", player),
-             lambda state: state.has_skill(SkillNames.base_skill_piano, player, 4))
+             lambda state: has_skill(state, SkillNames.base_skill_piano, player, 4))
     set_rule(world.get_location(f"{SkillNames.base_skill_piano} 5", player),
-             lambda state: state.has_skill(SkillNames.base_skill_piano, player, 5))
+             lambda state: has_skill(state, SkillNames.base_skill_piano, player, 5))
     set_rule(world.get_location(f"{SkillNames.base_skill_piano} 6", player),
-             lambda state: state.has_skill(SkillNames.base_skill_piano, player, 6))
+             lambda state: has_skill(state, SkillNames.base_skill_piano, player, 6))
     set_rule(world.get_location(f"{SkillNames.base_skill_piano} 7", player),
-             lambda state: state.has_skill(SkillNames.base_skill_piano, player, 7))
+             lambda state: has_skill(state, SkillNames.base_skill_piano, player, 7))
     set_rule(world.get_location(f"{SkillNames.base_skill_piano} 8", player),
-             lambda state: state.has_skill(SkillNames.base_skill_piano, player, 8))
+             lambda state: has_skill(state, SkillNames.base_skill_piano, player, 8))
     set_rule(world.get_location(f"{SkillNames.base_skill_piano} 9", player),
-             lambda state: state.has_skill(SkillNames.base_skill_piano, player, 9))
+             lambda state: has_skill(state, SkillNames.base_skill_piano, player, 9))
     set_rule(world.get_location(f"{SkillNames.base_skill_piano} 10", player),
-             lambda state: state.has_skill(SkillNames.base_skill_piano, player, 10))
+             lambda state: has_skill(state, SkillNames.base_skill_piano, player, 10))
 
     set_rule(world.get_location(f"{SkillNames.base_skill_violin} 3", player),
-             lambda state: state.has_skill(SkillNames.base_skill_violin, player, 3))
+             lambda state: has_skill(state, SkillNames.base_skill_violin, player, 3))
     set_rule(world.get_location(f"{SkillNames.base_skill_violin} 4", player),
-             lambda state: state.has_skill(SkillNames.base_skill_violin, player, 4))
+             lambda state: has_skill(state, SkillNames.base_skill_violin, player, 4))
     set_rule(world.get_location(f"{SkillNames.base_skill_violin} 5", player),
-             lambda state: state.has_skill(SkillNames.base_skill_violin, player, 5))
+             lambda state: has_skill(state, SkillNames.base_skill_violin, player, 5))
     set_rule(world.get_location(f"{SkillNames.base_skill_violin} 6", player),
-             lambda state: state.has_skill(SkillNames.base_skill_violin, player, 6))
+             lambda state: has_skill(state, SkillNames.base_skill_violin, player, 6))
     set_rule(world.get_location(f"{SkillNames.base_skill_violin} 7", player),
-             lambda state: state.has_skill(SkillNames.base_skill_violin, player, 7))
+             lambda state: has_skill(state, SkillNames.base_skill_violin, player, 7))
     set_rule(world.get_location(f"{SkillNames.base_skill_violin} 8", player),
-             lambda state: state.has_skill(SkillNames.base_skill_violin, player, 8))
+             lambda state: has_skill(state, SkillNames.base_skill_violin, player, 8))
     set_rule(world.get_location(f"{SkillNames.base_skill_violin} 9", player),
-             lambda state: state.has_skill(SkillNames.base_skill_violin, player, 9))
+             lambda state: has_skill(state, SkillNames.base_skill_violin, player, 9))
     set_rule(world.get_location(f"{SkillNames.base_skill_violin} 10", player),
-             lambda state: state.has_skill(SkillNames.base_skill_violin, player, 10))
+             lambda state: has_skill(state, SkillNames.base_skill_violin, player, 10))
 
     set_rule(world.get_location(f"{SkillNames.base_skill_guitar} 3", player),
-             lambda state: state.has_skill(SkillNames.base_skill_guitar, player, 3))
+             lambda state: has_skill(state, SkillNames.base_skill_guitar, player, 3))
     set_rule(world.get_location(f"{SkillNames.base_skill_guitar} 4", player),
-             lambda state: state.has_skill(SkillNames.base_skill_guitar, player, 4))
+             lambda state: has_skill(state, SkillNames.base_skill_guitar, player, 4))
     set_rule(world.get_location(f"{SkillNames.base_skill_guitar} 5", player),
-             lambda state: state.has_skill(SkillNames.base_skill_guitar, player, 5))
+             lambda state: has_skill(state, SkillNames.base_skill_guitar, player, 5))
     set_rule(world.get_location(f"{SkillNames.base_skill_guitar} 6", player),
-             lambda state: state.has_skill(SkillNames.base_skill_guitar, player, 6))
+             lambda state: has_skill(state, SkillNames.base_skill_guitar, player, 6))
     set_rule(world.get_location(f"{SkillNames.base_skill_guitar} 7", player),
-             lambda state: state.has_skill(SkillNames.base_skill_guitar, player, 7))
+             lambda state: has_skill(state, SkillNames.base_skill_guitar, player, 7))
     set_rule(world.get_location(f"{SkillNames.base_skill_guitar} 8", player),
-             lambda state: state.has_skill(SkillNames.base_skill_guitar, player, 8))
+             lambda state: has_skill(state, SkillNames.base_skill_guitar, player, 8))
     set_rule(world.get_location(f"{SkillNames.base_skill_guitar} 9", player),
-             lambda state: state.has_skill(SkillNames.base_skill_guitar, player, 9))
+             lambda state: has_skill(state, SkillNames.base_skill_guitar, player, 9))
     set_rule(world.get_location(f"{SkillNames.base_skill_guitar} 10", player),
-             lambda state: state.has_skill(SkillNames.base_skill_guitar, player, 10))
+             lambda state: has_skill(state, SkillNames.base_skill_guitar, player, 10))
 
     set_rule(world.get_location(f"{SkillNames.base_skill_painting} 3", player),
-             lambda state: state.has_skill(SkillNames.base_skill_painting, player, 3))
+             lambda state: has_skill(state, SkillNames.base_skill_painting, player, 3))
     set_rule(world.get_location(f"{SkillNames.base_skill_painting} 4", player),
-             lambda state: state.has_skill(SkillNames.base_skill_painting, player, 4))
+             lambda state: has_skill(state, SkillNames.base_skill_painting, player, 4))
     set_rule(world.get_location(f"{SkillNames.base_skill_painting} 5", player),
-             lambda state: state.has_skill(SkillNames.base_skill_painting, player, 5))
+             lambda state: has_skill(state, SkillNames.base_skill_painting, player, 5))
     set_rule(world.get_location(f"{SkillNames.base_skill_painting} 6", player),
-             lambda state: state.has_skill(SkillNames.base_skill_painting, player, 6))
+             lambda state: has_skill(state, SkillNames.base_skill_painting, player, 6))
     set_rule(world.get_location(f"{SkillNames.base_skill_painting} 7", player),
-             lambda state: state.has_skill(SkillNames.base_skill_painting, player, 7))
+             lambda state: has_skill(state, SkillNames.base_skill_painting, player, 7))
     set_rule(world.get_location(f"{SkillNames.base_skill_painting} 8", player),
-             lambda state: state.has_skill(SkillNames.base_skill_painting, player, 8))
+             lambda state: has_skill(state, SkillNames.base_skill_painting, player, 8))
     set_rule(world.get_location(f"{SkillNames.base_skill_painting} 9", player),
-             lambda state: state.has_skill(SkillNames.base_skill_painting, player, 9))
+             lambda state: has_skill(state, SkillNames.base_skill_painting, player, 9))
     set_rule(world.get_location(f"{SkillNames.base_skill_painting} 10", player),
-             lambda state: state.has_skill(SkillNames.base_skill_painting, player, 10))
+             lambda state: has_skill(state, SkillNames.base_skill_painting, player, 10))
 
     set_rule(world.get_location(f"{SkillNames.base_skill_photography} 3", player),
-             lambda state: state.has_skill(SkillNames.base_skill_photography, player, 3))
+             lambda state: has_skill(state, SkillNames.base_skill_photography, player, 3))
     set_rule(world.get_location(f"{SkillNames.base_skill_photography} 4", player),
-             lambda state: state.has_skill(SkillNames.base_skill_photography, player, 4))
+             lambda state: has_skill(state, SkillNames.base_skill_photography, player, 4))
     set_rule(world.get_location(f"{SkillNames.base_skill_photography} 5", player),
-             lambda state: state.has_skill(SkillNames.base_skill_photography, player, 5))
+             lambda state: has_skill(state, SkillNames.base_skill_photography, player, 5))
 
     set_rule(world.get_location(f"{SkillNames.base_skill_rocket_science} 3", player),
-             lambda state: state.has_skill(SkillNames.base_skill_rocket_science, player, 3))
+             lambda state: has_skill(state, SkillNames.base_skill_rocket_science, player, 3))
     set_rule(world.get_location(f"{SkillNames.base_skill_rocket_science} 4", player),
-             lambda state: state.has_skill(SkillNames.base_skill_rocket_science, player, 4))
+             lambda state: has_skill(state, SkillNames.base_skill_rocket_science, player, 4))
     set_rule(world.get_location(f"{SkillNames.base_skill_rocket_science} 5", player),
-             lambda state: state.has_skill(SkillNames.base_skill_rocket_science, player, 5))
+             lambda state: has_skill(state, SkillNames.base_skill_rocket_science, player, 5))
     set_rule(world.get_location(f"{SkillNames.base_skill_rocket_science} 6", player),
-             lambda state: state.has_skill(SkillNames.base_skill_rocket_science, player, 6))
+             lambda state: has_skill(state, SkillNames.base_skill_rocket_science, player, 6))
     set_rule(world.get_location(f"{SkillNames.base_skill_rocket_science} 7", player),
-             lambda state: state.has_skill(SkillNames.base_skill_rocket_science, player, 7))
+             lambda state: has_skill(state, SkillNames.base_skill_rocket_science, player, 7))
     set_rule(world.get_location(f"{SkillNames.base_skill_rocket_science} 8", player),
-             lambda state: state.has_skill(SkillNames.base_skill_rocket_science, player, 8))
+             lambda state: has_skill(state, SkillNames.base_skill_rocket_science, player, 8))
     set_rule(world.get_location(f"{SkillNames.base_skill_rocket_science} 9", player),
-             lambda state: state.has_skill(SkillNames.base_skill_rocket_science, player, 9))
+             lambda state: has_skill(state, SkillNames.base_skill_rocket_science, player, 9))
     set_rule(world.get_location(f"{SkillNames.base_skill_rocket_science} 10", player),
-             lambda state: state.has_skill(SkillNames.base_skill_rocket_science, player, 10))
+             lambda state: has_skill(state, SkillNames.base_skill_rocket_science, player, 10))
 
     if options.goal.value == options.goal.option_bodybuilder:
         world.completion_condition[player] = lambda state: state.can_reach(
