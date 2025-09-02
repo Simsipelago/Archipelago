@@ -352,6 +352,7 @@ def set_rules(sims4_world: Sims4World):
                                and state.has(SkillNames.base_skill_charisma, player, count=6)
                                and state.has(SkillNames.base_skill_painting, player, count=5))
     # Tech Guru
+    # TODO check project manager career logic https://discord.com/channels/731205301247803413/1079002955262480424/1403764728177758252
     if CareerNames.base_career_tech_guru in options.career:
         set_rule(world.get_location(CareerNames.base_career_tech_guru_4, player),
                  lambda state: state.has(SkillNames.base_skill_programming, player, count=1))
