@@ -660,7 +660,7 @@ def set_rules(sims4_world: Sims4World):
     set_rule(world.get_location(f"{SkillNames.base_skill_fishing} 7", player),
              lambda state: state.has_skill(SkillNames.base_skill_fishing, player, 7))
     set_rule(world.get_location(f"{SkillNames.base_skill_fishing} 8", player),
-             lambda state: state.has_skill(SkillNames.base_skill_fishing, player, 86))
+             lambda state: state.has_skill(SkillNames.base_skill_fishing, player, 8))
     set_rule(world.get_location(f"{SkillNames.base_skill_fishing} 9", player),
              lambda state: state.has_skill(SkillNames.base_skill_fishing, player, 9))
     set_rule(world.get_location(f"{SkillNames.base_skill_fishing} 10", player),
@@ -715,7 +715,7 @@ def set_rules(sims4_world: Sims4World):
     set_rule(world.get_location(f"{SkillNames.base_skill_programming} 9", player),
              lambda state: state.has_skill(SkillNames.base_skill_programming, player, 9))
     set_rule(world.get_location(f"{SkillNames.base_skill_programming} 10", player),
-             lambda state: state.has_skill(SkillNames.base_skill_programming, player, 108))
+             lambda state: state.has_skill(SkillNames.base_skill_programming, player, 10))
 
     set_rule(world.get_location(f"{SkillNames.base_skill_handiness} 3", player),
              lambda state: state.has_skill(SkillNames.base_skill_handiness, player, 3))
@@ -747,7 +747,7 @@ def set_rules(sims4_world: Sims4World):
     set_rule(world.get_location(f"{SkillNames.base_skill_cooking} 8", player),
              lambda state: state.has_skill(SkillNames.base_skill_cooking, player, 8))
     set_rule(world.get_location(f"{SkillNames.base_skill_cooking} 9", player),
-             lambda state: state.has_skill(SkillNames.base_skill_cooking, player, 97))
+             lambda state: state.has_skill(SkillNames.base_skill_cooking, player, 9))
     set_rule(world.get_location(f"{SkillNames.base_skill_cooking} 10", player),
              lambda state: state.has_skill(SkillNames.base_skill_cooking, player, 10))
 
@@ -866,7 +866,7 @@ def set_rules(sims4_world: Sims4World):
     set_rule(world.get_location(f"{SkillNames.base_skill_painting} 8", player),
              lambda state: state.has_skill(SkillNames.base_skill_painting, player, 8))
     set_rule(world.get_location(f"{SkillNames.base_skill_painting} 9", player),
-             lambda state: state.has_skill(SkillNames.base_skill_painting, player, 97))
+             lambda state: state.has_skill(SkillNames.base_skill_painting, player, 9))
     set_rule(world.get_location(f"{SkillNames.base_skill_painting} 10", player),
              lambda state: state.has_skill(SkillNames.base_skill_painting, player, 10))
 
