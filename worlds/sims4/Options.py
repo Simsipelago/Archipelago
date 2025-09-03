@@ -54,7 +54,29 @@ class Career(OptionSet):
 
 
 class ExpansionPacks(OptionSet):
-    """List of Expansion Packs that will be included in the shuffling. (Not Yet Implemented)"""
+    """List of Expansion Packs that will be included in the shuffling.
+    Valid Expansions include:
+    - Get to Work
+    - Get Together
+    - City Living
+    - Cats and Dogs
+    - Seasons
+    - Get Famous
+    - Island Living
+    - Discover University
+    - Eco Lifestyle
+    - Snowy Escape
+    - High School Years
+    - Growing Together
+    - Horse Ranch
+    - For Rent
+    - Lovestruck
+    - Life and Death
+    - Business and Hobbies
+    - Enchanted by Nature
+    - Cottage Living
+    (Not Yet Implemented)"""
+
     display_name = "expansion_packs"
     visibility = Visibility.none
     valid_keys = {ExpansionNames.get_to_work, ExpansionNames.get_together, ExpansionNames.city_living,
@@ -62,10 +84,24 @@ class ExpansionPacks(OptionSet):
                   ExpansionNames.island_living, ExpansionNames.discover_university, ExpansionNames.eco_lifestyle,
                   ExpansionNames.snowy_escape, ExpansionNames.high_school_years, ExpansionNames.growing_together,
                   ExpansionNames.horse_ranch, ExpansionNames.for_rent, ExpansionNames.lovestruck,
-                  ExpansionNames.life_and_death}
+                  ExpansionNames.life_and_death, ExpansionNames.cottage_living, ExpansionNames.enchanted_by_nature,
+                  ExpansionNames.business_and_hobbies}
 
 class GamePacks(OptionSet):
-    """List of Game Packs that will be included in the shuffling. (Not Yet Implemented)"""
+    """List of Game Packs that will be included in the shuffling.
+    List of valid Game Packs include:
+    - Outdoor Retreat
+    - Spa Day
+    - Dine Out
+    - Vampires
+    - Parenthood
+    - Jungle Adventure
+    - StrangerVille
+    - Realm of Magic
+    - Dream Home Decorator
+    - My Wedding Stories
+    - Werewolves
+(Not Yet Implemented)"""
     display_name = "game_packs"
     visibility = Visibility.none
     valid_keys = {GamePackNames.outdoor_retreat, GamePackNames.spa_day, GamePackNames.dine_out,
@@ -74,7 +110,29 @@ class GamePacks(OptionSet):
                   GamePackNames.my_wedding_stories, GamePackNames.werewolves}
 
 class StuffPacks(OptionSet):
-    """List of Stuff Packs that will be included in the shuffling. (Not Yet Implemented)"""
+    """List of Stuff Packs that will be included in the shuffling.
+    List of valid Stuff Packs include:
+    - Luxury Party
+    - Perfect Patio
+    - Cool Kitchen
+    - Spooky
+    - Movie Hangout
+    - Romantic Garden
+    - Kids Room
+    - Backyard
+    - Vintage Glamour
+    - Bowling Night
+    - Fitness
+    - Toddler
+    - Laundry Day
+    - My First Pet
+    - Moshino
+    - Tiny Living
+    - Nifty Knitting
+    - Paranormal
+    - Home Chef Hustle
+    - Crystal Creations
+(Not Yet Implemented)"""
     display_name = "stuff_packs"
     visibility = Visibility.none
     valid_keys = {StuffNames.luxury_party, StuffNames.perfect_patio, StuffNames.cool_kitchen,
@@ -85,7 +143,22 @@ class StuffPacks(OptionSet):
                   StuffNames.tiny_living, StuffNames.nifty_knitting, StuffNames.paranormal,
                   StuffNames.home_chef_hustle, StuffNames.crystal_creations}
 class CASKits(OptionSet):
-    """List of CAS (Create a Sim) Kits that will be included in the shuffling. (Not Yet Implemented)"""
+    """List of CAS (Create a Sim) Kits that will be included in the shuffling.
+    List of valid CAS (Create a Sim) Kits include:
+    - Throwback Fit
+    - Fashion Street
+    - Incheon Arrivals
+    - Modern Menswear
+    - Carnaval Streetwear
+    - Moonlight Chic
+    - First Fits
+    - Simtimates Collection
+    - Grunge Revival
+    - Poolside Splash
+    - Goth Galore
+    - Urban Homage
+    - Sweet Slumber Party
+    (Not Yet Implemented)"""
     display_name = "cas_kits"
     visibility = Visibility.none
     valid_keys = {CASKitNames.throwback_fit, CASKitNames.fashion_street, CASKitNames.incheon_arrivals,
@@ -95,7 +168,30 @@ class CASKits(OptionSet):
                   CASKitNames.sweet_slumber_party}
 
 class BuildKits(OptionSet):
-    """List of Build Kits that will be included in the shuffling. (Not Yet Implemented)"""
+    """List of Build Kits that will be included in the shuffling.
+    List of valid Build Kits include:
+    - Country Kitchen
+    - Courtyard Oasis
+    - Industrial Loft
+    - Blooming Rooms
+    - Decor to the Max
+    - Little Campers
+    - Desert Luxe
+    - Everyday Clutter
+    - Pastel Pop
+    - Bathroom Clutter
+    - Basement Treasures
+    - Greenhouse Haven
+    - Book Nook
+    - Modern Luxe
+    - Castle Estate
+    - Party Essentials
+    - Cozy Bistro
+    - Riviera Retreat
+    - Artist Studio
+    - Storybook Nursery
+    - Cozy Kitsch
+    (Not Yet Implemented)"""
     display_name = "build_kits"
     visibility = Visibility.none
     valid_keys = {BuildKitNames.country_kitchen, BuildKitNames.courtyard_oasis, BuildKitNames.industrial_loft,
