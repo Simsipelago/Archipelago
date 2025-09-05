@@ -167,17 +167,19 @@ async def game_watcher(ctx: SimsContext):
                 locations_to_send = []
                 if "Locations" in json_data and json_data["Locations"] is not None and json_data["Seed"] == ctx.seed_name:
                     # locations_to_remove = []
-                    for data in json_data["Locations"]:
-                        for location_id in ctx.missing_locations:
-                            location_current_name = ctx.location_names.lookup_in_game(location_id)
-                            if location_current_name == data:
-                                if ctx.goal == data.split("(", 1)[0].strip().replace(" ", "_").lower() and not ctx.finished_game:
-                                    await SimsContext.send_msgs(ctx, [
-                                        {"cmd": "StatusUpdate", "status": ClientStatus.CLIENT_GOAL}])
-                                    ctx.finished_game = True
-                                locations_to_send.append(location_id)
-                                # locations_to_remove.append(data)
-                                break
+
+                    checked_locations = set(json_data["Locations"])
+
+                    for location_id in ctx.missing_locations:
+                        location_current_name = ctx.location_names.lookup_in_game(location_id)
+                        if location_current_name in checked_locations:
+                            if ctx.goal == location_current_name.split("(", 1)[0].strip().replace(" ", "_").lower() and not ctx.finished_game:
+                                await SimsContext.send_msgs(ctx, [
+                                    {"cmd": "StatusUpdate", "status": ClientStatus.CLIENT_GOAL}])
+                                ctx.finished_game = True
+                            locations_to_send.append(location_id)
+                            # locations_to_remove.append(data)
+                            break
                     # for loc in locations_to_remove:
                     #     json_data["Locations"].remove(loc)
                     #     print_json(json_data, 'locations_cached.json', ctx)
