@@ -357,10 +357,10 @@ def set_rules(sims4_world: Sims4World):
     # TODO check project manager career logic https://discord.com/channels/731205301247803413/1079002955262480424/1403764728177758252
     if CareerNames.base_career_tech_guru in options.career:
         set_rule(world.get_location(CareerNames.base_career_tech_guru_4, player),
-                 lambda state: state.has(SkillNames.base_skill_programming, player, count=1))
+                 lambda state: has_skill(state, SkillNames.base_skill_programming, player, 3))
         set_rule(world.get_location(CareerNames.base_career_tech_guru_5, player),
-                 lambda state: state.has(SkillNames.base_skill_programming, player, count=2)
-                               and state.has(SkillNames.base_skill_video_gaming, player, count=1))
+                 lambda state: has_skill(state, SkillNames.base_skill_programming, player, 4)
+                                and has_skill(state, SkillNames.base_skill_video_gaming, player, 3))
         set_rule(world.get_location(CareerNames.base_career_tech_guru_6, player),
                  lambda state: state.has(SkillNames.base_skill_programming, player, count=3)
                                and state.has(SkillNames.base_skill_video_gaming, player, count=4))
@@ -763,3 +763,6 @@ def has_skill(state: CollectionState, skill: str, player: int, skill_level: int)
     # determines how many skill items are required based on the skill level passed into the function
     skills_required: int = skill_level - 2
     return state.has(skill, player, skills_required)
+def has_multiple_skills(state: CollectionState, skills_and_levels: dict[str, int], player: int):
+    skills = list(skills_and_levels.keys())
+    return has_skill(state, skills[0], player, skills_and_levels[skills[0]]) and has_skill(state, skills[1], player, skills_and_levels[skills[1]])
