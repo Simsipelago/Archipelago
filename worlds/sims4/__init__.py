@@ -12,7 +12,7 @@ from .Items import item_table, skills_table, Sims4Item, junk_table, filler_set
 from .Options import Sims4Options
 from .Regions import sims4_careers, sims4_aspiration_milestones, sims4_skill_dependencies, \
     sims4_regions
-from .Rules import set_rules as ts4_set_rules
+from .Rules import set_rules
 from .Groups import location_name_groups, item_name_groups
 from .UT import UTMixin
 from .Settings import Sims4Settings
@@ -126,7 +126,7 @@ class Sims4World(World, UTMixin):
         self.multiworld.regions.append(menu)
 
     def set_rules(self) -> None:
-        ts4_set_rules(self.multiworld, self.player, self.options)
+        set_rules(self.multiworld, self.player, self.options)
 
     def fill_slot_data(self) -> Mapping[str, Any]:
         # slot_data = self.options.as_dict("goal", "career", "expansion_packs", "game_packs", "stuff_packs", "cas_kits", "build_kits")
