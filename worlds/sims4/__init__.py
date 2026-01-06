@@ -4,6 +4,7 @@ from typing import Mapping, Any, ClassVar
 # ap imports
 from BaseClasses import Item, ItemClassification, Region, Entrance
 from worlds.AutoWorld import World
+from .Names import EventNames
 from ..LauncherComponents import Component, components, Type, icon_paths, launch
 
 # TS4 specific imports
@@ -127,9 +128,9 @@ class Sims4World(World, UTMixin):
                     Sims4Location(self.player, skill_name, self.location_name_to_id.get(skill_name), menu)
                 )
         if aspiration_key == self.options.goal.option_bodybuilder:
-            event = self.create_event_location("Completed Bodybuilder Aspiration")
+            event = self.create_event_location(EventNames.bodybuilder)
             menu.locations.append(event)
-            event.place_locked_item(self.create_event("Completed Bodybuilder"))
+            event.place_locked_item(self.create_event(EventNames.bodybuilder_item))
 
         self.multiworld.regions.append(menu)
 

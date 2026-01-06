@@ -7,7 +7,7 @@ from worlds.AutoWorld import LogicMixin
 from .Names.DLC import ExpansionNames, GamePackNames, StuffNames
 from ..generic.Rules import set_rule
 
-from .Names import SkillNames, CareerNames, AspirationNames
+from .Names import EventNames, SkillNames, CareerNames, AspirationNames
 from .Options import AspirationGoal, Sims4Options
 
 if TYPE_CHECKING:
@@ -31,8 +31,7 @@ def set_completion_condition(world: MultiWorld, player: int, options: Sims4Optio
     goal_value = goal.value
 
     if goal_value == goal.option_bodybuilder:
-        world.completion_condition[player] = lambda state: state.can_reach(
-            world.get_location(AspirationNames.base_aspiration_bodybuilder, player), player=player)
+        world.completion_condition[player] = lambda state: state.has(EventNames.bodybuilder_item, player)
     elif goal_value == goal.option_painter_extraordinaire:
         world.completion_condition[player] = lambda state: state.can_reach(
             world.get_location(AspirationNames.base_aspiration_painter_extraordinaire, player), player=player)
@@ -189,7 +188,7 @@ def _bodybuilder(world: MultiWorld, player: int):
              lambda state: has_skill(state, SkillNames.base_skill_fitness, player, 6))
     set_rule(world.get_location(AspirationNames.base_aspiration_bodybuilder, player),
              lambda state: has_skill(state, SkillNames.base_skill_fitness, player, 10))
-    set_rule(world.get_location("Completed Bodybuilder Aspiration", player),
+    set_rule(world.get_location(EventNames.bodybuilder, player),
              lambda state: state.can_reach(world.get_location(AspirationNames.base_aspiration_bodybuilder, player), player=player))
 
 def _painter_extraordinaire(world: MultiWorld, player: int):
