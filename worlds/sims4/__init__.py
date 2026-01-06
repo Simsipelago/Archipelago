@@ -56,9 +56,6 @@ class Sims4World(World, UTMixin):
 
     settings: ClassVar[Sims4Settings]
 
-    # ut_can_gen_without_yaml = True
-    # passthrough: dict[str, Any]
-
     def generate_early(self) -> None:
         # this is specific to UT, it doesn't apply unless UT is being used
         self.get_options_from_slot_data(self)
