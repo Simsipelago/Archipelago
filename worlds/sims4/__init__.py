@@ -19,6 +19,7 @@ from .Settings import Sims4Settings
 from .Web import Sims4Web
 from .Version import VERSION, Sims4Version
 
+
 def run_client(*args: str) -> None:
     from .Client import main
     launch(main, name="The Sims 4 Client", args=args)
@@ -27,6 +28,7 @@ def run_client(*args: str) -> None:
 components.append(Component("The Sims 4 Client", func=run_client, component_type=Type.CLIENT, icon="plumbob"))
 
 icon_paths["plumbob"] = f"ap:{__name__}/icons/plumbob.png"
+
 
 class Sims4World(World, UTMixin):
     """
@@ -79,7 +81,6 @@ class Sims4World(World, UTMixin):
     def generate_early(self) -> None:
         # this is specific to UT, it doesn't apply unless UT is being used
         self.get_options_from_slot_data(self)
-
 
     def create_item(self, name: str) -> Item:
         item_id: int = self.item_name_to_id[name]
