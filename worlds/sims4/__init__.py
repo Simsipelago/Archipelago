@@ -160,7 +160,6 @@ class Sims4World(World, UTMixin):
         set_rules(self.multiworld, self.player, self.options)
 
     def fill_slot_data(self) -> Mapping[str, Any]:
-        # slot_data = self.options.as_dict("goal", "career", "expansion_packs", "game_packs", "stuff_packs", "cas_kits", "build_kits")
         slot_data = {
             "goal": self.options.goal.current_key,
             "career": self.options.career.value,
