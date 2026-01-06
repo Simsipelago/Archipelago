@@ -111,7 +111,8 @@ class Sims4World(World, UTMixin):
     def create_regions(self):
         menu = self.create_region("Menu", locations=None, exits=None)
         chosen_careers = sorted(self.options.career.value)
-        aspiration_key = self.options.goal.current_key
+        goal = self.options.goal
+        aspiration_key = goal.current_key
         for career_key in chosen_careers:
             for career in sims4_careers[career_key.lower().replace(" ", "_")]:
                 menu.locations.append(
@@ -127,11 +128,11 @@ class Sims4World(World, UTMixin):
                 menu.locations.append(
                     Sims4Location(self.player, skill_name, self.location_name_to_id.get(skill_name), menu)
                 )
-        if aspiration_key == self.options.goal.option_bodybuilder:
+        if goal.value == goal.option_bodybuilder:
             event = self.create_event_location(EventNames.bodybuilder)
             menu.locations.append(event)
             event.place_locked_item(self.create_event(EventNames.bodybuilder_item))
-        elif aspiration_key == self.options.goal.option_painter_extraordinaire:
+        elif goal.value == goal.option_painter_extraordinaire:
             event = self.create_event_location(EventNames.painter_extraordinaire)
             menu.locations.append(event)
             event.place_locked_item(self.create_event(EventNames.painter_extraordinaire_item))
