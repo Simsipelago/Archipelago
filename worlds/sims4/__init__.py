@@ -131,6 +131,10 @@ class Sims4World(World, UTMixin):
             event = self.create_event_location(EventNames.bodybuilder)
             menu.locations.append(event)
             event.place_locked_item(self.create_event(EventNames.bodybuilder_item))
+        elif aspiration_key == self.options.goal.option_painter_extraordinaire:
+            event = self.create_event_location(EventNames.painter_extraordinaire)
+            menu.locations.append(event)
+            event.place_locked_item(self.create_event(EventNames.painter_extraordinaire_item))
 
         self.multiworld.regions.append(menu)
 
