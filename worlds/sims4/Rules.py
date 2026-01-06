@@ -189,6 +189,8 @@ def _bodybuilder(world: MultiWorld, player: int):
              lambda state: has_skill(state, SkillNames.base_skill_fitness, player, 6))
     set_rule(world.get_location(AspirationNames.base_aspiration_bodybuilder, player),
              lambda state: has_skill(state, SkillNames.base_skill_fitness, player, 10))
+    set_rule(world.get_location("Completed Bodybuilder Aspiration", player),
+             lambda state: state.can_reach(world.get_location(AspirationNames.base_aspiration_bodybuilder, player), player=player))
 
 def _painter_extraordinaire(world: MultiWorld, player: int):
     set_rule(world.get_location(AspirationNames.base_aspiration_fine_artist, player),

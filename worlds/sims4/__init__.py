@@ -126,6 +126,11 @@ class Sims4World(World, UTMixin):
                 menu.locations.append(
                     Sims4Location(self.player, skill_name, self.location_name_to_id.get(skill_name), menu)
                 )
+        if aspiration_key == self.options.goal.option_bodybuilder:
+            event = self.create_event_location("Completed Bodybuilder Aspiration")
+            menu.locations.append(event)
+            event.place_locked_item(self.create_event("Completed Bodybuilder"))
+
         self.multiworld.regions.append(menu)
 
     def set_rules(self) -> None:
