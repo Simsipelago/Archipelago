@@ -25,60 +25,6 @@ def set_rules(world: MultiWorld, player: int, options: Sims4Options):
     set_skill_rules(world, player, options)
     set_completion_condition(world, player, options)
 
-def count_skills_over(threshold: int, state, player) -> int:
-    total_count = 0
-
-    if state.has(SkillNames.base_skill_charisma, player, count=threshold):
-        total_count += 1
-    if state.has(SkillNames.base_skill_fitness, player, count=threshold):
-        total_count += 1
-    if state.has(SkillNames.base_skill_mischief, player, count=threshold):
-        total_count += 1
-    if state.has(SkillNames.base_skill_logic, player, count=threshold):
-        total_count += 1
-    if state.has(SkillNames.base_skill_cooking, player, count=threshold):
-        total_count += 1
-    if state.has(SkillNames.base_skill_mixology, player, count=threshold):
-        total_count += 1
-    if state.has(SkillNames.base_skill_comedy, player, count=threshold):
-        total_count += 1
-    if state.has(SkillNames.base_skill_writing, player, count=threshold):
-        total_count += 1
-    if state.has(SkillNames.base_skill_fishing, player, count=threshold):
-        total_count += 1
-    if state.has(SkillNames.base_skill_gardening, player, count=threshold):
-        total_count += 1
-    if state.has(SkillNames.base_skill_video_gaming, player, count=threshold):
-        total_count += 1
-    if state.has(SkillNames.base_skill_programming, player, count=threshold):
-        total_count += 1
-    if state.has(SkillNames.base_skill_photography, player, count=threshold):
-        total_count += 1
-    if state.has(SkillNames.base_skill_handiness, player, count=threshold):
-        total_count += 1
-    if state.has(SkillNames.base_skill_piano, player, count=threshold):
-        total_count += 1
-    if state.has(SkillNames.base_skill_violin, player, count=threshold):
-        total_count += 1
-    if state.has(SkillNames.base_skill_guitar, player, count=threshold):
-        total_count += 1
-    if state.has(SkillNames.base_skill_painting, player, count=threshold):
-        total_count += 1
-    if state.has(SkillNames.base_skill_rocket_science, player, count=threshold):
-        total_count += 1
-    if state.has(SkillNames.base_skill_gourmet, player, count=threshold):
-        total_count += 1
-
-    return total_count
-
-def has_skill(state: CollectionState, skill: str, player: int, skill_level: int) -> bool:
-    # determines how many skill items are required based on the skill level passed into the function
-    skills_required: int = skill_level - 2
-    return state.has(skill, player, skills_required)
-def has_multiple_skills(state: CollectionState, skills_and_levels: dict[str, int], player: int):
-    skills = list(skills_and_levels.keys())
-    return has_skill(state, skills[0], player, skills_and_levels[skills[0]]) and has_skill(state, skills[1], player, skills_and_levels[skills[1]])
-
 # TODO: use events for the completion condition in order to facilitate easier goal stuff, and presence in spoiler (also permits future goals to be more dynamic)
 def set_completion_condition(world: MultiWorld, player: int, options: Sims4Options):
     goal = options.goal
@@ -823,3 +769,58 @@ def set_career_rules(world: MultiWorld, player: int, options: Sims4Options):
     for career_name, handler in CAREER_RULES.items():
         if career_name in career:
             handler(world, player)
+
+def count_skills_over(threshold: int, state, player) -> int:
+    total_count = 0
+
+    if state.has(SkillNames.base_skill_charisma, player, count=threshold):
+        total_count += 1
+    if state.has(SkillNames.base_skill_fitness, player, count=threshold):
+        total_count += 1
+    if state.has(SkillNames.base_skill_mischief, player, count=threshold):
+        total_count += 1
+    if state.has(SkillNames.base_skill_logic, player, count=threshold):
+        total_count += 1
+    if state.has(SkillNames.base_skill_cooking, player, count=threshold):
+        total_count += 1
+    if state.has(SkillNames.base_skill_mixology, player, count=threshold):
+        total_count += 1
+    if state.has(SkillNames.base_skill_comedy, player, count=threshold):
+        total_count += 1
+    if state.has(SkillNames.base_skill_writing, player, count=threshold):
+        total_count += 1
+    if state.has(SkillNames.base_skill_fishing, player, count=threshold):
+        total_count += 1
+    if state.has(SkillNames.base_skill_gardening, player, count=threshold):
+        total_count += 1
+    if state.has(SkillNames.base_skill_video_gaming, player, count=threshold):
+        total_count += 1
+    if state.has(SkillNames.base_skill_programming, player, count=threshold):
+        total_count += 1
+    if state.has(SkillNames.base_skill_photography, player, count=threshold):
+        total_count += 1
+    if state.has(SkillNames.base_skill_handiness, player, count=threshold):
+        total_count += 1
+    if state.has(SkillNames.base_skill_piano, player, count=threshold):
+        total_count += 1
+    if state.has(SkillNames.base_skill_violin, player, count=threshold):
+        total_count += 1
+    if state.has(SkillNames.base_skill_guitar, player, count=threshold):
+        total_count += 1
+    if state.has(SkillNames.base_skill_painting, player, count=threshold):
+        total_count += 1
+    if state.has(SkillNames.base_skill_rocket_science, player, count=threshold):
+        total_count += 1
+    if state.has(SkillNames.base_skill_gourmet, player, count=threshold):
+        total_count += 1
+
+    return total_count
+
+def has_skill(state: CollectionState, skill: str, player: int, skill_level: int) -> bool:
+    # determines how many skill items are required based on the skill level passed into the function
+    skills_required: int = skill_level - 2
+    return state.has(skill, player, skills_required)
+
+def has_multiple_skills(state: CollectionState, skills_and_levels: dict[str, int], player: int):
+    skills = list(skills_and_levels.keys())
+    return has_skill(state, skills[0], player, skills_and_levels[skills[0]]) and has_skill(state, skills[1], player, skills_and_levels[skills[1]])
