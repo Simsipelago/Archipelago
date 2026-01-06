@@ -198,7 +198,7 @@ def _painter_extraordinaire(world: MultiWorld, player: int):
     set_rule(world.get_location(AspirationNames.base_aspiration_painter_extraordinaire, player),
              lambda state: has_skill(state, SkillNames.base_skill_painting, player, 10))
     set_rule(world.get_location(EventNames.painter_extraordinaire, player),
-             lambda state: state.can_reach(world.get_location(AspirationNames.base_aspiration_bodybuilder, player),
+             lambda state: state.can_reach(world.get_location(AspirationNames.base_aspiration_painter_extraordinaire, player),
                                            player=player))
 
 def _bestselling_author(world: MultiWorld, player: int):

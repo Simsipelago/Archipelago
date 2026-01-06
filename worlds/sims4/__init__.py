@@ -74,8 +74,8 @@ class Sims4World(World, UTMixin):
     def create_event(self, event: str):
         return Sims4Item(event, ItemClassification.progression, None, self.player)
 
-    def create_event_location(self, event: str):
-        return Sims4Location(self.player, event, None)
+    def create_event_location(self, event: str, region: Region):
+        return Sims4Location(self.player, event, None, region)
 
     def create_items(self) -> None:
         used_dlc = set(self.options.expansion_packs.value | self.options.game_packs.value | self.options.stuff_packs.value)
@@ -129,11 +129,11 @@ class Sims4World(World, UTMixin):
                     Sims4Location(self.player, skill_name, self.location_name_to_id.get(skill_name), menu)
                 )
         if goal.value == goal.option_bodybuilder:
-            event = self.create_event_location(EventNames.bodybuilder)
+            event = self.create_event_location(EventNames.bodybuilder, menu)
             menu.locations.append(event)
             event.place_locked_item(self.create_event(EventNames.bodybuilder_item))
         elif goal.value == goal.option_painter_extraordinaire:
-            event = self.create_event_location(EventNames.painter_extraordinaire)
+            event = self.create_event_location(EventNames.painter_extraordinaire, menu)
             menu.locations.append(event)
             event.place_locked_item(self.create_event(EventNames.painter_extraordinaire_item))
 
