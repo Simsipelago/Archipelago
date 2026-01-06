@@ -74,7 +74,7 @@ class Sims4World(World, UTMixin):
         Sims4Options.goal.option_angling_ace: (EventNames.angling_ace, EventNames.angling_ace_item),
         Sims4Options.goal.option_joke_star: (EventNames.joke_star, EventNames.joke_star_item),
         Sims4Options.goal.option_friend_of_the_world: (EventNames.friend_of_the_world, EventNames.friend_of_the_world_item),
-        Sims4Options.goal.option_neighborly_advisor: (EventNames.neighborly_advisor, EventNames.neighborly_advisor_item,),
+        Sims4Options.goal.option_neighborly_advisor: (EventNames.neighborly_advisor, EventNames.neighborly_advisor_item,)
     }
 
     def generate_early(self) -> None:
