@@ -58,8 +58,8 @@ class Sims4World(World, UTMixin):
 
     GOAL_TO_EVENT_MAPPING = {
         Sims4Options.goal.option_bodybuilder: (EventNames.bodybuilder, EventNames.bodybuilder_item),
-        Sims4Options.goal.option_painter_extraordinaire: (EventNames.painter_extraordinaire, EventNames.painter_extraordinaire_item)
-        Sims4Options.goal.option_bestselling_author: (EventNames.bestselling_author, EventNames.bestselling_author_item)
+        Sims4Options.goal.option_painter_extraordinaire: (EventNames.painter_extraordinaire, EventNames.painter_extraordinaire_item),
+        Sims4Options.goal.option_bestselling_author: (EventNames.bestselling_author, EventNames.bestselling_author_item),
         Sims4Options.goal.option_musical_genius: (EventNames.musical_genius, EventNames.musical_genius_item),
         Sims4Options.goal.option_public_enemy: (EventNames.public_enemy, EventNames.public_enemy_item),
         Sims4Options.goal.option_chief_of_mischief: (EventNames.chief_of_mischief, EventNames.chief_of_mischief_item),
