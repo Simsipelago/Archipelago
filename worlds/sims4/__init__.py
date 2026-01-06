@@ -4,12 +4,12 @@ from typing import Mapping, Any, ClassVar
 # ap imports
 from BaseClasses import Item, ItemClassification, Region, Entrance
 from worlds.AutoWorld import World
-from .Names import EventNames
 from ..LauncherComponents import Component, components, Type, icon_paths, launch
 
 # TS4 specific imports
 from .Locations import location_table, Sims4Location, skill_locations_table
 from .Items import item_table, skills_table, Sims4Item, junk_table, filler_set
+from .Names import EventNames
 from .Options import Sims4Options
 from .Regions import sims4_careers, sims4_aspiration_milestones, sims4_skill_dependencies, \
     sims4_regions
