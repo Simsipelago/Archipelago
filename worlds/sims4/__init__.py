@@ -10,7 +10,7 @@ from ..LauncherComponents import Component, components, Type, icon_paths, launch
 from .Locations import location_table, Sims4Location, skill_locations_table
 from .Items import item_table, skills_table, Sims4Item, junk_table, filler_set
 from .Names import EventNames
-from .Options import Sims4Options
+from .Options import AspirationGoal, Sims4Options
 from .Regions import sims4_careers, sims4_aspiration_milestones, sims4_skill_dependencies, \
     sims4_regions
 from .Rules import set_rules
@@ -57,24 +57,24 @@ class Sims4World(World, UTMixin):
     settings: ClassVar[Sims4Settings]
 
     GOAL_TO_EVENT_MAPPING = {
-        Sims4Options.goal.option_bodybuilder: (EventNames.bodybuilder, EventNames.bodybuilder_item),
-        Sims4Options.goal.option_painter_extraordinaire: (EventNames.painter_extraordinaire, EventNames.painter_extraordinaire_item),
-        Sims4Options.goal.option_bestselling_author: (EventNames.bestselling_author, EventNames.bestselling_author_item),
-        Sims4Options.goal.option_musical_genius: (EventNames.musical_genius, EventNames.musical_genius_item),
-        Sims4Options.goal.option_public_enemy: (EventNames.public_enemy, EventNames.public_enemy_item),
-        Sims4Options.goal.option_chief_of_mischief: (EventNames.chief_of_mischief, EventNames.chief_of_mischief_item),
-        Sims4Options.goal.option_master_chef: (EventNames.master_chef, EventNames.master_chef_item),
-        Sims4Options.goal.option_master_mixologist: (EventNames.master_mixologist, EventNames.master_mixologist_item),
-        Sims4Options.goal.option_renaissance_sim: (EventNames.renaissance_sim, EventNames.renaissance_sim_item),
-        Sims4Options.goal.option_nerd_brain: (EventNames.nerd_brain, EventNames.nerd_brain_item),
-        Sims4Options.goal.option_computer_whiz: (EventNames.computer_whiz, EventNames.computer_whiz_item),
-        Sims4Options.goal.option_serial_romantic: (EventNames.serial_romantic, EventNames.serial_romantic_item),
-        Sims4Options.goal.option_freelance_botanist: (EventNames.freelance_botanist, EventNames.freelance_botanist_item),
-        Sims4Options.goal.option_the_curator: (EventNames.the_curator, EventNames.the_curator_item),
-        Sims4Options.goal.option_angling_ace: (EventNames.angling_ace, EventNames.angling_ace_item),
-        Sims4Options.goal.option_joke_star: (EventNames.joke_star, EventNames.joke_star_item),
-        Sims4Options.goal.option_friend_of_the_world: (EventNames.friend_of_the_world, EventNames.friend_of_the_world_item),
-        Sims4Options.goal.option_neighborly_advisor: (EventNames.neighborly_advisor, EventNames.neighborly_advisor_item,)
+        AspirationGoal.option_bodybuilder: (EventNames.bodybuilder, EventNames.bodybuilder_item),
+        AspirationGoal.option_painter_extraordinaire: (EventNames.painter_extraordinaire, EventNames.painter_extraordinaire_item),
+        AspirationGoal.option_bestselling_author: (EventNames.bestselling_author, EventNames.bestselling_author_item),
+        AspirationGoal.option_musical_genius: (EventNames.musical_genius, EventNames.musical_genius_item),
+        AspirationGoal.option_public_enemy: (EventNames.public_enemy, EventNames.public_enemy_item),
+        AspirationGoal.option_chief_of_mischief: (EventNames.chief_of_mischief, EventNames.chief_of_mischief_item),
+        AspirationGoal.option_master_chef: (EventNames.master_chef, EventNames.master_chef_item),
+        AspirationGoal.option_master_mixologist: (EventNames.master_mixologist, EventNames.master_mixologist_item),
+        AspirationGoal.option_renaissance_sim: (EventNames.renaissance_sim, EventNames.renaissance_sim_item),
+        AspirationGoal.option_nerd_brain: (EventNames.nerd_brain, EventNames.nerd_brain_item),
+        AspirationGoal.option_computer_whiz: (EventNames.computer_whiz, EventNames.computer_whiz_item),
+        AspirationGoal.option_serial_romantic: (EventNames.serial_romantic, EventNames.serial_romantic_item),
+        AspirationGoal.option_freelance_botanist: (EventNames.freelance_botanist, EventNames.freelance_botanist_item),
+        AspirationGoal.option_the_curator: (EventNames.the_curator, EventNames.the_curator_item),
+        AspirationGoal.option_angling_ace: (EventNames.angling_ace, EventNames.angling_ace_item),
+        AspirationGoal.option_joke_star: (EventNames.joke_star, EventNames.joke_star_item),
+        AspirationGoal.option_friend_of_the_world: (EventNames.friend_of_the_world, EventNames.friend_of_the_world_item),
+        AspirationGoal.option_neighborly_advisor: (EventNames.neighborly_advisor, EventNames.neighborly_advisor_item,)
     }
 
     def generate_early(self) -> None:
