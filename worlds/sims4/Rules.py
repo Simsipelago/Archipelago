@@ -33,8 +33,7 @@ def set_completion_condition(world: MultiWorld, player: int, options: Sims4Optio
     if goal_value == goal.option_bodybuilder:
         world.completion_condition[player] = lambda state: state.has(EventNames.bodybuilder_item, player)
     elif goal_value == goal.option_painter_extraordinaire:
-        world.completion_condition[player] = lambda state: state.can_reach(
-            world.get_location(AspirationNames.base_aspiration_painter_extraordinaire, player), player=player)
+        world.completion_condition[player] = lambda state: state.has(EventNames.painter_extraordinaire_item, player)
     elif goal_value == goal.option_bestselling_author:
         world.completion_condition[player] = lambda state: state.can_reach(
             world.get_location(AspirationNames.base_aspiration_bestselling_author, player), player=player)
@@ -198,6 +197,9 @@ def _painter_extraordinaire(world: MultiWorld, player: int):
              lambda state: has_skill(state, SkillNames.base_skill_painting, player, 6))
     set_rule(world.get_location(AspirationNames.base_aspiration_painter_extraordinaire, player),
              lambda state: has_skill(state, SkillNames.base_skill_painting, player, 10))
+    set_rule(world.get_location(EventNames.painter_extraordinaire, player),
+             lambda state: state.can_reach(world.get_location(AspirationNames.base_aspiration_bodybuilder, player),
+                                           player=player))
 
 def _bestselling_author(world: MultiWorld, player: int):
     set_rule(world.get_location(AspirationNames.base_aspiration_competent_wordsmith, player),
