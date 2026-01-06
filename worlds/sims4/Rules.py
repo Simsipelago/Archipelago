@@ -8,7 +8,7 @@ from .Names.DLC import ExpansionNames, GamePackNames, StuffNames
 from ..generic.Rules import set_rule
 
 from .Names import SkillNames, CareerNames, AspirationNames
-from .Options import Sims4Options
+from .Options import AspirationGoal, Sims4Options
 
 if TYPE_CHECKING:
     from . import Sims4World
@@ -390,23 +390,23 @@ def _neighborly_advisor(world: MultiWorld, player: int):
              lambda state: has_skill(state, SkillNames.base_skill_charisma, player, 7))
 
 ASPIRATION_RULES = {
-        Sims4Options.goal.option_bodybuilder: _bodybuilder,
-        Sims4Options.goal.option_painter_extraordinaire: _painter_extraordinaire,
-        Sims4Options.goal.option_bestselling_author: _bestselling_author,
-        Sims4Options.goal.option_musical_genius: _musical_genius,
-        Sims4Options.goal.option_public_enemy: _public_enemy,
-        Sims4Options.goal.option_chief_of_mischief: _chief_of_mischief,
-        Sims4Options.goal.option_master_chef: _master_chef,
-        Sims4Options.goal.option_master_mixologist: _master_mixologist,
-        Sims4Options.goal.option_renaissance_sim: _renaissance_sim,
-        Sims4Options.goal.option_nerd_brain: _nerd_brain,
-        Sims4Options.goal.option_computer_whiz: _computer_whiz,
-        Sims4Options.goal.option_serial_romantic: _serial_romantic,
-        Sims4Options.goal.option_freelance_botanist: _freelance_botanist,
-        Sims4Options.goal.option_angling_ace: _angling_ace,
-        Sims4Options.goal.option_joke_star: _joke_star,
-        Sims4Options.goal.option_friend_of_the_world: _friend_of_the_world,
-        Sims4Options.goal.option_neighborly_advisor: _neighborly_advisor,
+        AspirationGoal.option_bodybuilder: _bodybuilder,
+        AspirationGoal.option_painter_extraordinaire: _painter_extraordinaire,
+        AspirationGoal.option_bestselling_author: _bestselling_author,
+        AspirationGoal.option_musical_genius: _musical_genius,
+        AspirationGoal.option_public_enemy: _public_enemy,
+        AspirationGoal.option_chief_of_mischief: _chief_of_mischief,
+        AspirationGoal.option_master_chef: _master_chef,
+        AspirationGoal.option_master_mixologist: _master_mixologist,
+        AspirationGoal.option_renaissance_sim: _renaissance_sim,
+        AspirationGoal.option_nerd_brain: _nerd_brain,
+        AspirationGoal.option_computer_whiz: _computer_whiz,
+        AspirationGoal.option_serial_romantic: _serial_romantic,
+        AspirationGoal.option_freelance_botanist: _freelance_botanist,
+        AspirationGoal.option_angling_ace: _angling_ace,
+        AspirationGoal.option_joke_star: _joke_star,
+        AspirationGoal.option_friend_of_the_world: _friend_of_the_world,
+        AspirationGoal.option_neighborly_advisor: _neighborly_advisor,
     }
 
 def set_aspiration_rules(world: MultiWorld, player: int, options: Sims4Options):
