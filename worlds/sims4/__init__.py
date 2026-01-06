@@ -73,6 +73,9 @@ class Sims4World(World, UTMixin):
     def create_event(self, event: str):
         return Sims4Item(event, ItemClassification.progression, None, self.player)
 
+    def create_event_location(self, event: str):
+        return Sims4Location(self.player, event, None)
+
     def create_items(self) -> None:
         used_dlc = set(self.options.expansion_packs.value | self.options.game_packs.value | self.options.stuff_packs.value)
         pool = []
