@@ -57,7 +57,7 @@ class Sims4World(World, UTMixin):
 
     settings: ClassVar[Sims4Settings]
 
-    GOAL_TO_EVENT_MAPPING: ClassVar = {
+    GOAL_TO_EVENT_MAPPING: ClassVar[dict[int, tuple[str, str]]] = {
         AspirationGoal.option_bodybuilder: (EventNames.bodybuilder, EventNames.bodybuilder_item),
         AspirationGoal.option_painter_extraordinaire: (EventNames.painter_extraordinaire, EventNames.painter_extraordinaire_item),
         AspirationGoal.option_bestselling_author: (EventNames.bestselling_author, EventNames.bestselling_author_item),
@@ -82,17 +82,17 @@ class Sims4World(World, UTMixin):
         # this is specific to UT, it doesn't apply unless UT is being used
         self.get_options_from_slot_data(self)
 
-    def create_item(self, name: str) -> Item:
+    def create_item(self, name: str) -> Sims4Item:
         item_id: int = self.item_name_to_id[name]
 
         return Sims4Item(name,
                          item_table[item_id]["classification"],
                          item_id, player=self.player)
 
-    def create_event(self, event: str):
+    def create_event(self, event: str) -> Sims4Item:
         return Sims4Item(event, ItemClassification.progression, None, self.player)
 
-    def create_event_location(self, event: str, region: Region):
+    def create_event_location(self, event: str, region: Region) -> Sims4Location:
         return Sims4Location(self.player, event, None, region)
 
     def create_items(self) -> None:
@@ -114,7 +114,7 @@ class Sims4World(World, UTMixin):
 
         self.multiworld.itempool += pool
 
-    def create_region(self, name: str, locations=None, exits=None):
+    def create_region(self, name: str, locations=None, exits=None) -> Region:
         ret = Region(name, self.player, self.multiworld)
         if locations:
             for location in locations:
@@ -126,7 +126,7 @@ class Sims4World(World, UTMixin):
                 ret.exits.append(Entrance(self.player, region_exit, ret))
         return ret
 
-    def create_regions(self):
+    def create_regions(self) -> None:
         menu = self.create_region("Menu", locations=None, exits=None)
         chosen_careers = sorted(self.options.career.value)
         goal = self.options.goal
