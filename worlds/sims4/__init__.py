@@ -56,6 +56,27 @@ class Sims4World(World, UTMixin):
 
     settings: ClassVar[Sims4Settings]
 
+    GOAL_TO_EVENT_MAPPING = {
+        Sims4Options.goal.option_bodybuilder: (EventNames.bodybuilder, EventNames.bodybuilder_item),
+        Sims4Options.goal.option_painter_extraordinaire: (EventNames.painter_extraordinaire, EventNames.painter_extraordinaire_item)
+        Sims4Options.goal.option_bestselling_author: (EventNames.bestselling_author, EventNames.bestselling_author_item)
+        Sims4Options.goal.option_musical_genius: (EventNames.musical_genius, EventNames.musical_genius_item),
+        Sims4Options.goal.option_public_enemy: (EventNames.public_enemy, EventNames.public_enemy_item),
+        Sims4Options.goal.option_chief_of_mischief: (EventNames.chief_of_mischief, EventNames.chief_of_mischief_item),
+        Sims4Options.goal.option_master_chef: (EventNames.master_chef, EventNames.master_chef_item),
+        Sims4Options.goal.option_master_mixologist: (EventNames.master_mixologist, EventNames.master_mixologist_item),
+        Sims4Options.goal.option_renaissance_sim: (EventNames.renaissance_sim, EventNames.renaissance_sim_item),
+        Sims4Options.goal.option_nerd_brain: (EventNames.nerd_brain, EventNames.nerd_brain_item),
+        Sims4Options.goal.option_computer_whiz: (EventNames.computer_whiz, EventNames.computer_whiz_item),
+        Sims4Options.goal.option_serial_romantic: (EventNames.serial_romantic, EventNames.serial_romantic_item),
+        Sims4Options.goal.option_freelance_botanist: (EventNames.freelance_botanist, EventNames.freelance_botanist_item),
+        Sims4Options.goal.option_the_curator: (EventNames.the_curator, EventNames.the_curator_item),
+        Sims4Options.goal.option_angling_ace: (EventNames.angling_ace, EventNames.angling_ace_item),
+        Sims4Options.goal.option_joke_star: (EventNames.joke_star, EventNames.joke_star_item),
+        Sims4Options.goal.option_friend_of_the_world: (EventNames.friend_of_the_world, EventNames.friend_of_the_world_item),
+        Sims4Options.goal.option_neighborly_advisor: (EventNames.neighborly_advisor, EventNames.neighborly_advisor_item,),
+    }
+
     def generate_early(self) -> None:
         # this is specific to UT, it doesn't apply unless UT is being used
         self.get_options_from_slot_data(self)
@@ -126,78 +147,12 @@ class Sims4World(World, UTMixin):
                 menu.locations.append(
                     Sims4Location(self.player, skill_name, self.location_name_to_id.get(skill_name), menu)
                 )
-        if goal_value == goal.option_bodybuilder:
-            event = self.create_event_location(EventNames.bodybuilder, menu)
+        mapping = self.GOAL_TO_EVENT_MAPPING.get(goal_value)
+        if mapping:
+            event_name, item_name = mapping
+            event = self.create_event_location(event_name, menu)
             menu.locations.append(event)
-            event.place_locked_item(self.create_event(EventNames.bodybuilder_item))
-        elif goal_value == goal.option_painter_extraordinaire:
-            event = self.create_event_location(EventNames.painter_extraordinaire, menu)
-            menu.locations.append(event)
-            event.place_locked_item(self.create_event(EventNames.painter_extraordinaire_item))
-        elif goal_value == goal.option_bestselling_author:
-            event = self.create_event_location(EventNames.bestselling_author, menu)
-            menu.locations.append(event)
-            event.place_locked_item(self.create_event(EventNames.bestselling_author_item))
-        elif goal_value == goal.option_musical_genius:
-            event = self.create_event_location(EventNames.musical_genius, menu)
-            menu.locations.append(event)
-            event.place_locked_item(self.create_event(EventNames.musical_genius_item))
-        elif goal_value == goal.option_public_enemy:
-            event = self.create_event_location(EventNames.public_enemy, menu)
-            menu.locations.append(event)
-            event.place_locked_item(self.create_event(EventNames.public_enemy_item))
-        elif goal_value == goal.option_chief_of_mischief:
-            event = self.create_event_location(EventNames.chief_of_mischief, menu)
-            menu.locations.append(event)
-            event.place_locked_item(self.create_event(EventNames.chief_of_mischief_item))
-        elif goal_value == goal.option_master_chef:
-            event = self.create_event_location(EventNames.master_chef, menu)
-            menu.locations.append(event)
-            event.place_locked_item(self.create_event(EventNames.master_chef_item))
-        elif goal_value == goal.option_master_mixologist:
-            event = self.create_event_location(EventNames.master_mixologist, menu)
-            menu.locations.append(event)
-            event.place_locked_item(self.create_event(EventNames.master_mixologist_item))
-        elif goal_value == goal.option_renaissance_sim:
-            event = self.create_event_location(EventNames.renaissance_sim, menu)
-            menu.locations.append(event)
-            event.place_locked_item(self.create_event(EventNames.renaissance_sim_item))
-        elif goal_value == goal.option_nerd_brain:
-            event = self.create_event_location(EventNames.nerd_brain, menu)
-            menu.locations.append(event)
-            event.place_locked_item(self.create_event(EventNames.nerd_brain_item))
-        elif goal_value == goal.option_computer_whiz:
-            event = self.create_event_location(EventNames.computer_whiz, menu)
-            menu.locations.append(event)
-            event.place_locked_item(self.create_event(EventNames.computer_whiz_item))
-        elif goal_value == goal.option_serial_romantic:
-            event = self.create_event_location(EventNames.serial_romantic, menu)
-            menu.locations.append(event)
-            event.place_locked_item(self.create_event(EventNames.serial_romantic_item))
-        elif goal_value == goal.option_freelance_botanist:
-            event = self.create_event_location(EventNames.freelance_botanist, menu)
-            menu.locations.append(event)
-            event.place_locked_item(self.create_event(EventNames.freelance_botanist_item))
-        elif goal_value == goal.option_the_curator:
-            event = self.create_event_location(EventNames.the_curator, menu)
-            menu.locations.append(event)
-            event.place_locked_item(self.create_event(EventNames.the_curator_item))
-        elif goal_value == goal.option_angling_ace:
-            event = self.create_event_location(EventNames.angling_ace, menu)
-            menu.locations.append(event)
-            event.place_locked_item(self.create_event(EventNames.angling_ace_item))
-        elif goal_value == goal.option_joke_star:
-            event = self.create_event_location(EventNames.joke_star, menu)
-            menu.locations.append(event)
-            event.place_locked_item(self.create_event(EventNames.joke_star_item))
-        elif goal_value == goal.option_friend_of_the_world:
-            event = self.create_event_location(EventNames.friend_of_the_world, menu)
-            menu.locations.append(event)
-            event.place_locked_item(self.create_event(EventNames.friend_of_the_world_item))
-        elif goal_value == goal.option_neighborly_advisor:
-            event = self.create_event_location(EventNames.neighborly_advisor, menu)
-            menu.locations.append(event)
-            event.place_locked_item(self.create_event(EventNames.neighborly_advisor_item))
+            event.place_locked_item(self.create_event(item_name))
 
         self.multiworld.regions.append(menu)
 
