@@ -57,7 +57,7 @@ class Sims4World(World, UTMixin):
 
     settings: ClassVar[Sims4Settings]
 
-    GOAL_TO_EVENT_MAPPING = {
+    GOAL_TO_EVENT_MAPPING: ClassVar = {
         AspirationGoal.option_bodybuilder: (EventNames.bodybuilder, EventNames.bodybuilder_item),
         AspirationGoal.option_painter_extraordinaire: (EventNames.painter_extraordinaire, EventNames.painter_extraordinaire_item),
         AspirationGoal.option_bestselling_author: (EventNames.bestselling_author, EventNames.bestselling_author_item),
@@ -75,7 +75,7 @@ class Sims4World(World, UTMixin):
         AspirationGoal.option_angling_ace: (EventNames.angling_ace, EventNames.angling_ace_item),
         AspirationGoal.option_joke_star: (EventNames.joke_star, EventNames.joke_star_item),
         AspirationGoal.option_friend_of_the_world: (EventNames.friend_of_the_world, EventNames.friend_of_the_world_item),
-        AspirationGoal.option_neighborly_advisor: (EventNames.neighborly_advisor, EventNames.neighborly_advisor_item,)
+        AspirationGoal.option_neighborly_advisor: (EventNames.neighborly_advisor, EventNames.neighborly_advisor_item)
     }
 
     def generate_early(self) -> None:
