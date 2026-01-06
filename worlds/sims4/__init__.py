@@ -154,6 +154,10 @@ class Sims4World(World, UTMixin):
             menu.locations.append(event)
             event.place_locked_item(self.create_event(EventNames.chief_of_mischief_item))
         elif goal_value == goal.option_master_chef:
+            event = self.create_event_location(EventNames.master_chef, menu)
+            menu.locations.append(event)
+            event.place_locked_item(self.create_event(EventNames.master_chef_item))
+        elif goal_value == goal.option_master_mixologist:
             event = self.create_event_location(EventNames.master_mixologist, menu)
             menu.locations.append(event)
             event.place_locked_item(self.create_event(EventNames.master_mixologist_item))
