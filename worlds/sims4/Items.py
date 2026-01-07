@@ -5,6 +5,7 @@ from BaseClasses import Item, ItemClassification
 from .Names import SkillNames, JunkNames, UsefulNames
 from .Names.DLC import ExpansionNames, GamePackNames, StuffNames
 
+
 class ItemDict(TypedDict):
     classification: ItemClassification
     count: int
@@ -24,6 +25,7 @@ class Sims4Item(Item):
 
 skills_table: dict[int, ItemDict] = {}
 
+
 def add_skill(skill_name: str, expansion: str, max_level: int) -> int:
     if skills_table:
         skill_id = max(skills_table.keys()) + 1
@@ -38,6 +40,7 @@ def add_skill(skill_name: str, expansion: str, max_level: int) -> int:
         "expansion": expansion
         }
     return skill_id
+
 
 add_skill(SkillNames.base_skill_comedy, ExpansionNames.base, 10)
 add_skill(SkillNames.base_skill_guitar, ExpansionNames.base, 10)
