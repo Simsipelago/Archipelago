@@ -85,7 +85,7 @@ add_skill(SkillNames.du_researchanddebate_skill, ExpansionNames.discover_univers
 add_skill(SkillNames.du_robotics_skill, ExpansionNames.discover_university, 10)
 add_skill(SkillNames.el_fabrication_skill, ExpansionNames.eco_lifestyle, 10)
 add_skill(SkillNames.el_juicefizzing_skill, ExpansionNames.eco_lifestyle, 5)
-add_skill(SkillNames.nk_knitting_skill,  StuffNames.nifty_knitting, 10)
+add_skill(SkillNames.nk_knitting_skill, StuffNames.nifty_knitting, 10)
 add_skill(SkillNames.sy_rock_climbing_skill, ExpansionNames.snowy_escape, 10)
 add_skill(SkillNames.sy_skiing_skill, ExpansionNames.snowy_escape, 10)
 add_skill(SkillNames.sy_snowboarding_skill, ExpansionNames.snowy_escape, 10)
