@@ -150,7 +150,7 @@ class Sims4World(World, UTMixin):
         for career_key in chosen_careers:
             for career in sims4_careers[career_key.lower().replace(" ", "_")]:
                 menu.locations.append(self.create_location(career, menu))
-        for aspiration in sims4_aspiration_milestones[aspiration_key]: # (change this later, we'll need it to do the multi aspiration thing that's in another branch)
+        for aspiration in sims4_aspiration_milestones[aspiration_key]:
             menu.locations.append(self.create_location(aspiration, menu))
         used_dlc = set(
             self.options.expansion_packs.value |
