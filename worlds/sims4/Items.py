@@ -28,7 +28,7 @@ skills_table: dict[int, ItemDict] = {}
 
 class SkillConfigError(ValueError):
     """Raised when skill configuration is invalid."""
-    pass
+
 
 def add_skill(skill_name: str, expansion: str, max_level: int) -> int:
     if max_level < 2:
