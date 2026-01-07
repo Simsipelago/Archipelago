@@ -134,8 +134,7 @@ class Sims4World(World, UTMixin):
         ret = Region(name, self.player, self.multiworld)
         if locations:
             for location_name in locations:
-                loc_id = self.location_name_to_id.get(location_name, None)
-                location = Sims4Location(self.player, location_name, loc_id, ret)
+                location = self.create_location(location_name)
                 ret.locations.append(location)
         if exits:
             for region_exit in exits:
@@ -150,12 +149,9 @@ class Sims4World(World, UTMixin):
         aspiration_key = goal.current_key
         for career_key in chosen_careers:
             for career in sims4_careers[career_key.lower().replace(" ", "_")]:
-                menu.locations.append(
-                    Sims4Location(self.player, career, self.location_name_to_id.get(career), menu))
-        for aspiration in sims4_aspiration_milestones[aspiration_key]:
-            menu.locations.append(
-                Sims4Location(self.player, aspiration, self.location_name_to_id.get(aspiration), menu)
-            )
+                menu.locations.append(self.create_location(career))
+        for aspiration in sims4_aspiration_milestones[aspiration_key]: # (change this later, we'll need it to do the multi aspiration thing that's in another branch)
+            menu.locations.append(self.create_location(aspiration))
         used_dlc = set(
             self.options.expansion_packs.value |
             self.options.game_packs.value |
@@ -164,9 +160,7 @@ class Sims4World(World, UTMixin):
         for skill in skill_locations_table.values():
             skill_name = skill["name"]
             if skill['expansion'] == 'base' or skill['expansion'] in used_dlc:
-                menu.locations.append(
-                    Sims4Location(self.player, skill_name, self.location_name_to_id.get(skill_name), menu)
-                )
+                menu.locations.append(self.create_location(skill_name))
         mapping = self.GOAL_TO_EVENT_MAPPING.get(goal_value)
         if mapping:
             event_name, item_name = mapping
