@@ -9,10 +9,6 @@ from .Names.DLC import ExpansionNames, GamePackNames, StuffNames
 class Sims4Location(Location):
     game: str = "The Sims 4"
 
-    def __init__(self, player: int, name: str, address: Optional[int], parent):
-        super().__init__(player, name, address, parent)
-        self.event = not address
-
 
 class Sims4LocationDict(TypedDict, total=False):
     name: str

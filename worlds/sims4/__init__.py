@@ -1,5 +1,5 @@
 # standard lib imports
-from typing import Mapping, Any, ClassVar
+from typing import Mapping, Any, ClassVar, Optional
 
 # ap imports
 from BaseClasses import ItemClassification, Region, Entrance
@@ -96,8 +96,11 @@ class Sims4World(World, UTMixin):
     def create_event(self, event: str) -> Sims4Item:
         return Sims4Item(event, ItemClassification.progression, None, self.player)
 
-    def create_event_location(self, event: str, region: Region) -> Sims4Location:
-        return Sims4Location(self.player, event, None, region)
+    def create_event_location(self, event: str, region: Optional[Region]) -> Sims4Location:
+        if region is not None:
+            return Sims4Location(self.player, event, None, region)
+        else:
+            return Sims4Location(self.player, event, None)
 
     def create_items(self) -> None:
         used_dlc = set(
