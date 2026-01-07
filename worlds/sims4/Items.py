@@ -26,9 +26,13 @@ class Sims4Item(Item):
 skills_table: dict[int, ItemDict] = {}
 
 
+class SkillConfigError(ValueError):
+    """Raised when skill configuration is invalid."""
+    pass
+
 def add_skill(skill_name: str, expansion: str, max_level: int) -> int:
     if max_level < 2:
-        raise ValueError(f"max_level must be at least 2, got {max_level}")
+        raise SkillConfigError(f"max_level must be at least 2, got {max_level}")
     if skills_table:
         skill_id = max(skills_table.keys()) + 1
     else:
