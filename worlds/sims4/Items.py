@@ -97,7 +97,7 @@ add_skill(SkillNames.bnh_tattooing_skill, ExpansionNames.business_and_hobbies, 1
 add_skill(SkillNames.ebn_apothecary_skill, ExpansionNames.enchanted_by_nature, 10)
 add_skill(SkillNames.ebn_natural_living_skill, ExpansionNames.enchanted_by_nature, 10)
 
-useful_table = {
+useful_table: dict[int, ItemDict] = {
     0x733400FF: {'classification': ItemClassification.useful,
                  'count': 4,
                  'name': UsefulNames.skill_gain_boost,
@@ -106,7 +106,7 @@ useful_table = {
 
 }
 
-junk_table = {
+junk_table: dict[int, ItemDict] = {
     0x73340FFF: {'classification': ItemClassification.filler,
                  'count': 0,
                  'name': JunkNames.twothousand_simoleons,
