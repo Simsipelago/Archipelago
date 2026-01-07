@@ -1,5 +1,6 @@
 # standard lib imports
-from typing import Mapping, Any, ClassVar, Optional
+from typing import Any, ClassVar, Optional
+from collections.abc import Mapping
 
 # ap imports
 from BaseClasses import ItemClassification, Region, Entrance
