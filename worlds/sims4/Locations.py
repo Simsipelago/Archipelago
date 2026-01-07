@@ -27,6 +27,7 @@ class Sims4LocationData(NamedTuple):
 
 skill_locations_table: dict[int, Sims4LocationDict] = {}
 
+
 def add_skill_location(skill_name: str, expansion: str, max_level: int) -> int:
     if skill_locations_table:
         start_id = max(skill_locations_table.keys())
@@ -41,6 +42,7 @@ def add_skill_location(skill_name: str, expansion: str, max_level: int) -> int:
             "expansion": expansion
         }
     return skill_id
+
 
 add_skill_location(SkillNames.base_skill_comedy, ExpansionNames.base, 10)
 add_skill_location(SkillNames.base_skill_guitar, ExpansionNames.base, 10)
@@ -97,8 +99,8 @@ add_skill_location(SkillNames.lv_romance_skill, ExpansionNames.lovestruck, 10)
 add_skill_location(SkillNames.lnd_thanatology_skill, ExpansionNames.life_and_death, 5)
 add_skill_location(SkillNames.bnh_pottery_skill, ExpansionNames.business_and_hobbies, 10)
 add_skill_location(SkillNames.bnh_tattooing_skill, ExpansionNames.business_and_hobbies, 10)
-add_skill_location(SkillNames.ebn_apothecary_skill, ExpansionNames.enchanted_by_nature , 10)
-add_skill_location(SkillNames.ebn_natural_living_skill, ExpansionNames.enchanted_by_nature , 10)
+add_skill_location(SkillNames.ebn_apothecary_skill, ExpansionNames.enchanted_by_nature, 10)
+add_skill_location(SkillNames.ebn_natural_living_skill, ExpansionNames.enchanted_by_nature, 10)
 
 del add_skill_location
 
