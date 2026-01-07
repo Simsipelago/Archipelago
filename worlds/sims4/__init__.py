@@ -91,7 +91,12 @@ class Sims4World(World, UTMixin):
 
         return Sims4Item(name,
                          item_table[item_id]["classification"],
-                         item_id, player=self.player)
+                         item_id, self.player)
+
+    def create_location(self, name: str) -> Sims4Location:
+        location_id: int = self.location_name_to_id[name]
+
+        return Sims4Location(self.player, name, location_id)
 
     def create_event(self, event: str) -> Sims4Item:
         return Sims4Item(event, ItemClassification.progression, None, self.player)
