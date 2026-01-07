@@ -27,13 +27,15 @@ skills_table: dict[int, ItemDict] = {}
 
 
 def add_skill(skill_name: str, expansion: str, max_level: int) -> int:
+    if max_level < 2:
+        raise ValueError(f"max_level must be at least 2, got {max_level}")
     if skills_table:
         skill_id = max(skills_table.keys()) + 1
     else:
         skill_id = 0x7334001
 
     skills_table[skill_id] = {
-        "name": f"{skill_name}",
+        "name": skill_name,
         "classification": ItemClassification.progression,
         "count": max_level - 2,
         "tech_type": "Skill",

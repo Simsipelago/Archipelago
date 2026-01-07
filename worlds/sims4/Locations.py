@@ -83,7 +83,7 @@ add_skill_location(SkillNames.du_researchanddebate_skill, ExpansionNames.discove
 add_skill_location(SkillNames.du_robotics_skill, ExpansionNames.discover_university, 10)
 add_skill_location(SkillNames.el_fabrication_skill, ExpansionNames.eco_lifestyle, 10)
 add_skill_location(SkillNames.el_juicefizzing_skill, ExpansionNames.eco_lifestyle, 5)
-add_skill_location(SkillNames.nk_knitting_skill,  StuffNames.nifty_knitting, 10)
+add_skill_location(SkillNames.nk_knitting_skill, StuffNames.nifty_knitting, 10)
 add_skill_location(SkillNames.sy_rock_climbing_skill, ExpansionNames.snowy_escape, 10)
 add_skill_location(SkillNames.sy_skiing_skill, ExpansionNames.snowy_escape, 10)
 add_skill_location(SkillNames.sy_snowboarding_skill, ExpansionNames.snowy_escape, 10)
@@ -103,7 +103,7 @@ add_skill_location(SkillNames.ebn_natural_living_skill, ExpansionNames.enchanted
 del add_skill_location
 
 
-careers_locations_table = {
+careers_locations_table: dict[int, Sims4LocationDict] = {
 
     0x73342001: {"name": f"{CareerNames.base_career_athlete_2}",
                  "category": "Athlete",
@@ -568,7 +568,7 @@ careers_locations_table = {
 
 }
 
-ptj_locations_table = {
+ptj_locations_table: dict[int, Sims4LocationDict] = {
 
     0x733420A2: {"name": f"{CareerNames.base_ptj_babysitter_2}",
                  "category": "Babysitter",
@@ -606,7 +606,7 @@ ptj_locations_table = {
                  "expansion": "base"},
 }
 
-aspiration_locations_table = {
+aspiration_locations_table: dict[int, Sims4LocationDict] = {
     0x73343000: {"name": f"{AspirationNames.base_aspiration_basic_trainer}",
                  "category": "Aspirations",
                  "expansion": "base"},
@@ -882,7 +882,7 @@ aspiration_locations_table = {
                  "expansion": "base"},
 }
 
-location_table = {
+location_table: dict[int, Sims4LocationDict] = {
     **skill_locations_table,
     **careers_locations_table,
     **aspiration_locations_table,
