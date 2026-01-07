@@ -1,5 +1,5 @@
 # standard lib imports
-from typing import Any, ClassVar, Optional
+from typing import Any, ClassVar
 from collections.abc import Mapping
 
 # ap imports
