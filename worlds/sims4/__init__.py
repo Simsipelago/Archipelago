@@ -96,7 +96,11 @@ class Sims4World(World, UTMixin):
         return Sims4Location(self.player, event, None, region)
 
     def create_items(self) -> None:
-        used_dlc = set(self.options.expansion_packs.value | self.options.game_packs.value | self.options.stuff_packs.value)
+        used_dlc = set(
+            self.options.expansion_packs.value |
+            self.options.game_packs.value |
+            self.options.stuff_packs.value
+        )
         pool = []
 
         unfilled_locations = len(self.multiworld.get_unfilled_locations(self.player))
@@ -114,7 +118,7 @@ class Sims4World(World, UTMixin):
 
         self.multiworld.itempool += pool
 
-    def create_region(self, name: str, locations=None, exits=None) -> Region:
+    def create_region(self, name: str, locations: list[str] | None = None, exits: list[str] | None = None) -> Region:
         ret = Region(name, self.player, self.multiworld)
         if locations:
             for location in locations:
@@ -140,7 +144,11 @@ class Sims4World(World, UTMixin):
             menu.locations.append(
                 Sims4Location(self.player, aspiration, self.location_name_to_id.get(aspiration), menu)
             )
-        used_dlc = set(self.options.expansion_packs.value | self.options.game_packs.value | self.options.stuff_packs.value)
+        used_dlc = set(
+            self.options.expansion_packs.value |
+            self.options.game_packs.value |
+            self.options.stuff_packs.value
+        )
         for skill in skill_locations_table.values():
             skill_name = skill["name"]
             if skill['expansion'] == 'base' or skill['expansion'] in used_dlc:
