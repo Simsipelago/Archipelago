@@ -24,7 +24,8 @@
 - By default, this mod only uses skills from the base game as checks and locations. You can optionally enable your packs in the YAML file if you would like to have them included in the randomization. Packs are unlikely to cause problems with the mod, however you can disable them optionally **NOT USING THE IN GAME PACK SELECTOR**.
   * If you don't know how disable packs without using the in game pack selector, you can use this [tutorial](https://jamesturner.yt/disablepacks) by James Turner.
 - Open the Archipelago Launcher and run the client. It should be called `The Sims 4 Client`. Upon the first time opening the client, it will prompt you to select your Mods folder. <strong>ONLY SELECT THE MODS FOLDER LOCATED AT</strong> <code>(your sims folder, typically called The Sims 4)/Mods</code>.
-  * If you have to manually se the path make sure you dont include quotes in the path
+  * If you have to manually set the path make sure you dont include quotes in the path
+  * Example: <code>/set_path C:/Users/User/Documents/Electronic Arts/The Sims 4/Mods</code>
 - Once you have selected the Mods folder if you've been prompted for it, follow the next steps before connecting.
 - Launch your copy of The Sims 4, and ensure you have Script Mods enabled. The mod will not work correctly if Script Mods are not enabled.
   * You can enable Script Mods by going to `Game Options -> Other -> Script Mods Allowed`.
