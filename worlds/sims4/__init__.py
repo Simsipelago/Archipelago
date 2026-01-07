@@ -77,7 +77,9 @@ class Sims4World(World, UTMixin):
         AspirationGoal.option_the_curator: (EventNames.the_curator, EventNames.the_curator_item),
         AspirationGoal.option_angling_ace: (EventNames.angling_ace, EventNames.angling_ace_item),
         AspirationGoal.option_joke_star: (EventNames.joke_star, EventNames.joke_star_item),
-        AspirationGoal.option_friend_of_the_world: (EventNames.friend_of_the_world, EventNames.friend_of_the_world_item),
+        AspirationGoal.option_friend_of_the_world: (
+            EventNames.friend_of_the_world, EventNames.friend_of_the_world_item
+        ),
         AspirationGoal.option_neighborly_advisor: (
             EventNames.neighborly_advisor, EventNames.neighborly_advisor_item
         )
