@@ -96,19 +96,16 @@ class Sims4World(World, UTMixin):
                          item_table[item_id]["classification"],
                          item_id, self.player)
 
-    def create_location(self, name: str) -> Sims4Location:
+    def create_location(self, name: str, parent: Region) -> Sims4Location:
         location_id: int = self.location_name_to_id[name]
 
-        return Sims4Location(self.player, name, location_id)
+        return Sims4Location(self.player, name, location_id, parent)
 
     def create_event(self, event: str) -> Sims4Item:
         return Sims4Item(event, ItemClassification.progression, None, self.player)
 
-    def create_event_location(self, event: str, region: Optional[Region] = None) -> Sims4Location:
-        if region is not None:
-            return Sims4Location(self.player, event, None, region)
-        else:
-            return Sims4Location(self.player, event, None)
+    def create_event_location(self, event: str, region: Region) -> Sims4Location:
+        return Sims4Location(self.player, event, None, region)
 
     def create_items(self) -> None:
         used_dlc = set(
@@ -137,7 +134,7 @@ class Sims4World(World, UTMixin):
         ret = Region(name, self.player, self.multiworld)
         if locations:
             for location_name in locations:
-                location = self.create_location(location_name)
+                location = self.create_location(location_name, ret)
                 ret.locations.append(location)
         if exits:
             for region_exit in exits:
@@ -152,9 +149,9 @@ class Sims4World(World, UTMixin):
         aspiration_key = goal.current_key
         for career_key in chosen_careers:
             for career in sims4_careers[career_key.lower().replace(" ", "_")]:
-                menu.locations.append(self.create_location(career))
+                menu.locations.append(self.create_location(career, menu))
         for aspiration in sims4_aspiration_milestones[aspiration_key]: # (change this later, we'll need it to do the multi aspiration thing that's in another branch)
-            menu.locations.append(self.create_location(aspiration))
+            menu.locations.append(self.create_location(aspiration, menu))
         used_dlc = set(
             self.options.expansion_packs.value |
             self.options.game_packs.value |
@@ -163,11 +160,11 @@ class Sims4World(World, UTMixin):
         for skill in skill_locations_table.values():
             skill_name = skill["name"]
             if skill['expansion'] == 'base' or skill['expansion'] in used_dlc:
-                menu.locations.append(self.create_location(skill_name))
+                menu.locations.append(self.create_location(skill_name, menu))
         mapping = self.GOAL_TO_EVENT_MAPPING.get(goal_value)
         if mapping:
             event_name, item_name = mapping
-            event = self.create_event_location(event_name)
+            event = self.create_event_location(event_name, menu)
             menu.locations.append(event)
             event.place_locked_item(self.create_event(item_name))
 
