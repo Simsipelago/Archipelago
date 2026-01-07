@@ -2,7 +2,7 @@
 from typing import Mapping, Any, ClassVar
 
 # ap imports
-from BaseClasses import Item, ItemClassification, Region, Entrance
+from BaseClasses import ItemClassification, Region, Entrance
 from worlds.AutoWorld import World
 from ..LauncherComponents import Component, components, Type, icon_paths, launch
 
