@@ -96,7 +96,7 @@ class Sims4World(World, UTMixin):
     def create_event(self, event: str) -> Sims4Item:
         return Sims4Item(event, ItemClassification.progression, None, self.player)
 
-    def create_event_location(self, event: str, region: Optional[Region]) -> Sims4Location:
+    def create_event_location(self, event: str, region: Optional[Region] = None) -> Sims4Location:
         if region is not None:
             return Sims4Location(self.player, event, None, region)
         else:
@@ -165,7 +165,7 @@ class Sims4World(World, UTMixin):
         mapping = self.GOAL_TO_EVENT_MAPPING.get(goal_value)
         if mapping:
             event_name, item_name = mapping
-            event = self.create_event_location(event_name, menu)
+            event = self.create_event_location(event_name)
             menu.locations.append(event)
             event.place_locked_item(self.create_event(item_name))
 
