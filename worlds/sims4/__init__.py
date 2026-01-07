@@ -128,9 +128,9 @@ class Sims4World(World, UTMixin):
     def create_region(self, name: str, locations: list[str] | None = None, exits: list[str] | None = None) -> Region:
         ret = Region(name, self.player, self.multiworld)
         if locations:
-            for location in locations:
-                loc_id = self.location_name_to_id.get(location, None)
-                location = Sims4Location(self.player, location, loc_id, ret)
+            for location_name in locations:
+                loc_id = self.location_name_to_id.get(location_name, None)
+                location = Sims4Location(self.player, location_name, loc_id, ret)
                 ret.locations.append(location)
         if exits:
             for region_exit in exits:
