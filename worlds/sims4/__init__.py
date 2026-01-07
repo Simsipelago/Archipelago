@@ -1,13 +1,10 @@
 # standard lib imports
-from typing import Mapping, Any, ClassVar, Dict
-from pathlib import Path
-from multiprocessing import Process
+from typing import Mapping, Any, ClassVar
 
 # ap imports
-import settings
-from BaseClasses import Tutorial, Item, ItemClassification, Region, Entrance
-from worlds.AutoWorld import World, WebWorld
-from ..LauncherComponents import Component, components, Type, icon_paths
+from BaseClasses import Item, ItemClassification, Region, Entrance
+from worlds.AutoWorld import World
+from ..LauncherComponents import Component, components, Type, icon_paths, launch
 
 # TS4 specific imports
 from .Locations import location_table, Sims4Location, skill_locations_table
@@ -17,38 +14,21 @@ from .Regions import sims4_careers, sims4_aspiration_milestones, sims4_skill_dep
     sims4_regions
 from .Rules import set_rules as ts4_set_rules
 from .Groups import location_name_groups, item_name_groups
+from .UT import UTMixin
+from .Settings import Sims4Settings
+from .Web import Sims4Web
+from .Version import VERSION, Sims4Version
 
-def run_client():
+def run_client(*args: str) -> None:
     from .Client import main
-    p = Process(target=main)
-    p.start()
+    launch(main, name="The Sims 4 Client", args=args)
 
 
 components.append(Component("The Sims 4 Client", func=run_client, component_type=Type.CLIENT, icon="plumbob"))
 
 icon_paths["plumbob"] = f"ap:{__name__}/icons/plumbob.png"
 
-
-class Sims4Settings(settings.Group):
-    class ModsFolder(settings.UserFolderPath):
-        """Path to the Sims 4 Mods folder"""
-        description = "the folder your Sims 4 mods are installed to"
-
-    mods_folder: ModsFolder = ModsFolder(Path.home() / "Documents" / "Electronic Arts" / "The Sims 4" / "Mods")
-
-
-class Sims4Web(WebWorld):
-    tutorials = [Tutorial(
-        "Multiworld Setup Guide",
-        "A guide to setting up The Sims 4 for MultiWorld.",
-        "English",
-        "setup_en.md",
-        "setup/en",
-        ["mrsummer360"]
-    )]
-
-
-class Sims4World(World):
+class Sims4World(World, UTMixin):
     """
     The Sims 4 is the fourth installment in The Sims franchise. Like the previous games in the series,
     The Sims 4 focuses on creating and controlling a neighborhood of virtual people, called "Sims".
@@ -75,21 +55,13 @@ class Sims4World(World):
 
     settings: ClassVar[Sims4Settings]
 
-    ut_can_gen_without_yaml = True
-    passthrough: dict[str, Any]
+    # ut_can_gen_without_yaml = True
+    # passthrough: dict[str, Any]
 
     def generate_early(self) -> None:
+        # this is specific to UT, it doesn't apply unless UT is being used
+        self.get_options_from_slot_data(self)
 
-        if hasattr(self.multiworld, "re_gen_passthrough"):
-            if "The Sims 4" in self.multiworld.re_gen_passthrough:
-                self.passthrough = self.multiworld.re_gen_passthrough["The Sims 4"]
-                self.options.goal.value = self.passthrough["goal_value"]
-                self.options.career.value = self.passthrough["career_value"]
-                self.options.expansion_packs.value = self.passthrough["expansion_packs"]
-                self.options.game_packs.value = self.passthrough["game_packs"]
-                self.options.stuff_packs.value = self.passthrough["stuff_packs"]
-                self.options.cas_kits.value = self.passthrough["cas_kits"]
-                self.options.build_kits.value = self.passthrough["build_kits"]
 
     def create_item(self, name: str) -> Item:
         item_id: int = self.item_name_to_id[name]
@@ -165,12 +137,10 @@ class Sims4World(World):
             "game_packs": self.options.game_packs.value,
             "stuff_packs": self.options.stuff_packs.value,
             "cas_kits": self.options.cas_kits.value,
-            "build_kits": self.options.build_kits.value
+            "build_kits": self.options.build_kits.value,
+            "version": Sims4Version.tuple_to_str(VERSION),
         }
         return slot_data
 
-    # for UT, not called in standard generation
-    @staticmethod
-    def interpret_slot_data(slot_data: Dict[str, Any]) -> Dict[str, Any]:
-        # returns slot data to be used in UT regen
-        return slot_data
+    def get_filler_item_name(self) -> str:
+        return self.random.choice([entry['name'] for entry in junk_table.values()])

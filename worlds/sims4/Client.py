@@ -4,8 +4,10 @@ import asyncio
 import json
 import os
 import urllib.parse
+import re
 from pathlib import Path
 
+import Utils
 from CommonClient import ClientCommandProcessor, gui_enabled, get_base_parser, server_loop, logger, ClientStatus
 from MultiServer import mark_raw
 
@@ -20,8 +22,15 @@ from . import Sims4World
 
 # Gets the sims 4 mods folder
 
-if Sims4World.settings.mods_folder.exists():
-    mod_data_path = Path(Sims4World.settings.mods_folder) / "mod_data" / "s4ap"
+def unescape_ap_path(path: str) -> str:
+    # Replace Archipelago's \_ escape with NBSP,
+    # but skip if it's the first character of a segment
+    return re.sub(r'(?<!\\)\\_', '\u00A0', path)
+
+mods_folder_path = Path(unescape_ap_path(str(Sims4World.settings.mods_folder)))
+
+if mods_folder_path.exists():
+    mod_data_path = mods_folder_path / "mod_data" / "s4ap"
 
 # reads and prints json files
 
@@ -107,6 +116,7 @@ class SimsContext(SuperContext):
         self.syncing = False
         self.goal = None
         self.career = None
+        self.version: str | None = None
 
     def make_gui(self):
         ui = super().make_gui()
@@ -118,6 +128,53 @@ class SimsContext(SuperContext):
         if cmd == "Connected":
             self.goal = args["slot_data"]["goal"]
             self.career = args["slot_data"]["career"]
+            self.version = args["slot_data"].get("version")
+
+            if self.version is not None:
+                from .Version import VERSION, Sims4Version
+
+                slot_version_tuple = Sims4Version.str_to_tuple(self.version)
+
+                # compare major version mismatch
+                if Sims4Version.does_major_version_mismatch(slot_version_tuple, VERSION):
+                    self.gui_error(
+                        title="Version mismatch",
+                        text=f"This server is running Sims 4 AP {self.version}, "
+                             f"but your client is {Sims4Version.tuple_to_str(VERSION)}.\n"
+                             f"Please update your client."
+                    )
+                    Utils.async_start(self.disconnect(False))
+                    return
+
+                # disallow RCs when client is not RC
+                client_is_rc = Sims4Version.is_rc(VERSION)
+                slot_is_rc = Sims4Version.is_rc(slot_version_tuple)
+                if client_is_rc != slot_is_rc:
+                    self.gui_error(
+                        title="Incompatible version",
+                        text=f"This slot was generated using a release candidate ({self.version}).\n"
+                             f"Your client is {Sims4Version.tuple_to_str(VERSION)}.\n"
+                             f"Please install the same version of the APWorld to connect."
+                    )
+                    Utils.async_start(self.disconnect(False))
+                    return
+
+                # if both are RC, check exact suffix match
+                if all([client_is_rc, slot_is_rc]) and slot_version_tuple[3] != VERSION[3]:
+                    self.gui_error(
+                        title="Incompatible RC version",
+                        text=f"This slot was generated using {self.version}.\n"
+                             f"Your client is {Sims4Version.tuple_to_str(VERSION)}.\n"
+                             f"Please install the exact same RC build to connect."
+                    )
+                    Utils.async_start(self.disconnect(False))
+                    return
+            else:
+                from CommonClient import logger
+                # Older APWorlds don't have the version string
+                logger.info("Warning: slot data has no version information; compatibility not checked.")
+
+
             url = urllib.parse.urlparse(self.server_address)
             payload = {
                 'cmd': "Connected",
@@ -126,7 +183,8 @@ class SimsContext(SuperContext):
                 'name': self.slot_info[self.slot].name,
                 'seed_name': self.seed_name,
                 'goal': self.goal,
-                'career': self.career
+                'career': self.career,
+                'slot': self.slot
             }
             print_json(payload, 'connection_status.json', self)
 
@@ -161,23 +219,25 @@ async def game_watcher(ctx: SimsContext):
             sync_msg = [{'cmd': 'Sync'}]
             await ctx.send_msgs(sync_msg)
             ctx.syncing = False
-        if (ctx.server and ctx.slot) is not None:
+        if ctx.server is not None and ctx.slot is not None:
             json_data = load_json('locations_cached.json')
             if json_data is not None:
                 locations_to_send = []
                 if "Locations" in json_data and json_data["Locations"] is not None and json_data["Seed"] == ctx.seed_name:
                     # locations_to_remove = []
-                    for data in json_data["Locations"]:
-                        for location_id in ctx.missing_locations:
-                            location_current_name = ctx.location_names.lookup_in_game(location_id)
-                            if location_current_name == data:
-                                if ctx.goal == data.split("(", 1)[0].strip().replace(" ", "_").lower() and not ctx.finished_game:
-                                    await SimsContext.send_msgs(ctx, [
-                                        {"cmd": "StatusUpdate", "status": ClientStatus.CLIENT_GOAL}])
-                                    ctx.finished_game = True
-                                locations_to_send.append(location_id)
-                                # locations_to_remove.append(data)
-                                break
+
+                    checked_locations = set(json_data["Locations"])
+
+                    for location_id in ctx.missing_locations:
+                        location_current_name = ctx.location_names.lookup_in_game(location_id)
+                        if location_current_name in checked_locations:
+                            if ctx.goal == location_current_name.split("(", 1)[0].strip().replace(" ", "_").lower() and not ctx.finished_game:
+                                await SimsContext.send_msgs(ctx, [
+                                    {"cmd": "StatusUpdate", "status": ClientStatus.CLIENT_GOAL}])
+                                ctx.finished_game = True
+                            locations_to_send.append(location_id)
+                            # locations_to_remove.append(data)
+                            break
                     # for loc in locations_to_remove:
                     #     json_data["Locations"].remove(loc)
                     #     print_json(json_data, 'locations_cached.json', ctx)
@@ -192,12 +252,12 @@ async def game_watcher(ctx: SimsContext):
         await asyncio.sleep(0.5)
 
 
-def main():
+def main(args):
     async def _main():
         parser = get_base_parser(description="The Sims 4 Client, for text interfacing.")
-        args, rest = parser.parse_known_args()
+        _args, _rest = parser.parse_known_args(args)
 
-        ctx = SimsContext(args.connect, args.password)
+        ctx = SimsContext(_args.connect, _args.password)
         ctx.server_task = asyncio.create_task(server_loop(ctx), name="ServerLoop")
         watcher_task = asyncio.create_task(game_watcher(ctx), name="GameWatcher")
 
@@ -220,4 +280,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    main(None)
