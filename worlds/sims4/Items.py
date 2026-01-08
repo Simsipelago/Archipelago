@@ -5,6 +5,7 @@ from BaseClasses import Item, ItemClassification
 from .Names import SkillNames, JunkNames, UsefulNames
 from .Names.DLC import ExpansionNames, GamePackNames, StuffNames
 
+
 class ItemDict(TypedDict):
     classification: ItemClassification
     count: int
@@ -24,20 +25,28 @@ class Sims4Item(Item):
 
 skills_table: dict[int, ItemDict] = {}
 
+
+class SkillConfigError(ValueError):
+    """Raised when skill configuration is invalid."""
+
+
 def add_skill(skill_name: str, expansion: str, max_level: int) -> int:
+    if max_level < 2:
+        raise SkillConfigError(f"max_level must be at least 2, got {max_level}")
     if skills_table:
         skill_id = max(skills_table.keys()) + 1
     else:
         skill_id = 0x7334001
 
     skills_table[skill_id] = {
-        "name": f"{skill_name}",
+        "name": skill_name,
         "classification": ItemClassification.progression,
         "count": max_level - 2,
         "tech_type": "Skill",
         "expansion": expansion
         }
     return skill_id
+
 
 add_skill(SkillNames.base_skill_comedy, ExpansionNames.base, 10)
 add_skill(SkillNames.base_skill_guitar, ExpansionNames.base, 10)
@@ -80,7 +89,7 @@ add_skill(SkillNames.du_researchanddebate_skill, ExpansionNames.discover_univers
 add_skill(SkillNames.du_robotics_skill, ExpansionNames.discover_university, 10)
 add_skill(SkillNames.el_fabrication_skill, ExpansionNames.eco_lifestyle, 10)
 add_skill(SkillNames.el_juicefizzing_skill, ExpansionNames.eco_lifestyle, 5)
-add_skill(SkillNames.nk_knitting_skill,  StuffNames.nifty_knitting, 10)
+add_skill(SkillNames.nk_knitting_skill, StuffNames.nifty_knitting, 10)
 add_skill(SkillNames.sy_rock_climbing_skill, ExpansionNames.snowy_escape, 10)
 add_skill(SkillNames.sy_skiing_skill, ExpansionNames.snowy_escape, 10)
 add_skill(SkillNames.sy_snowboarding_skill, ExpansionNames.snowy_escape, 10)
@@ -97,7 +106,7 @@ add_skill(SkillNames.bnh_tattooing_skill, ExpansionNames.business_and_hobbies, 1
 add_skill(SkillNames.ebn_apothecary_skill, ExpansionNames.enchanted_by_nature, 10)
 add_skill(SkillNames.ebn_natural_living_skill, ExpansionNames.enchanted_by_nature, 10)
 
-useful_table = {
+useful_table: dict[int, ItemDict] = {
     0x733400FF: {'classification': ItemClassification.useful,
                  'count': 4,
                  'name': UsefulNames.skill_gain_boost,
@@ -106,7 +115,7 @@ useful_table = {
 
 }
 
-junk_table = {
+junk_table: dict[int, ItemDict] = {
     0x73340FFF: {'classification': ItemClassification.filler,
                  'count': 0,
                  'name': JunkNames.twothousand_simoleons,

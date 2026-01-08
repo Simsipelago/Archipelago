@@ -9,10 +9,6 @@ from .Names.DLC import ExpansionNames, GamePackNames, StuffNames
 class Sims4Location(Location):
     game: str = "The Sims 4"
 
-    def __init__(self, player: int, name: str, address: Optional[int], parent):
-        super().__init__(player, name, address, parent)
-        self.event = not address
-
 
 class Sims4LocationDict(TypedDict, total=False):
     name: str
@@ -26,6 +22,7 @@ class Sims4LocationData(NamedTuple):
 
 
 skill_locations_table: dict[int, Sims4LocationDict] = {}
+
 
 def add_skill_location(skill_name: str, expansion: str, max_level: int) -> int:
     if skill_locations_table:
@@ -41,6 +38,7 @@ def add_skill_location(skill_name: str, expansion: str, max_level: int) -> int:
             "expansion": expansion
         }
     return skill_id
+
 
 add_skill_location(SkillNames.base_skill_comedy, ExpansionNames.base, 10)
 add_skill_location(SkillNames.base_skill_guitar, ExpansionNames.base, 10)
@@ -83,7 +81,7 @@ add_skill_location(SkillNames.du_researchanddebate_skill, ExpansionNames.discove
 add_skill_location(SkillNames.du_robotics_skill, ExpansionNames.discover_university, 10)
 add_skill_location(SkillNames.el_fabrication_skill, ExpansionNames.eco_lifestyle, 10)
 add_skill_location(SkillNames.el_juicefizzing_skill, ExpansionNames.eco_lifestyle, 5)
-add_skill_location(SkillNames.nk_knitting_skill,  StuffNames.nifty_knitting, 10)
+add_skill_location(SkillNames.nk_knitting_skill, StuffNames.nifty_knitting, 10)
 add_skill_location(SkillNames.sy_rock_climbing_skill, ExpansionNames.snowy_escape, 10)
 add_skill_location(SkillNames.sy_skiing_skill, ExpansionNames.snowy_escape, 10)
 add_skill_location(SkillNames.sy_snowboarding_skill, ExpansionNames.snowy_escape, 10)
@@ -97,13 +95,13 @@ add_skill_location(SkillNames.lv_romance_skill, ExpansionNames.lovestruck, 10)
 add_skill_location(SkillNames.lnd_thanatology_skill, ExpansionNames.life_and_death, 5)
 add_skill_location(SkillNames.bnh_pottery_skill, ExpansionNames.business_and_hobbies, 10)
 add_skill_location(SkillNames.bnh_tattooing_skill, ExpansionNames.business_and_hobbies, 10)
-add_skill_location(SkillNames.ebn_apothecary_skill, ExpansionNames.enchanted_by_nature , 10)
-add_skill_location(SkillNames.ebn_natural_living_skill, ExpansionNames.enchanted_by_nature , 10)
+add_skill_location(SkillNames.ebn_apothecary_skill, ExpansionNames.enchanted_by_nature, 10)
+add_skill_location(SkillNames.ebn_natural_living_skill, ExpansionNames.enchanted_by_nature, 10)
 
 del add_skill_location
 
 
-careers_locations_table = {
+careers_locations_table: dict[int, Sims4LocationDict] = {
 
     0x73342001: {"name": f"{CareerNames.base_career_athlete_2}",
                  "category": "Athlete",
@@ -568,7 +566,7 @@ careers_locations_table = {
 
 }
 
-ptj_locations_table = {
+ptj_locations_table: dict[int, Sims4LocationDict] = {
 
     0x733420A2: {"name": f"{CareerNames.base_ptj_babysitter_2}",
                  "category": "Babysitter",
@@ -606,7 +604,7 @@ ptj_locations_table = {
                  "expansion": "base"},
 }
 
-aspiration_locations_table = {
+aspiration_locations_table: dict[int, Sims4LocationDict] = {
     0x73343000: {"name": f"{AspirationNames.base_aspiration_basic_trainer}",
                  "category": "Aspirations",
                  "expansion": "base"},
@@ -882,7 +880,7 @@ aspiration_locations_table = {
                  "expansion": "base"},
 }
 
-location_table = {
+location_table: dict[int, Sims4LocationDict] = {
     **skill_locations_table,
     **careers_locations_table,
     **aspiration_locations_table,
