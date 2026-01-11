@@ -11,7 +11,7 @@ from .Names import SkillNames
 from .Names.AspirationNames import *
 from .Names.EventNames import *
 from .Names.CareerNames import *
-from .Options import Goal, Sims4Options
+from .Options import Sims4Options
 
 if TYPE_CHECKING:
     from . import Sims4World
