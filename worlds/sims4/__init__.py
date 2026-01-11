@@ -11,7 +11,7 @@ from ..LauncherComponents import Component, components, Type, icon_paths, launch
 from .Locations import location_table, Sims4Location, skill_locations_table
 from .Items import item_table, Sims4Item, junk_table, filler_set
 from .Names import EventNames
-from .Options import AspirationGoal, Sims4Options
+from .Options import Goal, Sims4Options
 from .Regions import sims4_careers, sims4_aspiration_milestones
 from .Rules import set_rules
 from .Groups import location_name_groups, item_name_groups
@@ -59,28 +59,28 @@ class Sims4World(World, UTMixin):
     settings: ClassVar[Sims4Settings]
 
     GOAL_TO_EVENT_MAPPING: ClassVar[dict[int, tuple[str, str]]] = {
-        AspirationGoal.option_bodybuilder: (EventNames.bodybuilder, EventNames.bodybuilder_item),
-        AspirationGoal.option_painter_extraordinaire: (
+        Goal.option_bodybuilder: (EventNames.bodybuilder, EventNames.bodybuilder_item),
+        Goal.option_painter_extraordinaire: (
             EventNames.painter_extraordinaire, EventNames.painter_extraordinaire_item
         ),
-        AspirationGoal.option_bestselling_author: (EventNames.bestselling_author, EventNames.bestselling_author_item),
-        AspirationGoal.option_musical_genius: (EventNames.musical_genius, EventNames.musical_genius_item),
-        AspirationGoal.option_public_enemy: (EventNames.public_enemy, EventNames.public_enemy_item),
-        AspirationGoal.option_chief_of_mischief: (EventNames.chief_of_mischief, EventNames.chief_of_mischief_item),
-        AspirationGoal.option_master_chef: (EventNames.master_chef, EventNames.master_chef_item),
-        AspirationGoal.option_master_mixologist: (EventNames.master_mixologist, EventNames.master_mixologist_item),
-        AspirationGoal.option_renaissance_sim: (EventNames.renaissance_sim, EventNames.renaissance_sim_item),
-        AspirationGoal.option_nerd_brain: (EventNames.nerd_brain, EventNames.nerd_brain_item),
-        AspirationGoal.option_computer_whiz: (EventNames.computer_whiz, EventNames.computer_whiz_item),
-        AspirationGoal.option_serial_romantic: (EventNames.serial_romantic, EventNames.serial_romantic_item),
-        AspirationGoal.option_freelance_botanist: (EventNames.freelance_botanist, EventNames.freelance_botanist_item),
-        AspirationGoal.option_the_curator: (EventNames.the_curator, EventNames.the_curator_item),
-        AspirationGoal.option_angling_ace: (EventNames.angling_ace, EventNames.angling_ace_item),
-        AspirationGoal.option_joke_star: (EventNames.joke_star, EventNames.joke_star_item),
-        AspirationGoal.option_friend_of_the_world: (
+        Goal.option_bestselling_author: (EventNames.bestselling_author, EventNames.bestselling_author_item),
+        Goal.option_musical_genius: (EventNames.musical_genius, EventNames.musical_genius_item),
+        Goal.option_public_enemy: (EventNames.public_enemy, EventNames.public_enemy_item),
+        Goal.option_chief_of_mischief: (EventNames.chief_of_mischief, EventNames.chief_of_mischief_item),
+        Goal.option_master_chef: (EventNames.master_chef, EventNames.master_chef_item),
+        Goal.option_master_mixologist: (EventNames.master_mixologist, EventNames.master_mixologist_item),
+        Goal.option_renaissance_sim: (EventNames.renaissance_sim, EventNames.renaissance_sim_item),
+        Goal.option_nerd_brain: (EventNames.nerd_brain, EventNames.nerd_brain_item),
+        Goal.option_computer_whiz: (EventNames.computer_whiz, EventNames.computer_whiz_item),
+        Goal.option_serial_romantic: (EventNames.serial_romantic, EventNames.serial_romantic_item),
+        Goal.option_freelance_botanist: (EventNames.freelance_botanist, EventNames.freelance_botanist_item),
+        Goal.option_the_curator: (EventNames.the_curator, EventNames.the_curator_item),
+        Goal.option_angling_ace: (EventNames.angling_ace, EventNames.angling_ace_item),
+        Goal.option_joke_star: (EventNames.joke_star, EventNames.joke_star_item),
+        Goal.option_friend_of_the_world: (
             EventNames.friend_of_the_world, EventNames.friend_of_the_world_item
         ),
-        AspirationGoal.option_neighborly_advisor: (
+        Goal.option_neighborly_advisor: (
             EventNames.neighborly_advisor, EventNames.neighborly_advisor_item
         )
     }
