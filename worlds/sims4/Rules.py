@@ -8,8 +8,8 @@ from .Names.DLC import ExpansionNames, GamePackNames, StuffNames
 from ..generic.Rules import set_rule
 
 from .Names import SkillNames
+from .Names.EventNames import Aspiration
 from .Names.AspirationNames import *
-from .Names.EventNames import *
 from .Names.CareerNames import *
 from .Options import Sims4Options
 

@@ -1,36 +1,29 @@
-bodybuilder = "Completed Bodybuilder Aspiration"
-bodybuilder_item = "Completed Bodybuilder"
-painter_extraordinaire = "Completed Painter Extraordinaire Aspiration"
-painter_extraordinaire_item = "Completed Painter Extraordinaire"
-bestselling_author = "Completed Bestselling Author Aspiration"
-bestselling_author_item = "Completed Bestselling Author"
-musical_genius = "Completed Musical Genius Aspiration"
-musical_genius_item = "Completed Musical Genius"
-chief_of_mischief = "Completed Chief of Mischief Aspiration"
-chief_of_mischief_item = "Completed Chief of Mischief"
-public_enemy = "Completed Public Enemy Aspiration"
-public_enemy_item = "Completed Public Enemy"
-master_chef = "Completed Master Chef Aspiration"
-master_chef_item = "Completed Master Chef"
-master_mixologist = "Completed Master Mixologist Aspiration"
-master_mixologist_item = "Completed Master Mixologist"
-renaissance_sim = "Completed Renaissance Sim Aspiration"
-renaissance_sim_item = "Completed Renaissance Sim"
-nerd_brain = "Completed Nerd Brain Aspiration"
-nerd_brain_item = "Completed Nerd Brain"
-computer_whiz = "Completed Computer Whiz Aspiration"
-computer_whiz_item = "Completed Computer Whiz"
-serial_romantic = "Completed Serial Romantic Aspiration"
-serial_romantic_item = "Completed Serial Romantic"
-freelance_botanist = "Completed Freelance Botanist Aspiration"
-freelance_botanist_item = "Completed Freelance Botanist"
-the_curator = "Completed The Curator Aspiration"
-the_curator_item = "Completed The Curator"
-angling_ace = "Completed Angling Ace Aspiration"
-angling_ace_item = "Completed Angling Ace"
-joke_star = "Completed Joke Star Aspiration"
-joke_star_item = "Completed Joke Star"
-friend_of_the_world = "Completed Friend of the World Aspiration"
-friend_of_the_world_item = "Completed Friend of the World"
-neighborly_advisor = "Completed Neighborly Advisor Aspiration"
-neighborly_advisor_item = "Completed Neighborly Advisor"
+from enum import StrEnum
+
+class Aspiration(StrEnum):
+    BODYBUILDER = ("Completed Bodybuilder Aspiration", "Completed Bodybuilder")
+    PAINTER_EXTRAORDINAIRE = ("Completed Painter Extraordinaire Aspiration", "Completed Painter Extraordinaire")
+    BESTSELLING_AUTHOR = ("Completed Bestselling Author Aspiration", "Completed Bestselling Author")
+    MUSICAL_GENIUS = ("Completed Musical Genius Aspiration", "Completed Musical Genius")
+    CHIEF_OF_MISCHIEF = ("Completed Chief of Mischief Aspiration", "Completed Chief of Mischief")
+    PUBLIC_ENEMY = ("Completed Public Enemy Aspiration", "Completed Public Enemy")
+    MASTER_CHEF = ("Completed Master Chef Aspiration", "Completed Master Chef")
+    MASTER_MIXOLOGIST = ("Completed Master Mixologist Aspiration", "Completed Master Mixologist")
+    RENAISSANCE_SIM = ("Completed Renaissance Sim Aspiration", "Completed Renaissance Sim")
+    NERD_BRAIN = ("Completed Nerd Brain Aspiration", "Completed Nerd Brain")
+    COMPUTER_WHIZ = ("Completed Computer Whiz Aspiration", "Completed Computer Whiz")
+    SERIAL_ROMANTIC = ("Completed Serial Romantic Aspiration", "Completed Serial Romantic")
+    FREELANCE_BOTANIST = ("Completed Freelance Botanist Aspiration", "Completed Freelance Botanist")
+    THE_CURATOR = ("Completed The Curator Aspiration", "Completed The Curator")
+    ANGLING_ACE = ("Completed Angling Ace Aspiration", "Completed Angling Ace")
+    JOKE_STAR = ("Completed Joke Star Aspiration", "Completed Joke Star")
+    FRIEND_OF_THE_WORLD = ("Completed Friend of the World Aspiration", "Completed Friend of the World")
+    NEIGHBORLY_ADVISOR = ("Completed Neighborly Advisor Aspiration", "Completed Neighborly Advisor")
+
+    @property
+    def aspiration_name(self):
+        return self.value[0]
+
+    @property
+    def item_name(self):
+        return self.value[1]
