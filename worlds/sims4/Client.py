@@ -93,7 +93,7 @@ class SimsCommandProcessor(ClientCommandProcessor):
         p = sims_4_mods_path
         global mod_data_path
         if not p:
-            self.output("no path inputed")
+            self.output("No path provided")
         elif os.path.exists(os.path.join(p, 'mod_data', 's4ap')):
             self.output('Sims 4 mods folder found')
             mod_data_path = os.path.join(p, 'mod_data', 's4ap')
