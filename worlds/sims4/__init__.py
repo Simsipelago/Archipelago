@@ -146,11 +146,11 @@ class Sims4World(World, UTMixin):
         chosen_careers = sorted(self.options.career.value)
         goal = self.options.goal
         goal_value = goal.value
-        aspiration_key = goal.current_key
+        aspirations = self.options.aspiration.value
         for career_key in chosen_careers:
             for career in sims4_careers[career_key.lower().replace(" ", "_")]:
                 menu.locations.append(self.create_location(career, menu))
-        for aspiration in sims4_aspiration_milestones[aspiration_key]:
+        for aspiration in aspirations:
             menu.locations.append(self.create_location(aspiration, menu))
         used_dlc = set(
             self.options.expansion_packs.value |
