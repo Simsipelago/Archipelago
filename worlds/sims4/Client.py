@@ -92,11 +92,13 @@ class SimsCommandProcessor(ClientCommandProcessor):
         """Set the file path to the Sims 4 mods folder manually (if automatic detection fails)"""
         p = sims_4_mods_path
         global mod_data_path
-        if p == '':
-            self.output('no path inputed')
+        if not p:
+            self.output("no path inputed")
         elif os.path.exists(os.path.join(p, 'mod_data', 's4ap')):
             self.output('Sims 4 mods folder found')
             mod_data_path = os.path.join(p, 'mod_data', 's4ap')
+        elif not os.path.isabs(p):
+            self.output("Please enter the full path to the Sims 4 mods folder.\nFor example: C:\\Users\\Username\\Documents\\Electronic Arts\\The Sims 4\\Mods")
         else:
             self.ctx.gui_error(title='Sims 4 mods folder not found',
                                text=f'Make sure the file path you inputed is correct.')
