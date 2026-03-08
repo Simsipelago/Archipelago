@@ -174,7 +174,7 @@ def _bodybuilder(world: MultiWorld, player: int):
              lambda state: has_skill(state, SkillNames.base_skill_fitness, player, 6))
     set_rule(world.get_location(base_aspiration_bodybuilder, player),
              lambda state: has_skill(state, SkillNames.base_skill_fitness, player, 10))
-    set_rule(world.get_location(bodybuilder, player),
+    set_rule(world.get_location(Aspiration.BODYBUILDER.aspiration_name, player),
              lambda state: state.can_reach(world.get_location(base_aspiration_bodybuilder, player), player=player))
 
 def _painter_extraordinaire(world: MultiWorld, player: int):
@@ -184,7 +184,7 @@ def _painter_extraordinaire(world: MultiWorld, player: int):
              lambda state: has_skill(state, SkillNames.base_skill_painting, player, 6))
     set_rule(world.get_location(base_aspiration_painter_extraordinaire, player),
              lambda state: has_skill(state, SkillNames.base_skill_painting, player, 10))
-    set_rule(world.get_location(painter_extraordinaire, player),
+    set_rule(world.get_location(Aspiration.PAINTER_EXTRAORDINAIRE.aspiration_name, player),
              lambda state: state.can_reach(world.get_location(base_aspiration_painter_extraordinaire, player),
                                            player=player))
 
@@ -195,7 +195,7 @@ def _bestselling_author(world: MultiWorld, player: int):
              lambda state: has_skill(state, SkillNames.base_skill_writing, player, 6))
     set_rule(world.get_location(base_aspiration_bestselling_author, player),
              lambda state: has_skill(state, SkillNames.base_skill_writing, player, 10))
-    set_rule(world.get_location(bestselling_author, player),
+    set_rule(world.get_location(Aspiration.BESTSELLING_AUTHOR.aspiration_name, player),
              lambda state: state.can_reach(
                  world.get_location(base_aspiration_bestselling_author, player), player=player))
 
@@ -212,7 +212,7 @@ def _musical_genius(world: MultiWorld, player: int):
              lambda state: has_skill(state, SkillNames.base_skill_guitar, player, 10)
                            or has_skill(state, SkillNames.base_skill_violin, player, 10)
                            or has_skill(state, SkillNames.base_skill_piano, player, 10))
-    set_rule(world.get_location(musical_genius, player),
+    set_rule(world.get_location(Aspiration.MUSICAL_GENIUS.aspiration_name, player),
              lambda state: state.can_reach(
                  world.get_location(base_aspiration_musical_genius, player), player=player))
 
@@ -222,7 +222,7 @@ def _public_enemy(world: MultiWorld, player: int):
     set_rule(world.get_location(base_aspiration_public_enemy, player),
              lambda state: has_skill(state, SkillNames.base_skill_mischief, player, 8)
                            and has_skill(state, SkillNames.base_skill_programming, player, 4))
-    set_rule(world.get_location(public_enemy, player),
+    set_rule(world.get_location(Aspiration.PUBLIC_ENEMY.aspiration_name, player),
              lambda state: state.can_reach(
                  world.get_location(base_aspiration_public_enemy, player), player=player))
 
@@ -233,7 +233,7 @@ def _chief_of_mischief(world: MultiWorld, player: int):
              lambda state: has_skill(state, SkillNames.base_skill_mischief, player, 6))
     set_rule(world.get_location(base_aspiration_chief_of_mischief, player),
              lambda state: has_skill(state, SkillNames.base_skill_mischief, player, 10))
-    set_rule(world.get_location(chief_of_mischief, player),
+    set_rule(world.get_location(Aspiration.CHIEF_OF_MISCHIEF.aspiration_name, player),
              lambda state: state.can_reach(
                  world.get_location(base_aspiration_chief_of_mischief, player), player=player))
 
@@ -248,7 +248,7 @@ def _master_chef(world: MultiWorld, player: int):
                            or (has_skill(state, SkillNames.base_skill_gourmet, player, 5)
                                and has_skill(state, SkillNames.base_skill_mixology, player, 7)
                                and has_skill(state, SkillNames.base_skill_charisma, player, 4)))
-    set_rule(world.get_location(master_chef, player),
+    set_rule(world.get_location(Aspiration.MASTER_CHEF.aspiration_name, player),
              lambda state: state.can_reach(
                  world.get_location(base_aspiration_master_chef, player), player=player))
 
@@ -261,7 +261,7 @@ def _master_mixologist(world: MultiWorld, player: int):
     set_rule(world.get_location(base_aspiration_master_mixologist, player),
              lambda state: has_skill(state, SkillNames.base_skill_mixology, player, 10)
                            and has_skill(state, SkillNames.base_skill_cooking, player, 4))
-    set_rule(world.get_location(master_mixologist, player),
+    set_rule(world.get_location(Aspiration.MASTER_MIXOLOGIST.aspiration_name, player),
              lambda state: state.can_reach(
                  world.get_location(base_aspiration_master_mixologist, player), player=player))
 def _renaissance_sim(world: MultiWorld, player: int):
@@ -273,7 +273,7 @@ def _renaissance_sim(world: MultiWorld, player: int):
              lambda state: count_skills_over(3, state, player) >= 5)
     set_rule(world.get_location(base_aspiration_renaissance_sim, player),
              lambda state: count_skills_over(6, state, player) >= 6)
-    set_rule(world.get_location(renaissance_sim, player),
+    set_rule(world.get_location(Aspiration.RENAISSANCE_SIM.aspiration_name, player),
              lambda state: state.can_reach(
                  world.get_location(base_aspiration_renaissance_sim, player), player=player))
 
@@ -287,7 +287,7 @@ def _nerd_brain(world: MultiWorld, player: int):
     set_rule(world.get_location(base_aspiration_nerd_brain, player),
              lambda state: has_skill(state, SkillNames.base_skill_logic, player, 10)
                            and has_skill(state, SkillNames.base_skill_handiness, player, 5))
-    set_rule(world.get_location(nerd_brain, player),
+    set_rule(world.get_location(Aspiration.NERD_BRAIN.aspiration_name, player),
              lambda state: state.can_reach(
                  world.get_location(base_aspiration_nerd_brain, player), player=player))
 
@@ -299,7 +299,7 @@ def _computer_whiz(world: MultiWorld, player: int):
     set_rule(world.get_location(base_aspiration_computer_whiz, player),
              lambda state: has_skill(state, SkillNames.base_skill_programming, player, 7)
                            and has_skill(state, SkillNames.base_skill_video_gaming, player, 4))
-    set_rule(world.get_location(computer_whiz, player),
+    set_rule(world.get_location(Aspiration.COMPUTER_WHIZ.aspiration_name, player),
              lambda state: state.can_reach(
                  world.get_location(base_aspiration_computer_whiz, player), player=player))
 
@@ -310,7 +310,7 @@ def _serial_romantic(world: MultiWorld, player: int):
              lambda state: has_skill(state, SkillNames.base_skill_charisma, player, 6))
     set_rule(world.get_location(base_aspiration_serial_romantic, player),
              lambda state: has_skill(state, SkillNames.base_skill_charisma, player, 6))
-    set_rule(world.get_location(serial_romantic, player),
+    set_rule(world.get_location(Aspiration.SERIAL_ROMANTIC.aspiration_name, player),
              lambda state: state.can_reach(
                  world.get_location(base_aspiration_serial_romantic, player), player=player))
 
@@ -321,7 +321,7 @@ def _freelance_botanist (world: MultiWorld, player: int):
              lambda state: has_skill(state, SkillNames.base_skill_gardening, player, 6))
     set_rule(world.get_location(base_aspiration_freelance_botanist, player),
              lambda state: has_skill(state, SkillNames.base_skill_gardening, player, 10))
-    set_rule(world.get_location(freelance_botanist, player),
+    set_rule(world.get_location(Aspiration.FREELANCE_BOTANIST.aspiration_name, player),
              lambda state: state.can_reach(
                  world.get_location(base_aspiration_freelance_botanist, player), player=player))
 
@@ -332,7 +332,7 @@ def _angling_ace(world: MultiWorld, player: int):
              lambda state: has_skill(state, SkillNames.base_skill_fishing, player, 6))
     set_rule(world.get_location(base_aspiration_angling_ace, player),
              lambda state: has_skill(state, SkillNames.base_skill_fishing, player, 10))
-    set_rule(world.get_location(angling_ace, player),
+    set_rule(world.get_location(Aspiration.ANGLING_ACE.aspiration_name, player),
              lambda state: state.can_reach(
                  world.get_location(base_aspiration_angling_ace, player), player=player))
 
@@ -349,7 +349,7 @@ def _joke_star(world: MultiWorld, player: int):
              lambda state: has_skill(state, SkillNames.base_skill_comedy, player, 10)
                            and (has_skill(state, SkillNames.base_skill_guitar, player, 3)
                                 or has_skill(state, SkillNames.base_skill_violin, player, 3)))
-    set_rule(world.get_location(joke_star, player),
+    set_rule(world.get_location(Aspiration.JOKE_STAR.aspiration_name, player),
              lambda state: state.can_reach(
                  world.get_location(base_aspiration_joke_star, player), player=player))
 
@@ -360,14 +360,14 @@ def _friend_of_the_world(world: MultiWorld, player: int):
              lambda state: has_skill(state, SkillNames.base_skill_charisma, player, 6))
     set_rule(world.get_location(base_aspiration_friend_of_the_world, player),
              lambda state: has_skill(state, SkillNames.base_skill_charisma, player, 10))
-    set_rule(world.get_location(friend_of_the_world, player),
+    set_rule(world.get_location(Aspiration.FRIEND_OF_THE_WORLD.aspiration_name, player),
              lambda state: state.can_reach(
                  world.get_location(base_aspiration_friend_of_the_world, player), player=player))
 
 def _neighborly_advisor(world: MultiWorld, player: int):
     set_rule(world.get_location(base_aspiration_neighborly_advisor, player),
              lambda state: has_skill(state, SkillNames.base_skill_charisma, player, 7))
-    set_rule(world.get_location(neighborly_advisor, player),
+    set_rule(world.get_location(Aspiration.NEIGHBORLY_ADVISOR.aspiration_name, player),
              lambda state: state.can_reach(
                  world.get_location(base_aspiration_neighborly_advisor, player), player=player))
 
