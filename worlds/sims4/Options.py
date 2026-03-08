@@ -2,7 +2,7 @@ from dataclasses import dataclass
 
 from Options import Choice, PerGameCommonOptions, OptionSet, StartInventoryPool, Visibility
 
-from .Names import CareerNames
+from .Names import AspirationNames, CareerNames
 from .Names.DLC import ExpansionNames, GamePackNames, StuffNames, CASKitNames, BuildKitNames
 
 class Goal(Choice):
