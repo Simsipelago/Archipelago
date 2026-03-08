@@ -34,41 +34,41 @@ def set_completion_condition(world: MultiWorld, player: int, options: Sims4Optio
     goal_value = goal.value
 
     if goal_value == goal.option_bodybuilder:
-        world.completion_condition[player] = lambda state: state.has(bodybuilder_item, player)
+        world.completion_condition[player] = lambda state: state.has(Aspiration.BODYBUILDER.item_name, player)
     elif goal_value == goal.option_painter_extraordinaire:
-        world.completion_condition[player] = lambda state: state.has(painter_extraordinaire_item, player)
+        world.completion_condition[player] = lambda state: state.has(Aspiration.PAINTER_EXTRAORDINAIRE.item_name, player)
     elif goal_value == goal.option_bestselling_author:
-        world.completion_condition[player] = lambda state: state.has(bestselling_author_item, player)
+        world.completion_condition[player] = lambda state: state.has(Aspiration.BESTSELLING_AUTHOR.item_name, player)
     elif goal_value == goal.option_musical_genius:
-        world.completion_condition[player] = lambda state: state.has(musical_genius_item, player)
+        world.completion_condition[player] = lambda state: state.has(Aspiration.MUSICAL_GENIUS.item_name, player)
     elif goal_value == goal.option_public_enemy:
-        world.completion_condition[player] = lambda state: state.has(public_enemy_item, player)
+        world.completion_condition[player] = lambda state: state.has(Aspiration.PUBLIC_ENEMY.item_name, player)
     elif goal_value == goal.option_chief_of_mischief:
-        world.completion_condition[player] = lambda state: state.has(chief_of_mischief_item, player)
+        world.completion_condition[player] = lambda state: state.has(Aspiration.CHIEF_OF_MISCHIEF.item_name, player)
     elif goal_value == goal.option_master_chef:
-        world.completion_condition[player] = lambda state: state.has(master_chef_item, player)
+        world.completion_condition[player] = lambda state: state.has(Aspiration.MASTER_CHEF.item_name, player)
     elif goal_value == goal.option_master_mixologist:
-        world.completion_condition[player] = lambda state: state.has(master_mixologist_item, player)
+        world.completion_condition[player] = lambda state: state.has(Aspiration.MASTER_MIXOLOGIST.item_name, player)
     elif goal_value == goal.option_renaissance_sim:
-        world.completion_condition[player] = lambda state: state.has(renaissance_sim_item, player)
+        world.completion_condition[player] = lambda state: state.has(Aspiration.RENAISSANCE_SIM.item_name, player)
     elif goal_value == goal.option_nerd_brain:
-        world.completion_condition[player] = lambda state: state.has(nerd_brain_item, player)
+        world.completion_condition[player] = lambda state: state.has(Aspiration.NERD_BRAIN.item_name, player)
     elif goal_value == goal.option_computer_whiz:
-        world.completion_condition[player] = lambda state: state.has(computer_whiz_item, player)
+        world.completion_condition[player] = lambda state: state.has(Aspiration.COMPUTER_WHIZ.item_name, player)
     elif goal_value == goal.option_serial_romantic:
-        world.completion_condition[player] = lambda state: state.has(serial_romantic_item, player)
+        world.completion_condition[player] = lambda state: state.has(Aspiration.SERIAL_ROMANTIC.item_name, player)
     elif goal_value == goal.option_freelance_botanist:
-        world.completion_condition[player] = lambda state: state.has(freelance_botanist_item, player)
+        world.completion_condition[player] = lambda state: state.has(Aspiration.FREELANCE_BOTANIST.item_name, player)
     elif goal_value == goal.option_the_curator:
-        world.completion_condition[player] = lambda state: state.has(the_curator_item, player)
+        world.completion_condition[player] = lambda state: state.has(Aspiration.THE_CURATOR.item_name, player)
     elif goal_value == goal.option_angling_ace:
-        world.completion_condition[player] = lambda state: state.has(angling_ace_item, player)
+        world.completion_condition[player] = lambda state: state.has(Aspiration.ANGLING_ACE.item_name, player)
     elif goal_value == goal.option_joke_star:
-        world.completion_condition[player] = lambda state: state.has(joke_star_item, player)
+        world.completion_condition[player] = lambda state: state.has(Aspiration.JOKE_STAR.item_name, player)
     elif goal_value == goal.option_friend_of_the_world:
-        world.completion_condition[player] = lambda state: state.has(friend_of_the_world_item, player)
+        world.completion_condition[player] = lambda state: state.has(Aspiration.FRIEND_OF_THE_WORLD.item_name, player)
     elif goal_value == goal.option_neighborly_advisor:
-        world.completion_condition[player] = lambda state: state.has(neighborly_advisor_item, player)
+        world.completion_condition[player] = lambda state: state.has(Aspiration.NEIGHBORLY_ADVISOR.item_name, player)
 
 def set_skill_rules(world: MultiWorld, player: int, options: Sims4Options):
     skills = {
