@@ -16,7 +16,7 @@
   - Alternatively, if you are on Windows, you can double-click the APWorld to install it automatically. 
   - Additionally, you may not see the .apworld extension on the `sims4.apworld` file on certain operating systems. Windows is usually the primary culprit for this, so the double click method is more friendly to people who are a bit less tech-savvy. However, there are guides online that show you how to enable file extensions on Windows, that you can find through a cursory Google search. 
 - Follow the tutorial on [how to generate a game](https://archipelago.gg/tutorial/Archipelago/setup/en) from Archipelago's website.
-- Make sure you download both the `.ts4script` and `.package` files from the [Sims 4 Community Library](https://github.com/ColonolNutty/Sims4CommunityLibrary/releases/latest) and the [Sims 4 Archipelago Mod](https://github.com/Simsipelago/Sims4ArchipelagoMod/releases/latest).
+- Make sure you download both the `.ts4script` and `.package` files from the [Sims 4 Community Library](https://github.com/DeviantGameMods/Sims4CommunityLibrary/releases/latest) and the [Sims 4 Archipelago Mod](https://github.com/Simsipelago/Sims4ArchipelagoMod/releases/latest).
 - You will also need to download the [Lot 51 Core Library](https://lot51.cc/mods/core-library). 
 - Install all the downloaded mods to your Mods folder, which is usually located in `Documents/Electronic Arts/The Sims 4/Mods`.
 
