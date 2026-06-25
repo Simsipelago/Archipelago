@@ -78,6 +78,7 @@ class ExpansionPacks(OptionSet):
     - Cottage Living"""
 
     display_name = "expansion_packs"
+    visibility = Visibility.none
     valid_keys = {ExpansionNames.get_to_work, ExpansionNames.get_together, ExpansionNames.city_living,
                   ExpansionNames.cats_and_dogs, ExpansionNames.seasons, ExpansionNames.get_famous,
                   ExpansionNames.island_living, ExpansionNames.discover_university, ExpansionNames.eco_lifestyle,
@@ -101,6 +102,7 @@ class GamePacks(OptionSet):
     - My Wedding Stories
     - Werewolves"""
     display_name = "game_packs"
+    visibility = Visibility.none
     valid_keys = {GamePackNames.outdoor_retreat, GamePackNames.spa_day, GamePackNames.dine_out,
                   GamePackNames.vampires, GamePackNames.parenthood, GamePackNames.jungle_adventure,
                   GamePackNames.stranger_ville, GamePackNames.realm_of_magic, GamePackNames.dream_home_decorator,
@@ -130,6 +132,7 @@ class StuffPacks(OptionSet):
     - Home Chef Hustle
     - Crystal Creations"""
     display_name = "stuff_packs"
+    visibility = Visibility.none
     valid_keys = {StuffNames.luxury_party, StuffNames.perfect_patio, StuffNames.cool_kitchen,
                   StuffNames.spooky, StuffNames.movie_hangout, StuffNames.romantic_garden,
                   StuffNames.kids_room, StuffNames.backyard, StuffNames.vintage_glamour,
