@@ -46,6 +46,10 @@ def print_json(obj: object, name: str, ctx: SimsContext):
         with open(full_path, "w") as f:
             json.dump(obj, f)
 
+def normalize_goal_key(location_name: str) -> str:
+    return location_name.split("(", 1)[0].strip().replace(" ", "_").lower()
+
+
 mtime = None
 
 
@@ -224,30 +228,30 @@ async def game_watcher(ctx: SimsContext):
             await ctx.send_msgs(sync_msg)
             ctx.syncing = False
         if ctx.server is not None and ctx.slot is not None:
+            checked_locations = set()
             json_data = load_json('locations_cached.json')
             if json_data is not None:
                 locations_to_send = []
                 if "Locations" in json_data and json_data["Locations"] is not None and json_data["Seed"] == ctx.seed_name:
-                    # locations_to_remove = []
-
                     checked_locations = set(json_data["Locations"])
 
                     for location_id in ctx.missing_locations:
                         location_current_name = ctx.location_names.lookup_in_game(location_id)
                         if location_current_name in checked_locations:
-                            if ctx.goal == location_current_name.split("(", 1)[0].strip().replace(" ", "_").lower() and not ctx.finished_game:
-                                await SimsContext.send_msgs(ctx, [
-                                    {"cmd": "StatusUpdate", "status": ClientStatus.CLIENT_GOAL}])
-                                ctx.finished_game = True
                             locations_to_send.append(location_id)
-                            # locations_to_remove.append(data)
-                            break
-                    # for loc in locations_to_remove:
-                    #     json_data["Locations"].remove(loc)
-                    #     print_json(json_data, 'locations_cached.json', ctx)
                 if locations_to_send:
                     locations_to_send = await SimsContext.send_msgs(ctx,
                                             [{"cmd": "LocationChecks", "locations": locations_to_send}])
+            if not ctx.finished_game and ctx.goal is not None:
+                goal_location_ids = {location_id for location_id in ctx.server_locations if
+                                     normalize_goal_key(ctx.location_names.lookup_in_game(location_id)) == ctx.goal}
+                goal_complete = bool(goal_location_ids & ctx.checked_locations) or any(
+                    ctx.location_names.lookup_in_game(location_id) in checked_locations
+                    for location_id in goal_location_ids)
+                if goal_complete:
+                    await SimsContext.send_msgs(ctx, [
+                        {"cmd": "StatusUpdate", "status": ClientStatus.CLIENT_GOAL}])
+                    ctx.finished_game = True
             json_data = load_json('sync.json')
             if json_data is not None:
                 if json_data:
