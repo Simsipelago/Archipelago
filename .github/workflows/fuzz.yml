@@ -10,7 +10,7 @@ jobs:
       - uses: Eijebong/ap-actions/fuzz@main
         with:
           apworld-path: worlds/sims4
-          ap-version: '0.6.1'
+          ap-version: '0.6.7'
           python-version: '3.12'
           runs: 500 # This is optional
           yamls-per-run: 1 # This is optional
