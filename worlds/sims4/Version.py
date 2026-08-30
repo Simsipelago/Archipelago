@@ -1,3 +1,12 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at https://mozilla.org/MPL/2.0/.
+#
+# Alternatively, this file may be used and redistributed under the terms
+# of the 3-Clause BSD License as published in the repository's LICENSE-BSD file.
+#
+# Copyright (c) 2026 Benny Dreamly. All rights reserved.
+
 VERSION: tuple[int, int, int] | tuple[int, int, int, str] = (2, 0, 1)
 
 
