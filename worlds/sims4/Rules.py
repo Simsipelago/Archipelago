@@ -797,6 +797,11 @@ CAREER_RULES = {
 
 def set_career_rules(world: MultiWorld, player: int, options: Sims4Options):
     # TODO relearn how the career locations send, and then refactor this to use has_skill
+    """
+    Career locations appear to be sent upon receiving a promotion in game.
+    Example: base_career_writer_4 (Advice Columnist (Writer 4) is sent upon being promoted from
+    Freelance Article Writer (Writer 3) to Advice Columnist.
+    """
     career = options.career
 
     for career_name, handler in CAREER_RULES.items():
