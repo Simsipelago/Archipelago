@@ -796,11 +796,13 @@ CAREER_RULES = {
 }
 
 def set_career_rules(world: MultiWorld, player: int, options: Sims4Options):
-    # TODO relearn how the career locations send, and then refactor this to use has_skill
+    # TODO refactor the remaining career rules to use has_skill
     """
-    Career locations appear to be sent upon receiving a promotion in game.
-    Example: base_career_writer_4 (Advice Columnist (Writer 4) is sent upon being promoted from
-    Freelance Article Writer (Writer 3) to Advice Columnist.
+    Career locations are sent by the mod once per promotion in game (see the mod's
+    career_event_dispatcher.py). The level in the location name is the level promoted to,
+    so a check's rule must use the skill levels the game requires for that promotion.
+    Example: base_career_writer_4 (Advice Columnist (Writer 4)) is sent upon being promoted
+    from Freelance Article Writer (Writer 3) to Advice Columnist.
     """
     career = options.career
 
