@@ -851,6 +851,12 @@ def count_skills_over(threshold: int, state, player) -> int:
 
 def has_skill(state: CollectionState, skill: str, player: int, skill_level: int) -> bool:
     # determines how many skill items are required based on the skill level passed into the function
+    """
+    Design Decision:
+    Skill items in the pool represent progression milestones beyond level 2.
+    Therefore, level N requires (N - 2) skill items.
+    Example: Level 3 requires 1 item, Level 10 requires 8 items.
+    """
     skills_required: int = skill_level - 2
     return state.has(skill, player, skills_required)
 
