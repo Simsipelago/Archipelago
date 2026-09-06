@@ -441,31 +441,38 @@ def _career_astronaut(world: MultiWorld, player: int):
              lambda state: has_skill(state, SkillNames.base_skill_logic, player, 5)
                            and has_skill(state, SkillNames.base_skill_fitness, player, 4))
     set_rule(world.get_location(CareerNames.base_career_astronaut_6, player),
-             lambda state: has_skill(state, SkillNames.base_skill_fitness, player, 6))
+             lambda state: has_skill(state, SkillNames.base_skill_logic, player, 5)
+                           and has_skill(state, SkillNames.base_skill_fitness, player, 6))
     set_rule(world.get_location(CareerNames.base_career_astronaut_7, player),
              lambda state: has_skill(state, SkillNames.base_skill_logic, player, 6)
                            and has_skill(state, SkillNames.base_skill_fitness, player, 7))
 
     # Branch A: Space Ranger
     set_rule(world.get_location(CareerNames.base_career_astronaut_8A, player),
-             lambda state: has_skill(state, SkillNames.base_skill_rocket_science, player, 2)
+             lambda state: has_skill(state, SkillNames.base_skill_logic, player, 6)
+                           and has_skill(state, SkillNames.base_skill_rocket_science, player, 2)
                            and has_skill(state, SkillNames.base_skill_fitness, player, 8))
     set_rule(world.get_location(CareerNames.base_career_astronaut_9A, player),
-             lambda state: has_skill(state, SkillNames.base_skill_rocket_science, player, 4)
+             lambda state: has_skill(state, SkillNames.base_skill_logic, player, 6)
+                           and has_skill(state, SkillNames.base_skill_rocket_science, player, 4)
                            and has_skill(state, SkillNames.base_skill_fitness, player, 10))
     set_rule(world.get_location(CareerNames.base_career_astronaut_10A, player),
-             lambda state: has_skill(state, SkillNames.base_skill_rocket_science, player, 4)
+             lambda state: has_skill(state, SkillNames.base_skill_logic, player, 6)
+                           and has_skill(state, SkillNames.base_skill_rocket_science, player, 4)
                            and has_skill(state, SkillNames.base_skill_fitness, player, 10))
 
     # Branch B: Interstellar Smuggler
     set_rule(world.get_location(CareerNames.base_career_astronaut_8B, player),
-             lambda state: has_skill(state, SkillNames.base_skill_rocket_science, player, 2)
+             lambda state: has_skill(state, SkillNames.base_skill_logic, player, 6)
+                           and has_skill(state, SkillNames.base_skill_rocket_science, player, 2)
                            and has_skill(state, SkillNames.base_skill_fitness, player, 8))
     set_rule(world.get_location(CareerNames.base_career_astronaut_9B, player),
-             lambda state: has_skill(state, SkillNames.base_skill_rocket_science, player, 4)
+             lambda state: has_skill(state, SkillNames.base_skill_logic, player, 6)
+                           and has_skill(state, SkillNames.base_skill_rocket_science, player, 4)
                            and has_skill(state, SkillNames.base_skill_fitness, player, 10))
     set_rule(world.get_location(CareerNames.base_career_astronaut_10B, player),
-             lambda state: has_skill(state, SkillNames.base_skill_rocket_science, player, 4)
+             lambda state: has_skill(state, SkillNames.base_skill_logic, player, 6)
+                           and has_skill(state, SkillNames.base_skill_rocket_science, player, 4)
                            and has_skill(state, SkillNames.base_skill_fitness, player, 10))
 
 def _career_business(world: MultiWorld, player: int):
