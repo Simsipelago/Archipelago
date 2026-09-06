@@ -665,38 +665,44 @@ def _career_painter(world: MultiWorld, player: int):
              lambda state: has_skill(state, SkillNames.base_skill_painting, player, 10)
                            and has_skill(state, SkillNames.base_skill_charisma, player, 6))
 def _career_secret_agent(world: MultiWorld, player: int):
+    # Base branch
     set_rule(world.get_location(CareerNames.base_career_secret_agent_4, player),
-             lambda state: state.has(SkillNames.base_skill_logic, player, count=1)
-                           and state.has(SkillNames.base_skill_charisma, player, count=1))
+             lambda state: has_skill(state, SkillNames.base_skill_logic, player, 3)
+                           and has_skill(state, SkillNames.base_skill_charisma, player, 3))
     set_rule(world.get_location(CareerNames.base_career_secret_agent_5, player),
-             lambda state: state.has(SkillNames.base_skill_logic, player, count=1)
-                           and state.has(SkillNames.base_skill_charisma, player, count=1))
+             lambda state: has_skill(state, SkillNames.base_skill_logic, player, 5)
+                           and has_skill(state, SkillNames.base_skill_charisma, player, 5))
     set_rule(world.get_location(CareerNames.base_career_secret_agent_6, player),
-             lambda state: state.has(SkillNames.base_skill_logic, player, count=3)
-                           and state.has(SkillNames.base_skill_charisma, player, count=3))
+             lambda state: has_skill(state, SkillNames.base_skill_logic, player, 5)
+                           and has_skill(state, SkillNames.base_skill_charisma, player, 5))
     set_rule(world.get_location(CareerNames.base_career_secret_agent_7, player),
-             lambda state: state.has(SkillNames.base_skill_logic, player, count=3)
-                           and state.has(SkillNames.base_skill_charisma, player, count=3))
+             lambda state: has_skill(state, SkillNames.base_skill_logic, player, 6)
+                           and has_skill(state, SkillNames.base_skill_charisma, player, 6))
+
+    # Branch A: Diamond Agent
     set_rule(world.get_location(CareerNames.base_career_secret_agent_8A, player),
-             lambda state: state.has(SkillNames.base_skill_logic, player, count=4)
-                           and state.has(SkillNames.base_skill_charisma, player, count=4))
-    set_rule(world.get_location(CareerNames.base_career_secret_agent_8B, player),
-             lambda state: state.has(SkillNames.base_skill_logic, player, count=4)
-                           and state.has(SkillNames.base_skill_charisma, player, count=4))
+             lambda state: has_skill(state, SkillNames.base_skill_logic, player, 8)
+                           and has_skill(state, SkillNames.base_skill_charisma, player, 7))
     set_rule(world.get_location(CareerNames.base_career_secret_agent_9A, player),
-             lambda state: state.has(SkillNames.base_skill_logic, player, count=6)
-                           and state.has(SkillNames.base_skill_charisma, player, count=5))
+             lambda state: has_skill(state, SkillNames.base_skill_logic, player, 10)
+                           and has_skill(state, SkillNames.base_skill_charisma, player, 8))
     set_rule(world.get_location(CareerNames.base_career_secret_agent_10A, player),
-             lambda state: state.has(SkillNames.base_skill_logic, player, count=8)
-                           and state.has(SkillNames.base_skill_charisma, player, count=6))
+             lambda state: has_skill(state, SkillNames.base_skill_logic, player, 10)
+                           and has_skill(state, SkillNames.base_skill_charisma, player, 8))
+
+    # Branch B: Villain
+    set_rule(world.get_location(CareerNames.base_career_secret_agent_8B, player),
+             lambda state: has_skill(state, SkillNames.base_skill_logic, player, 8)
+                           and has_skill(state, SkillNames.base_skill_mischief, player, 2))
     set_rule(world.get_location(CareerNames.base_career_secret_agent_9B, player),
-             lambda state: state.has(SkillNames.base_skill_logic, player, count=6))
+             lambda state: has_skill(state, SkillNames.base_skill_logic, player, 10)
+                           and has_skill(state, SkillNames.base_skill_mischief, player, 4))
     set_rule(world.get_location(CareerNames.base_career_secret_agent_10B, player),
-             lambda state: state.has(SkillNames.base_skill_logic, player, count=8)
-                           and state.has(SkillNames.base_skill_mischief, player, count=2))
+             lambda state: has_skill(state, SkillNames.base_skill_logic, player, 10)
+                           and has_skill(state, SkillNames.base_skill_mischief, player, 6))
     set_rule(world.get_location(CareerNames.base_career_secret_agent_11B, player),
-             lambda state: state.has(SkillNames.base_skill_logic, player, count=8)
-                           and state.has(SkillNames.base_skill_mischief, player, count=4))
+             lambda state: has_skill(state, SkillNames.base_skill_logic, player, 10)
+                           and has_skill(state, SkillNames.base_skill_mischief, player, 6))
 def _career_style_influencer(world: MultiWorld, player: int):
     set_rule(world.get_location(CareerNames.base_career_style_influencer_4, player),
              lambda state: state.has(SkillNames.base_skill_writing, player, count=1))
