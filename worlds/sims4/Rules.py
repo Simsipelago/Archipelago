@@ -704,52 +704,60 @@ def _career_secret_agent(world: MultiWorld, player: int):
              lambda state: has_skill(state, SkillNames.base_skill_logic, player, 10)
                            and has_skill(state, SkillNames.base_skill_mischief, player, 6))
 def _career_style_influencer(world: MultiWorld, player: int):
+    # Base branch
     set_rule(world.get_location(CareerNames.base_career_style_influencer_4, player),
-             lambda state: state.has(SkillNames.base_skill_writing, player, count=1))
+             lambda state: has_skill(state, SkillNames.base_skill_writing, player, 4)
+                           and has_skill(state, SkillNames.base_skill_photography, player, 2))
     set_rule(world.get_location(CareerNames.base_career_style_influencer_5, player),
-             lambda state: state.has(SkillNames.base_skill_writing, player, count=2))
+             lambda state: has_skill(state, SkillNames.base_skill_writing, player, 5)
+                           and has_skill(state, SkillNames.base_skill_painting, player, 3)
+                           and has_skill(state, SkillNames.base_skill_charisma, player, 3))
+
+    # Branch A: Stylist
     set_rule(world.get_location(CareerNames.base_career_style_influencer_6A, player),
-             lambda state: state.has(SkillNames.base_skill_writing, player, count=3)
-                           and state.has(SkillNames.base_skill_charisma, player, count=1)
-                           and state.has(SkillNames.base_skill_painting, player, count=1))
+             lambda state: has_skill(state, SkillNames.base_skill_writing, player, 6)
+                           and has_skill(state, SkillNames.base_skill_charisma, player, 6)
+                           and has_skill(state, SkillNames.base_skill_painting, player, 6)
+                           and has_skill(state, SkillNames.base_skill_photography, player, 6))
     set_rule(world.get_location(CareerNames.base_career_style_influencer_7A, player),
-             lambda state: state.has(SkillNames.base_skill_writing, player, count=4)
-                           and state.has(SkillNames.base_skill_charisma, player, count=3)
-                           and state.has(SkillNames.base_skill_painting, player, count=2)
-                           and state.has(SkillNames.base_skill_photography, player, count=1))
+             lambda state: has_skill(state, SkillNames.base_skill_writing, player, 7)
+                           and has_skill(state, SkillNames.base_skill_charisma, player, 6)
+                           and has_skill(state, SkillNames.base_skill_painting, player, 5))
     set_rule(world.get_location(CareerNames.base_career_style_influencer_8A, player),
-             lambda state: state.has(SkillNames.base_skill_writing, player, count=5)
-                           and state.has(SkillNames.base_skill_charisma, player, count=4)
-                           and state.has(SkillNames.base_skill_painting, player, count=3))
+             lambda state: has_skill(state, SkillNames.base_skill_writing, player, 8)
+                           and has_skill(state, SkillNames.base_skill_charisma, player, 7)
+                           and has_skill(state, SkillNames.base_skill_painting, player, 6))
     set_rule(world.get_location(CareerNames.base_career_style_influencer_9A, player),
-             lambda state: state.has(SkillNames.base_skill_writing, player, count=6)
-                           and state.has(SkillNames.base_skill_charisma, player, count=5)
-                           and state.has(SkillNames.base_skill_painting, player, count=6))
+             lambda state: has_skill(state, SkillNames.base_skill_writing, player, 9)
+                           and has_skill(state, SkillNames.base_skill_charisma, player, 8)
+                           and has_skill(state, SkillNames.base_skill_painting, player, 7))
     set_rule(world.get_location(CareerNames.base_career_style_influencer_10A, player),
-             lambda state: state.has(SkillNames.base_skill_writing, player, count=7)
-                           and state.has(SkillNames.base_skill_charisma, player, count=6)
-                           and state.has(SkillNames.base_skill_painting, player, count=5))
+             lambda state: has_skill(state, SkillNames.base_skill_charisma, player, 9)
+                           and has_skill(state, SkillNames.base_skill_painting, player, 8)
+                           and has_skill(state, SkillNames.base_skill_photography, player, 4))
+
+    # Branch B: Trend Setter
     set_rule(world.get_location(CareerNames.base_career_style_influencer_6B, player),
-             lambda state: state.has(SkillNames.base_skill_writing, player, count=3)
-                           and state.has(SkillNames.base_skill_charisma, player, count=1)
-                           and state.has(SkillNames.base_skill_painting, player, count=1))
+             lambda state: has_skill(state, SkillNames.base_skill_writing, player, 6)
+                           and has_skill(state, SkillNames.base_skill_charisma, player, 5)
+                           and has_skill(state, SkillNames.base_skill_painting, player, 4)
+                           and has_skill(state, SkillNames.base_skill_photography, player, 3))
     set_rule(world.get_location(CareerNames.base_career_style_influencer_7B, player),
-             lambda state: state.has(SkillNames.base_skill_writing, player, count=4)
-                           and state.has(SkillNames.base_skill_charisma, player, count=3)
-                           and state.has(SkillNames.base_skill_painting, player, count=2)
-                           and state.has(SkillNames.base_skill_photography, player, count=1))
+             lambda state: has_skill(state, SkillNames.base_skill_writing, player, 7)
+                           and has_skill(state, SkillNames.base_skill_charisma, player, 6)
+                           and has_skill(state, SkillNames.base_skill_painting, player, 5))
     set_rule(world.get_location(CareerNames.base_career_style_influencer_8B, player),
-             lambda state: state.has(SkillNames.base_skill_writing, player, count=5)
-                           and state.has(SkillNames.base_skill_charisma, player, count=4)
-                           and state.has(SkillNames.base_skill_painting, player, count=3))
+             lambda state: has_skill(state, SkillNames.base_skill_writing, player, 8)
+                           and has_skill(state, SkillNames.base_skill_charisma, player, 7)
+                           and has_skill(state, SkillNames.base_skill_painting, player, 6))
     set_rule(world.get_location(CareerNames.base_career_style_influencer_9B, player),
-             lambda state: state.has(SkillNames.base_skill_writing, player, count=6)
-                           and state.has(SkillNames.base_skill_charisma, player, count=5)
-                           and state.has(SkillNames.base_skill_painting, player, count=6))
+             lambda state: has_skill(state, SkillNames.base_skill_writing, player, 9)
+                           and has_skill(state, SkillNames.base_skill_charisma, player, 8)
+                           and has_skill(state, SkillNames.base_skill_painting, player, 7))
     set_rule(world.get_location(CareerNames.base_career_style_influencer_10B, player),
-             lambda state: state.has(SkillNames.base_skill_writing, player, count=7)
-                           and state.has(SkillNames.base_skill_charisma, player, count=6)
-                           and state.has(SkillNames.base_skill_painting, player, count=5))
+             lambda state: has_skill(state, SkillNames.base_skill_charisma, player, 9)
+                           and has_skill(state, SkillNames.base_skill_painting, player, 8)
+                           and has_skill(state, SkillNames.base_skill_photography, player, 4))
 def _career_tech_guru(world: MultiWorld, player: int):
     # TODO check project manager career logic https://discord.com/channels/731205301247803413/1079002955262480424/1403764728177758252
     # Main Branch
