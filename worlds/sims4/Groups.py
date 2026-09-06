@@ -1,3 +1,14 @@
+# SPDX-License-Identifier: MPL-2.0 OR BSD-3-Clause
+#
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at https://mozilla.org/MPL/2.0/.
+#
+# Alternatively, this file may be used and redistributed under the terms
+# of the 3-Clause BSD License as published in the repository's LICENSE-BSD file.
+#
+# Copyright (c) 2026 Benny Dreamly. All rights reserved.
+
 location_name_groups: dict[str, set[str]] = {
     "Writing": {f"Writing Skill {i}" for i in range(2, 11)},
     "Charisma": {f"Charisma Skill {i}" for i in range(2, 11)},
