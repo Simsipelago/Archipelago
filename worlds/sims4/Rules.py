@@ -543,47 +543,44 @@ def _career_criminal(world: MultiWorld, player: int):
              lambda state: has_skill(state, SkillNames.base_skill_mischief, player, 10)
                            and has_skill(state, SkillNames.base_skill_programming, player, 8))
 def _career_culinary(world: MultiWorld, player: int):
+    # Base branch
     set_rule(world.get_location(CareerNames.base_career_culinary_5, player),
-             lambda state: state.has(SkillNames.base_skill_cooking, player, count=1)
-                           and state.has(SkillNames.base_skill_mixology, player, count=1))
+             lambda state: has_skill(state, SkillNames.base_skill_cooking, player, 4)
+                           and has_skill(state, SkillNames.base_skill_mixology, player, 4))
+
+    # Branch A: Chef
     set_rule(world.get_location(CareerNames.base_career_culinary_6A, player),
-             lambda state: state.has(SkillNames.base_skill_cooking, player, count=2)
-                           and state.has(SkillNames.base_skill_mixology, player, count=2))
-    set_rule(world.get_location(CareerNames.base_career_culinary_6B, player),
-             lambda state: state.has(SkillNames.base_skill_cooking, player, count=2)
-                           and state.has(SkillNames.base_skill_mixology, player, count=2))
+             lambda state: has_skill(state, SkillNames.base_skill_cooking, player, 6)
+                           and has_skill(state, SkillNames.base_skill_gourmet, player, 2))
     set_rule(world.get_location(CareerNames.base_career_culinary_7A, player),
-             lambda state: state.has(SkillNames.base_skill_cooking, player, count=4)
-                           and state.has(SkillNames.base_skill_gourmet, player, count=0)
-                           and state.has(SkillNames.base_skill_mixology, player, count=2))
+             lambda state: has_skill(state, SkillNames.base_skill_cooking, player, 7)
+                           and has_skill(state, SkillNames.base_skill_gourmet, player, 4))
     set_rule(world.get_location(CareerNames.base_career_culinary_8A, player),
-             lambda state: state.has(SkillNames.base_skill_cooking, player, count=6)
-                           and state.has(SkillNames.base_skill_gourmet, player, count=4)
-                           and state.has(SkillNames.base_skill_mixology, player, count=2))
+             lambda state: has_skill(state, SkillNames.base_skill_cooking, player, 8)
+                           and has_skill(state, SkillNames.base_skill_gourmet, player, 6))
     set_rule(world.get_location(CareerNames.base_career_culinary_9A, player),
-             lambda state: state.has(SkillNames.base_skill_cooking, player, count=6)
-                           and state.has(SkillNames.base_skill_gourmet, player, count=4)
-                           and state.has(SkillNames.base_skill_mixology, player, count=2))
+             lambda state: has_skill(state, SkillNames.base_skill_cooking, player, 10)
+                           and has_skill(state, SkillNames.base_skill_gourmet, player, 8))
     set_rule(world.get_location(CareerNames.base_career_culinary_10A, player),
-             lambda state: state.has(SkillNames.base_skill_cooking, player, count=8)
-                           and state.has(SkillNames.base_skill_gourmet, player, count=6)
-                           and state.has(SkillNames.base_skill_mixology, player, count=2))
+             lambda state: has_skill(state, SkillNames.base_skill_cooking, player, 10)
+                           and has_skill(state, SkillNames.base_skill_gourmet, player, 8))
+
+    # Branch B: Mixologist
+    set_rule(world.get_location(CareerNames.base_career_culinary_6B, player),
+             lambda state: has_skill(state, SkillNames.base_skill_mixology, player, 5)
+                           and has_skill(state, SkillNames.base_skill_charisma, player, 2))
     set_rule(world.get_location(CareerNames.base_career_culinary_7B, player),
-             lambda state: state.has(SkillNames.base_skill_mixology, player, count=3)
-                           and state.has(SkillNames.base_skill_charisma, player, count=0)
-                           and state.has(SkillNames.base_skill_cooking, player, count=2))
+             lambda state: has_skill(state, SkillNames.base_skill_mixology, player, 7)
+                           and has_skill(state, SkillNames.base_skill_charisma, player, 4))
     set_rule(world.get_location(CareerNames.base_career_culinary_8B, player),
-             lambda state: state.has(SkillNames.base_skill_mixology, player, count=5)
-                           and state.has(SkillNames.base_skill_charisma, player, count=2)
-                           and state.has(SkillNames.base_skill_cooking, player, count=2))
+             lambda state: has_skill(state, SkillNames.base_skill_mixology, player, 8)
+                           and has_skill(state, SkillNames.base_skill_charisma, player, 6))
     set_rule(world.get_location(CareerNames.base_career_culinary_9B, player),
-             lambda state: state.has(SkillNames.base_skill_mixology, player, count=6)
-                           and state.has(SkillNames.base_skill_charisma, player, count=4)
-                           and state.has(SkillNames.base_skill_cooking, player, count=2))
+             lambda state: has_skill(state, SkillNames.base_skill_mixology, player, 10)
+                           and has_skill(state, SkillNames.base_skill_charisma, player, 8))
     set_rule(world.get_location(CareerNames.base_career_culinary_10B, player),
-             lambda state: state.has(SkillNames.base_skill_mixology, player, count=8)
-                           and state.has(SkillNames.base_skill_charisma, player, count=6)
-                           and state.has(SkillNames.base_skill_cooking, player, count=2))
+             lambda state: has_skill(state, SkillNames.base_skill_mixology, player, 10)
+                           and has_skill(state, SkillNames.base_skill_charisma, player, 8))
 
 def _career_entertainer(world: MultiWorld, player: int):
     set_rule(world.get_location(CareerNames.base_career_entertainer_5A, player),
