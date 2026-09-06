@@ -796,7 +796,14 @@ CAREER_RULES = {
 }
 
 def set_career_rules(world: MultiWorld, player: int, options: Sims4Options):
-    # TODO relearn how the career locations send, and then refactor this to use has_skill
+    # TODO refactor the remaining career rules to use has_skill
+    """
+    Career locations are sent by the mod once per promotion in game (see the mod's
+    career_event_dispatcher.py). The level in the location name is the level promoted to,
+    so a check's rule must use the skill levels the game requires for that promotion.
+    Example: base_career_writer_4 (Advice Columnist (Writer 4)) is sent upon being promoted
+    from Freelance Article Writer (Writer 3) to Advice Columnist.
+    """
     career = options.career
 
     for career_name, handler in CAREER_RULES.items():
@@ -851,6 +858,12 @@ def count_skills_over(threshold: int, state, player) -> int:
 
 def has_skill(state: CollectionState, skill: str, player: int, skill_level: int) -> bool:
     # determines how many skill items are required based on the skill level passed into the function
+    """
+    Design Decision:
+    Skill items in the pool represent progression milestones beyond level 2.
+    Therefore, level N requires (N - 2) skill items.
+    Example: Level 3 requires 1 item, Level 10 requires 8 items.
+    """
     skills_required: int = skill_level - 2
     return state.has(skill, player, skills_required)
 
