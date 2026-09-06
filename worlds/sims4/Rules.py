@@ -798,36 +798,45 @@ def _career_tech_guru(world: MultiWorld, player: int):
              lambda state: has_skill(state, SkillNames.base_skill_programming, player, 10)
                            and has_skill(state, SkillNames.base_skill_charisma, player, 6))
 def _career_writer(world: MultiWorld, player: int):
+    # Base branch
     set_rule(world.get_location(CareerNames.base_career_writer_4, player),
-             lambda state: state.has(SkillNames.base_skill_writing, player, count=1))
+             lambda state: has_skill(state, SkillNames.base_skill_writing, player, 4))
     set_rule(world.get_location(CareerNames.base_career_writer_5, player),
-             lambda state: state.has(SkillNames.base_skill_writing, player, count=2))
+             lambda state: has_skill(state, SkillNames.base_skill_writing, player, 5))
+
+    # Branch A: Author
     set_rule(world.get_location(CareerNames.base_career_writer_6A, player),
-             lambda state: state.has(SkillNames.base_skill_writing, player, count=3))
-    set_rule(world.get_location(CareerNames.base_career_writer_6B, player),
-             lambda state: state.has(SkillNames.base_skill_writing, player, count=3))
+             lambda state: has_skill(state, SkillNames.base_skill_writing, player, 7)
+                           and has_skill(state, SkillNames.base_skill_logic, player, 2))
     set_rule(world.get_location(CareerNames.base_career_writer_7A, player),
-             lambda state: state.has(SkillNames.base_skill_writing, player, count=5))
+             lambda state: has_skill(state, SkillNames.base_skill_writing, player, 8)
+                           and has_skill(state, SkillNames.base_skill_logic, player, 3))
     set_rule(world.get_location(CareerNames.base_career_writer_8A, player),
-             lambda state: state.has(SkillNames.base_skill_writing, player, count=6)
-                           and state.has(SkillNames.base_skill_logic, player, count=1))
+             lambda state: has_skill(state, SkillNames.base_skill_writing, player, 9)
+                           and has_skill(state, SkillNames.base_skill_logic, player, 4))
     set_rule(world.get_location(CareerNames.base_career_writer_9A, player),
-             lambda state: state.has(SkillNames.base_skill_writing, player, count=7)
-                           and state.has(SkillNames.base_skill_logic, player, count=2))
+             lambda state: has_skill(state, SkillNames.base_skill_writing, player, 10)
+                           and has_skill(state, SkillNames.base_skill_logic, player, 5))
     set_rule(world.get_location(CareerNames.base_career_writer_10A, player),
-             lambda state: state.has(SkillNames.base_skill_writing, player, count=8)
-                           and state.has(SkillNames.base_skill_logic, player, count=3))
+             lambda state: has_skill(state, SkillNames.base_skill_writing, player, 10)
+                           and has_skill(state, SkillNames.base_skill_logic, player, 5))
+
+    # Branch B: Journalist
+    set_rule(world.get_location(CareerNames.base_career_writer_6B, player),
+             lambda state: has_skill(state, SkillNames.base_skill_writing, player, 7)
+                           and has_skill(state, SkillNames.base_skill_charisma, player, 2))
     set_rule(world.get_location(CareerNames.base_career_writer_7B, player),
-             lambda state: state.has(SkillNames.base_skill_writing, player, count=5))
+             lambda state: has_skill(state, SkillNames.base_skill_writing, player, 8)
+                           and has_skill(state, SkillNames.base_skill_charisma, player, 3))
     set_rule(world.get_location(CareerNames.base_career_writer_8B, player),
-             lambda state: state.has(SkillNames.base_skill_writing, player, count=6)
-                           and state.has(SkillNames.base_skill_charisma, player, count=1))
+             lambda state: has_skill(state, SkillNames.base_skill_writing, player, 9)
+                           and has_skill(state, SkillNames.base_skill_charisma, player, 4))
     set_rule(world.get_location(CareerNames.base_career_writer_9B, player),
-             lambda state: state.has(SkillNames.base_skill_writing, player, count=7)
-                           and state.has(SkillNames.base_skill_charisma, player, count=2))
+             lambda state: has_skill(state, SkillNames.base_skill_writing, player, 10)
+                           and has_skill(state, SkillNames.base_skill_charisma, player, 5))
     set_rule(world.get_location(CareerNames.base_career_writer_10B, player),
-             lambda state: state.has(SkillNames.base_skill_writing, player, count=8)
-                           and state.has(SkillNames.base_skill_charisma, player, count=3))
+             lambda state: has_skill(state, SkillNames.base_skill_writing, player, 10)
+                           and has_skill(state, SkillNames.base_skill_charisma, player, 5))
 
 CAREER_RULES = {
     CareerNames.base_career_athlete: _career_athlete,
