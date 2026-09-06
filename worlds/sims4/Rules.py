@@ -504,36 +504,44 @@ def _career_business(world: MultiWorld, player: int):
                            and has_skill(state, SkillNames.base_skill_logic, player, 10))
 
 def _career_criminal(world: MultiWorld, player: int):
+    # Base branch
     set_rule(world.get_location(CareerNames.base_career_criminal_4, player),
-             lambda state: state.has(SkillNames.base_skill_mischief, player, count=1))
+             lambda state: has_skill(state, SkillNames.base_skill_mischief, player, 5))
     set_rule(world.get_location(CareerNames.base_career_criminal_5, player),
-             lambda state: state.has(SkillNames.base_skill_mischief, player, count=3))
+             lambda state: has_skill(state, SkillNames.base_skill_mischief, player, 6))
+
+    # Branch A: Boss
     set_rule(world.get_location(CareerNames.base_career_criminal_6A, player),
-             lambda state: state.has(SkillNames.base_skill_mischief, player, count=4))
-    set_rule(world.get_location(CareerNames.base_career_criminal_6B, player),
-             lambda state: state.has(SkillNames.base_skill_mischief, player, count=4))
+             lambda state: has_skill(state, SkillNames.base_skill_mischief, player, 7))
     set_rule(world.get_location(CareerNames.base_career_criminal_7A, player),
-             lambda state: state.has(SkillNames.base_skill_mischief, player, count=5))
+             lambda state: has_skill(state, SkillNames.base_skill_mischief, player, 8)
+                           and has_skill(state, SkillNames.base_skill_handiness, player, 2))
     set_rule(world.get_location(CareerNames.base_career_criminal_8A, player),
-             lambda state: state.has(SkillNames.base_skill_mischief, player, count=6))
+             lambda state: has_skill(state, SkillNames.base_skill_mischief, player, 9)
+                           and has_skill(state, SkillNames.base_skill_handiness, player, 4))
     set_rule(world.get_location(CareerNames.base_career_criminal_9A, player),
-             lambda state: state.has(SkillNames.base_skill_mischief, player, count=7)
-                           and state.has(SkillNames.base_skill_handiness, player, count=2))
+             lambda state: has_skill(state, SkillNames.base_skill_mischief, player, 10)
+                           and has_skill(state, SkillNames.base_skill_handiness, player, 6))
     set_rule(world.get_location(CareerNames.base_career_criminal_10A, player),
-             lambda state: state.has(SkillNames.base_skill_mischief, player, count=8)
-                           and state.has(SkillNames.base_skill_handiness, player, count=4))
+             lambda state: has_skill(state, SkillNames.base_skill_mischief, player, 10)
+                           and has_skill(state, SkillNames.base_skill_handiness, player, 6))
+
+    # Branch B: Oracle
+    set_rule(world.get_location(CareerNames.base_career_criminal_6B, player),
+             lambda state: has_skill(state, SkillNames.base_skill_mischief, player, 7)
+                           and has_skill(state, SkillNames.base_skill_programming, player, 2))
     set_rule(world.get_location(CareerNames.base_career_criminal_7B, player),
-             lambda state: state.has(SkillNames.base_skill_mischief, player, count=5)
-                           and state.has(SkillNames.base_skill_programming, player, count=0))
+             lambda state: has_skill(state, SkillNames.base_skill_mischief, player, 8)
+                           and has_skill(state, SkillNames.base_skill_programming, player, 4))
     set_rule(world.get_location(CareerNames.base_career_criminal_8B, player),
-             lambda state: state.has(SkillNames.base_skill_mischief, player, count=6)
-                           and state.has(SkillNames.base_skill_programming, player, count=2))
+             lambda state: has_skill(state, SkillNames.base_skill_mischief, player, 9)
+                           and has_skill(state, SkillNames.base_skill_programming, player, 6))
     set_rule(world.get_location(CareerNames.base_career_criminal_9B, player),
-             lambda state: state.has(SkillNames.base_skill_mischief, player, count=7)
-                           and state.has(SkillNames.base_skill_programming, player, count=4))
+             lambda state: has_skill(state, SkillNames.base_skill_mischief, player, 10)
+                           and has_skill(state, SkillNames.base_skill_programming, player, 8))
     set_rule(world.get_location(CareerNames.base_career_criminal_10B, player),
-             lambda state: state.has(SkillNames.base_skill_mischief, player, count=8)
-                           and state.has(SkillNames.base_skill_programming, player, count=6))
+             lambda state: has_skill(state, SkillNames.base_skill_mischief, player, 10)
+                           and has_skill(state, SkillNames.base_skill_programming, player, 8))
 def _career_culinary(world: MultiWorld, player: int):
     set_rule(world.get_location(CareerNames.base_career_culinary_5, player),
              lambda state: state.has(SkillNames.base_skill_cooking, player, count=1)
