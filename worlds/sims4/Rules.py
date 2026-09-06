@@ -394,45 +394,44 @@ def set_aspiration_rules(world: MultiWorld, player: int, options: Sims4Options):
         handler(world, player)
 
 def _career_athlete(world: MultiWorld, player: int):
+    # Base branch
     set_rule(world.get_location(CareerNames.base_career_athlete_4, player),
-             lambda state: state.has(SkillNames.base_skill_charisma, player, count=1)
-                           and state.has(SkillNames.base_skill_fitness, player, count=1))
+             lambda state: has_skill(state, SkillNames.base_skill_charisma, player, 4)
+                           and has_skill(state, SkillNames.base_skill_fitness, player, 4))
+
+    # Branch A: Professional Athlete
     set_rule(world.get_location(CareerNames.base_career_athlete_5A, player),
-             lambda state: state.has(SkillNames.base_skill_charisma, player, count=2)
-                           and state.has(SkillNames.base_skill_fitness, player, count=2))
-    set_rule(world.get_location(CareerNames.base_career_athlete_5B, player),
-             lambda state: state.has(SkillNames.base_skill_charisma, player, count=2)
-                           and state.has(SkillNames.base_skill_fitness, player, count=2))
+             lambda state: has_skill(state, SkillNames.base_skill_fitness, player, 5))
     set_rule(world.get_location(CareerNames.base_career_athlete_6A, player),
-             lambda state: state.has(SkillNames.base_skill_charisma, player, count=2)
-                           and state.has(SkillNames.base_skill_fitness, player, count=3))
+             lambda state: has_skill(state, SkillNames.base_skill_fitness, player, 6))
     set_rule(world.get_location(CareerNames.base_career_athlete_7A, player),
-             lambda state: state.has(SkillNames.base_skill_charisma, player, count=2)
-                           and state.has(SkillNames.base_skill_fitness, player, count=4))
+             lambda state: has_skill(state, SkillNames.base_skill_charisma, player, 5)
+                           and has_skill(state, SkillNames.base_skill_fitness, player, 8))
     set_rule(world.get_location(CareerNames.base_career_athlete_8A, player),
-             lambda state: state.has(SkillNames.base_skill_charisma, player, count=3)
-                           and state.has(SkillNames.base_skill_fitness, player, count=6))
+             lambda state: has_skill(state, SkillNames.base_skill_charisma, player, 6)
+                           and has_skill(state, SkillNames.base_skill_fitness, player, 9))
     set_rule(world.get_location(CareerNames.base_career_athlete_9A, player),
-             lambda state: state.has(SkillNames.base_skill_charisma, player, count=4)
-                           and state.has(SkillNames.base_skill_fitness, player, count=7))
+             lambda state: has_skill(state, SkillNames.base_skill_charisma, player, 8)
+                           and has_skill(state, SkillNames.base_skill_fitness, player, 10))
     set_rule(world.get_location(CareerNames.base_career_athlete_10A, player),
-             lambda state: state.has(SkillNames.base_skill_charisma, player, count=6)
-                           and state.has(SkillNames.base_skill_fitness, player, count=8))
+             lambda state: has_skill(state, SkillNames.base_skill_charisma, player, 8)
+                           and has_skill(state, SkillNames.base_skill_fitness, player, 10))
+
+    # Branch B: Bodybuilder
+    set_rule(world.get_location(CareerNames.base_career_athlete_5B, player),
+             lambda state: has_skill(state, SkillNames.base_skill_charisma, player, 5)
+                           and has_skill(state, SkillNames.base_skill_fitness, player, 8))
     set_rule(world.get_location(CareerNames.base_career_athlete_6B, player),
-             lambda state: state.has(SkillNames.base_skill_charisma, player, count=3)
-                           and state.has(SkillNames.base_skill_fitness, player, count=6))
+             lambda state: has_skill(state, SkillNames.base_skill_fitness, player, 9))
     set_rule(world.get_location(CareerNames.base_career_athlete_7B, player),
-             lambda state: state.has(SkillNames.base_skill_charisma, player, count=3)
-                           and state.has(SkillNames.base_skill_fitness, player, count=7))
+             lambda state: has_skill(state, SkillNames.base_skill_charisma, player, 6)
+                           and has_skill(state, SkillNames.base_skill_fitness, player, 10))
     set_rule(world.get_location(CareerNames.base_career_athlete_8B, player),
-             lambda state: state.has(SkillNames.base_skill_charisma, player, count=4)
-                           and state.has(SkillNames.base_skill_fitness, player, count=8))
+             lambda state: has_skill(state, SkillNames.base_skill_charisma, player, 7))
     set_rule(world.get_location(CareerNames.base_career_athlete_9B, player),
-             lambda state: state.has(SkillNames.base_skill_charisma, player, count=5)
-                           and state.has(SkillNames.base_skill_fitness, player, count=8))
+             lambda state: has_skill(state, SkillNames.base_skill_charisma, player, 8))
     set_rule(world.get_location(CareerNames.base_career_athlete_10B, player),
-             lambda state: state.has(SkillNames.base_skill_charisma, player, count=6)
-                           and state.has(SkillNames.base_skill_fitness, player, count=8))
+             lambda state: has_skill(state, SkillNames.base_skill_charisma, player, 8))
 
 def _career_astronaut(world: MultiWorld, player: int):
     set_rule(world.get_location(CareerNames.base_career_astronaut_4, player),
