@@ -583,45 +583,50 @@ def _career_culinary(world: MultiWorld, player: int):
                            and has_skill(state, SkillNames.base_skill_charisma, player, 8))
 
 def _career_entertainer(world: MultiWorld, player: int):
+    # Branch A: Musician
     set_rule(world.get_location(CareerNames.base_career_entertainer_5A, player),
-             lambda state: (state.has(SkillNames.base_skill_guitar, player, count=1)
-                            or state.has(SkillNames.base_skill_violin, player, count=1))
-                           and state.has(SkillNames.base_skill_comedy, player, count=1))
-    set_rule(world.get_location(CareerNames.base_career_entertainer_5B, player),
-             lambda state: (state.has(SkillNames.base_skill_guitar, player, count=1)
-                            or state.has(SkillNames.base_skill_violin, player, count=1))
-                           and state.has(SkillNames.base_skill_comedy, player, count=1))
+             lambda state: has_skill(state, SkillNames.base_skill_piano, player, 2)
+                           and (has_skill(state, SkillNames.base_skill_guitar, player, 4)
+                                or has_skill(state, SkillNames.base_skill_violin, player, 4)))
     set_rule(world.get_location(CareerNames.base_career_entertainer_6A, player),
-             lambda state: state.has(SkillNames.base_skill_violin, player, count=2))
+             lambda state: has_skill(state, SkillNames.base_skill_piano, player, 4)
+                           and (has_skill(state, SkillNames.base_skill_guitar, player, 5)
+                                or has_skill(state, SkillNames.base_skill_violin, player, 5)))
     set_rule(world.get_location(CareerNames.base_career_entertainer_7A, player),
-             lambda state: (state.has(SkillNames.base_skill_guitar, player, count=3)
-                            or state.has(SkillNames.base_skill_violin, player, count=3))
-                           and state.has(SkillNames.base_skill_piano, player, count=2))
+             lambda state: has_skill(state, SkillNames.base_skill_piano, player, 6)
+                           and (has_skill(state, SkillNames.base_skill_guitar, player, 6)
+                                or has_skill(state, SkillNames.base_skill_violin, player, 6)))
     set_rule(world.get_location(CareerNames.base_career_entertainer_8A, player),
-             lambda state: (state.has(SkillNames.base_skill_guitar, player, count=4)
-                            or state.has(SkillNames.base_skill_violin, player, count=4))
-                           and state.has(SkillNames.base_skill_piano, player, count=4))
+             lambda state: has_skill(state, SkillNames.base_skill_piano, player, 8)
+                           and (has_skill(state, SkillNames.base_skill_guitar, player, 7)
+                                or has_skill(state, SkillNames.base_skill_violin, player, 7)))
     set_rule(world.get_location(CareerNames.base_career_entertainer_9A, player),
-             lambda state: (state.has(SkillNames.base_skill_guitar, player, count=5)
-                            or state.has(SkillNames.base_skill_violin, player, count=5))
-                           and state.has(SkillNames.base_skill_piano, player, count=6))
+             lambda state: has_skill(state, SkillNames.base_skill_piano, player, 10)
+                           and (has_skill(state, SkillNames.base_skill_guitar, player, 8)
+                                or has_skill(state, SkillNames.base_skill_violin, player, 8)))
     set_rule(world.get_location(CareerNames.base_career_entertainer_10A, player),
-             lambda state: (state.has(SkillNames.base_skill_guitar, player, count=6)
-                            or state.has(SkillNames.base_skill_violin, player, count=6))
-                           and state.has(SkillNames.base_skill_piano, player, count=8))
+             lambda state: has_skill(state, SkillNames.base_skill_piano, player, 10)
+                           and (has_skill(state, SkillNames.base_skill_guitar, player, 8)
+                                or has_skill(state, SkillNames.base_skill_violin, player, 8)))
+
+    # Branch B: Comedian
+    set_rule(world.get_location(CareerNames.base_career_entertainer_5B, player),
+             lambda state: has_skill(state, SkillNames.base_skill_comedy, player, 6))
     set_rule(world.get_location(CareerNames.base_career_entertainer_6B, player),
-             lambda state: state.has(SkillNames.base_skill_comedy, player, count=4))
+             lambda state: has_skill(state, SkillNames.base_skill_comedy, player, 7)
+                           and has_skill(state, SkillNames.base_skill_charisma, player, 2))
     set_rule(world.get_location(CareerNames.base_career_entertainer_7B, player),
-             lambda state: state.has(SkillNames.base_skill_comedy, player, count=5))
+             lambda state: has_skill(state, SkillNames.base_skill_comedy, player, 8)
+                           and has_skill(state, SkillNames.base_skill_charisma, player, 4))
     set_rule(world.get_location(CareerNames.base_career_entertainer_8B, player),
-             lambda state: state.has(SkillNames.base_skill_comedy, player, count=6)
-                           and state.has(SkillNames.base_skill_charisma, player, count=2))
+             lambda state: has_skill(state, SkillNames.base_skill_comedy, player, 9)
+                           and has_skill(state, SkillNames.base_skill_charisma, player, 6))
     set_rule(world.get_location(CareerNames.base_career_entertainer_9B, player),
-             lambda state: state.has(SkillNames.base_skill_comedy, player, count=7)
-                           and state.has(SkillNames.base_skill_charisma, player, count=4))
+             lambda state: has_skill(state, SkillNames.base_skill_comedy, player, 10)
+                           and has_skill(state, SkillNames.base_skill_charisma, player, 8))
     set_rule(world.get_location(CareerNames.base_career_entertainer_10B, player),
-             lambda state: state.has(SkillNames.base_skill_comedy, player, count=8)
-                           and state.has(SkillNames.base_skill_charisma, player, count=6))
+             lambda state: has_skill(state, SkillNames.base_skill_comedy, player, 10)
+                           and has_skill(state, SkillNames.base_skill_charisma, player, 8))
 
 def _career_painter(world: MultiWorld, player: int):
     set_rule(world.get_location(CareerNames.base_career_painter_4, player),
