@@ -629,32 +629,41 @@ def _career_entertainer(world: MultiWorld, player: int):
                            and has_skill(state, SkillNames.base_skill_charisma, player, 8))
 
 def _career_painter(world: MultiWorld, player: int):
+    # Base branch
     set_rule(world.get_location(CareerNames.base_career_painter_4, player),
-             lambda state: state.has(SkillNames.base_skill_painting, player, count=2))
+             lambda state: has_skill(state, SkillNames.base_skill_painting, player, 5))
     set_rule(world.get_location(CareerNames.base_career_painter_5, player),
-             lambda state: state.has(SkillNames.base_skill_painting, player, count=3))
+             lambda state: has_skill(state, SkillNames.base_skill_painting, player, 6))
     set_rule(world.get_location(CareerNames.base_career_painter_6, player),
-             lambda state: state.has(SkillNames.base_skill_painting, player, count=4))
+             lambda state: has_skill(state, SkillNames.base_skill_painting, player, 7))
+
+    # Branch A: Master of the Real
     set_rule(world.get_location(CareerNames.base_career_painter_7A, player),
-             lambda state: state.has(SkillNames.base_skill_painting, player, count=5))
-    set_rule(world.get_location(CareerNames.base_career_painter_7B, player),
-             lambda state: state.has(SkillNames.base_skill_painting, player, count=5))
+             lambda state: has_skill(state, SkillNames.base_skill_painting, player, 8)
+                           and has_skill(state, SkillNames.base_skill_logic, player, 2))
     set_rule(world.get_location(CareerNames.base_career_painter_8A, player),
-             lambda state: state.has(SkillNames.base_skill_painting, player, count=6))
+             lambda state: has_skill(state, SkillNames.base_skill_painting, player, 9)
+                           and has_skill(state, SkillNames.base_skill_logic, player, 4))
     set_rule(world.get_location(CareerNames.base_career_painter_9A, player),
-             lambda state: state.has(SkillNames.base_skill_painting, player, count=7)
-                           and state.has(SkillNames.base_skill_logic, player, count=2))
+             lambda state: has_skill(state, SkillNames.base_skill_painting, player, 10)
+                           and has_skill(state, SkillNames.base_skill_logic, player, 6))
     set_rule(world.get_location(CareerNames.base_career_painter_10A, player),
-             lambda state: state.has(SkillNames.base_skill_painting, player, count=8)
-                           and state.has(SkillNames.base_skill_logic, player, count=4))
+             lambda state: has_skill(state, SkillNames.base_skill_painting, player, 10)
+                           and has_skill(state, SkillNames.base_skill_logic, player, 6))
+
+    # Branch B: Patron of the Arts
+    set_rule(world.get_location(CareerNames.base_career_painter_7B, player),
+             lambda state: has_skill(state, SkillNames.base_skill_painting, player, 8)
+                           and has_skill(state, SkillNames.base_skill_charisma, player, 2))
     set_rule(world.get_location(CareerNames.base_career_painter_8B, player),
-             lambda state: state.has(SkillNames.base_skill_painting, player, count=6))
+             lambda state: has_skill(state, SkillNames.base_skill_painting, player, 9)
+                           and has_skill(state, SkillNames.base_skill_charisma, player, 4))
     set_rule(world.get_location(CareerNames.base_career_painter_9B, player),
-             lambda state: state.has(SkillNames.base_skill_painting, player, count=7)
-                           and state.has(SkillNames.base_skill_charisma, player, count=2))
+             lambda state: has_skill(state, SkillNames.base_skill_painting, player, 10)
+                           and has_skill(state, SkillNames.base_skill_charisma, player, 6))
     set_rule(world.get_location(CareerNames.base_career_painter_10B, player),
-             lambda state: state.has(SkillNames.base_skill_painting, player, count=8)
-                           and state.has(SkillNames.base_skill_charisma, player, count=4))
+             lambda state: has_skill(state, SkillNames.base_skill_painting, player, 10)
+                           and has_skill(state, SkillNames.base_skill_charisma, player, 6))
 def _career_secret_agent(world: MultiWorld, player: int):
     set_rule(world.get_location(CareerNames.base_career_secret_agent_4, player),
              lambda state: state.has(SkillNames.base_skill_logic, player, count=1)
