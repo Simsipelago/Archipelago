@@ -480,7 +480,8 @@ def _career_business(world: MultiWorld, player: int):
     set_rule(world.get_location(CareerNames.base_career_business_5, player),
              lambda state: has_skill(state, SkillNames.base_skill_charisma, player, 4))
     set_rule(world.get_location(CareerNames.base_career_business_6, player),
-             lambda state: has_skill(state, SkillNames.base_skill_logic, player, 4))
+             lambda state: has_skill(state, SkillNames.base_skill_charisma, player, 4)
+                           and has_skill(state, SkillNames.base_skill_logic, player, 4))
 
     # Branch A: Management
     set_rule(world.get_location(CareerNames.base_career_business_7A, player),
