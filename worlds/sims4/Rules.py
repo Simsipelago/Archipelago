@@ -711,15 +711,19 @@ def _career_secret_agent(world: MultiWorld, player: int):
     # Branch B: Villain
     set_rule(world.get_location(CareerNames.base_career_secret_agent_8B, player),
              lambda state: has_skill(state, SkillNames.base_skill_logic, player, 8)
+                           and has_skill(state, SkillNames.base_skill_charisma, player, 6)
                            and has_skill(state, SkillNames.base_skill_mischief, player, 2))
     set_rule(world.get_location(CareerNames.base_career_secret_agent_9B, player),
              lambda state: has_skill(state, SkillNames.base_skill_logic, player, 10)
+                           and has_skill(state, SkillNames.base_skill_charisma, player, 6)
                            and has_skill(state, SkillNames.base_skill_mischief, player, 4))
     set_rule(world.get_location(CareerNames.base_career_secret_agent_10B, player),
              lambda state: has_skill(state, SkillNames.base_skill_logic, player, 10)
+                           and has_skill(state, SkillNames.base_skill_charisma, player, 6)
                            and has_skill(state, SkillNames.base_skill_mischief, player, 6))
     set_rule(world.get_location(CareerNames.base_career_secret_agent_11B, player),
              lambda state: has_skill(state, SkillNames.base_skill_logic, player, 10)
+                           and has_skill(state, SkillNames.base_skill_charisma, player, 6)
                            and has_skill(state, SkillNames.base_skill_mischief, player, 6))
 def _career_style_influencer(world: MultiWorld, player: int):
     # Base branch
