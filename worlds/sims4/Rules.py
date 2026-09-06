@@ -853,7 +853,6 @@ CAREER_RULES = {
 }
 
 def set_career_rules(world: MultiWorld, player: int, options: Sims4Options):
-    # TODO refactor the remaining career rules to use has_skill
     """
     Career locations are sent by the mod once per promotion in game (see the mod's
     career_event_dispatcher.py). The level in the location name is the level promoted to,
