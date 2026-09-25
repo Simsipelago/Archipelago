@@ -1,9 +1,9 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Callable
 
 import rule_builder.rules
-from rule_builder.rules import Has, CanReachLocation
+from rule_builder.rules import Has, CanReachLocation, Rule
 
 from .Names import AspirationNames, CareerNames, EventNames, SkillNames
 from .Names.DLC import ExpansionNames, GamePackNames, StuffNames
@@ -11,6 +11,16 @@ from .Options import AspirationGoal, Sims4Options
 
 if TYPE_CHECKING:
     from . import Sims4World
+
+def has_skill(skill: str, skill_level: int) -> Has:
+    # determines how many skill items are required based on the skill level passed into the function
+    skills_required: int = skill_level - 2
+    return Has(skill, skills_required)
+
+def has_multiple_skills(skills_and_levels: dict[str, int]) -> rule_builder.rules.And:
+    skills = list(skills_and_levels.items())
+    return rule_builder.rules.And(*(has_skill(skill, level) for skill, level in skills))
+
 
 def set_rules(world: Sims4World, player: int, options: Sims4Options) -> None:
     # TODO: Part Time Jobs?
@@ -208,7 +218,7 @@ def _public_enemy(world: Sims4World, player: int):
              has_skill(SkillNames.base_skill_mischief, 3))
     world.set_rule(world.get_location(AspirationNames.base_aspiration_public_enemy),
              has_skill(SkillNames.base_skill_mischief, 8)
-                           and has_skill(SkillNames.base_skill_programming, 4))
+                           & has_skill(SkillNames.base_skill_programming, 4))
     world.set_rule(world.get_location(EventNames.public_enemy),
              CanReachLocation(AspirationNames.base_aspiration_public_enemy))
 
@@ -636,46 +646,53 @@ _career_culinary = {
     },
 }
 
-def _career_entertainer(world: Sims4World, player: int):
-    world.set_rule(world.get_location(CareerNames.base_career_entertainer_5A),
-             lambda state: (state.has(SkillNames.base_skill_guitar, player, count=1)
-                            or state.has(SkillNames.base_skill_violin, player, count=1))
-                           and state.has(SkillNames.base_skill_comedy, player, count=1))
-    world.set_rule(world.get_location(CareerNames.base_career_entertainer_5B),
-             lambda state: (state.has(SkillNames.base_skill_guitar, player, count=1)
-                            or state.has(SkillNames.base_skill_violin, player, count=1))
-                           and state.has(SkillNames.base_skill_comedy, player, count=1))
-    world.set_rule(world.get_location(CareerNames.base_career_entertainer_6A),
-             lambda state: state.has(SkillNames.base_skill_violin, player, count=2))
-    world.set_rule(world.get_location(CareerNames.base_career_entertainer_7A),
-             lambda state: (state.has(SkillNames.base_skill_guitar, player, count=3)
-                            or state.has(SkillNames.base_skill_violin, player, count=3))
-                           and state.has(SkillNames.base_skill_piano, player, count=2))
-    world.set_rule(world.get_location(CareerNames.base_career_entertainer_8A),
-             lambda state: (state.has(SkillNames.base_skill_guitar, player, count=4)
-                            or state.has(SkillNames.base_skill_violin, player, count=4))
-                           and state.has(SkillNames.base_skill_piano, player, count=4))
-    world.set_rule(world.get_location(CareerNames.base_career_entertainer_9A),
-             lambda state: (state.has(SkillNames.base_skill_guitar, player, count=5)
-                            or state.has(SkillNames.base_skill_violin, player, count=5))
-                           and state.has(SkillNames.base_skill_piano, player, count=6))
-    world.set_rule(world.get_location(CareerNames.base_career_entertainer_10A),
-             lambda state: (state.has(SkillNames.base_skill_guitar, player, count=6)
-                            or state.has(SkillNames.base_skill_violin, player, count=6))
-                           and state.has(SkillNames.base_skill_piano, player, count=8))
-    world.set_rule(world.get_location(CareerNames.base_career_entertainer_6B),
-             lambda state: state.has(SkillNames.base_skill_comedy, player, count=4))
-    world.set_rule(world.get_location(CareerNames.base_career_entertainer_7B),
-             lambda state: state.has(SkillNames.base_skill_comedy, player, count=5))
-    world.set_rule(world.get_location(CareerNames.base_career_entertainer_8B),
-             lambda state: state.has(SkillNames.base_skill_comedy, player, count=6)
-                           and state.has(SkillNames.base_skill_charisma, player, count=2))
-    world.set_rule(world.get_location(CareerNames.base_career_entertainer_9B),
-             lambda state: state.has(SkillNames.base_skill_comedy, player, count=7)
-                           and state.has(SkillNames.base_skill_charisma, player, count=4))
-    world.set_rule(world.get_location(CareerNames.base_career_entertainer_10B),
-             lambda state: state.has(SkillNames.base_skill_comedy, player, count=8)
-                           and state.has(SkillNames.base_skill_charisma, player, count=6))
+_career_entertainer = {
+    CareerNames.base_career_entertainer_5A:
+        (has_skill(SkillNames.base_skill_guitar, 3) | has_skill(SkillNames.base_skill_violin, 3))
+        & has_skill(SkillNames.base_skill_comedy, 3),
+    CareerNames.base_career_entertainer_5B:
+        (has_skill(SkillNames.base_skill_guitar, 3) | has_skill(SkillNames.base_skill_violin, 3))
+        & has_skill(SkillNames.base_skill_comedy, 3),
+    CareerNames.base_career_entertainer_6A:
+        (has_skill(SkillNames.base_skill_guitar, 4) | has_skill(SkillNames.base_skill_violin, 4))
+        & has_skill(SkillNames.base_skill_piano, 2)
+        & has_skill(SkillNames.base_skill_comedy, 3),
+    CareerNames.base_career_entertainer_7A:
+        (has_skill(SkillNames.base_skill_guitar, 5) | has_skill(SkillNames.base_skill_violin, 5))
+        & has_skill(SkillNames.base_skill_piano, 4)
+        & has_skill(SkillNames.base_skill_comedy, 3),
+    CareerNames.base_career_entertainer_8A:
+        (has_skill(SkillNames.base_skill_guitar, 6) | has_skill(SkillNames.base_skill_violin, 6))
+        & has_skill(SkillNames.base_skill_piano, 6)
+        & has_skill(SkillNames.base_skill_comedy, 3),
+    CareerNames.base_career_entertainer_9A:
+        (has_skill(SkillNames.base_skill_guitar, 7) | has_skill(SkillNames.base_skill_violin, 7))
+        & has_skill(SkillNames.base_skill_piano, 8)
+        & has_skill(SkillNames.base_skill_comedy, 3),
+    CareerNames.base_career_entertainer_10A:
+        (has_skill(SkillNames.base_skill_guitar, 8) | has_skill(SkillNames.base_skill_violin, 8))
+        & has_skill(SkillNames.base_skill_piano, 10)
+        & has_skill(SkillNames.base_skill_comedy, 3),
+    CareerNames.base_career_entertainer_6B:
+        (has_skill(SkillNames.base_skill_guitar, 3) | has_skill(SkillNames.base_skill_violin, 3))
+        & has_skill(SkillNames.base_skill_comedy, 6),
+    CareerNames.base_career_entertainer_7B:
+        (has_skill(SkillNames.base_skill_guitar, 3) | has_skill(SkillNames.base_skill_violin, 3))
+        & has_skill(SkillNames.base_skill_comedy, 7)
+        & has_skill(SkillNames.base_skill_charisma, 2),
+    CareerNames.base_career_entertainer_8B:
+        (has_skill(SkillNames.base_skill_guitar, 3) | has_skill(SkillNames.base_skill_violin, 3))
+        & has_skill(SkillNames.base_skill_comedy, 8)
+        & has_skill(SkillNames.base_skill_charisma, 4),
+    CareerNames.base_career_entertainer_9B:
+        (has_skill(SkillNames.base_skill_guitar, 3) | has_skill(SkillNames.base_skill_violin, 3))
+        & has_skill(SkillNames.base_skill_comedy, 9)
+        & has_skill(SkillNames.base_skill_charisma, 6),
+    CareerNames.base_career_entertainer_10B:
+        (has_skill(SkillNames.base_skill_guitar, 3) | has_skill(SkillNames.base_skill_violin, 3))
+        & has_skill(SkillNames.base_skill_comedy, 10)
+        & has_skill(SkillNames.base_skill_charisma, 8),
+}
 
 def _career_painter(world: Sims4World, player: int):
     world.set_rule(world.get_location(CareerNames.base_career_painter_4),
@@ -852,7 +869,7 @@ def _career_writer(world: Sims4World, player: int):
              lambda state: state.has(SkillNames.base_skill_writing, player, count=8)
                            and state.has(SkillNames.base_skill_charisma, player, count=3))
 
-CAREER_RULES = {
+CAREER_RULES: dict[str, Callable | dict[str, dict[str, int]] | dict[str, Rule]] = {
     CareerNames.base_career_athlete: _career_athlete,
     CareerNames.base_career_astronaut: _career_astronaut,
     CareerNames.base_career_business: _career_business,
@@ -868,15 +885,20 @@ CAREER_RULES = {
 
 def set_career_rules(world: Sims4World, player: int, options: Sims4Options):
     # TODO relearn how the career locations send, and then refactor this to use has_skill
-    career = options.career
+    selected_careers = options.career
 
-    for career_name, handler in CAREER_RULES.items():
-        if career_name in career:
-            if callable(handler):
-                handler(world, player)
+    for career_name, career_data in CAREER_RULES.items():
+        if career_name in selected_careers:
+            if callable(career_data):
+                career_data(world, player)
             else:
-                for loc_name, skills in handler.items():
-                    world.set_rule(world.get_location(loc_name), has_multiple_skills(skills))
+                for loc_name, rule in career_data.items():
+                    if isinstance(rule, dict):
+                        world.set_rule(world.get_location(loc_name), has_multiple_skills(rule))
+                    elif isinstance(rule, Rule):
+                        world.set_rule(world.get_location(loc_name), rule)
+                    else:
+                        raise ValueError(f"Unsupported type for {loc_name} rule: {type(rule)}")
 
 def count_skills_over(threshold: int, state, player) -> int:
     total_count = 0
@@ -923,12 +945,3 @@ def count_skills_over(threshold: int, state, player) -> int:
         total_count += 1
 
     return total_count
-
-def has_skill(skill: str, skill_level: int) -> Has:
-    # determines how many skill items are required based on the skill level passed into the function
-    skills_required: int = skill_level - 2
-    return Has(skill, skills_required)
-
-def has_multiple_skills(skills_and_levels: dict[str, int]) -> rule_builder.rules.And:
-    skills = list(skills_and_levels.items())
-    return rule_builder.rules.And(*(has_skill(skill, level) for skill, level in skills))
