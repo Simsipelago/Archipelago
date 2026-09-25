@@ -1,13 +1,17 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Callable
+import dataclasses
+from typing import TYPE_CHECKING, Callable, override
 
+from BaseClasses import CollectionState
+from NetUtils import JSONMessagePart
 import rule_builder.rules
 from rule_builder.rules import Has, CanReachLocation, Rule
 
 from .Names import AspirationNames, CareerNames, EventNames, SkillNames
 from .Names.DLC import ExpansionNames, GamePackNames, StuffNames
 from .Options import AspirationGoal, Sims4Options
+from .Items import skills_table
 
 if TYPE_CHECKING:
     from . import Sims4World
@@ -20,6 +24,46 @@ def has_skill(skill: str, skill_level: int) -> Has:
 def has_multiple_skills(skills_and_levels: dict[str, int]) -> rule_builder.rules.And:
     skills = list(skills_and_levels.items())
     return rule_builder.rules.And(*(has_skill(skill, level) for skill, level in skills))
+
+
+@dataclasses.dataclass()
+class JackOfNTradesRule(Rule, game="The Sims 4"):
+    skill_threshold: int
+    skill_count: int
+
+    @override
+    def _instantiate(self, world: rule_builder.rules.World) -> Rule.Resolved:
+        return self.Resolved(skill_threshold=self.skill_threshold, skill_count=self.skill_count, player=world.player)
+
+    class Resolved(Rule.Resolved):
+        skill_threshold: int
+        skill_count: int
+
+        @override
+        def _evaluate(self, state: CollectionState) -> bool:
+            count = 0
+            for skill in skills_table.values():
+                if state.has(skill["name"], self.player, self.skill_threshold):
+                    count += 1
+            return count >= self.skill_count
+
+        @override
+        def explain_json(self, state: CollectionState | None = None) -> list[JSONMessagePart]:
+            text: list[JSONMessagePart] = [
+                {"type": "text", "text": "Have at least "},
+                {"type": "text", "text": str(self.skill_count)},
+                {"type": "text", "text": " skills at level "},
+                {"type": "text", "text": str(self.skill_threshold)},
+                {"type": "text", "text": "."},
+            ]
+            if state is not None:
+                count = 0
+                for skill in skills_table.values():
+                    if state.has(skill["name"], self.player, self.skill_threshold):
+                        count += 1
+                text.append({"type": "text", "text": f" (Currently have {count})",
+                             "color": "green" if count >= self.skill_count else "red"})
+            return text
 
 
 def set_rules(world: Sims4World, player: int, options: Sims4Options) -> None:
@@ -263,11 +307,11 @@ def _renaissance_sim(world: Sims4World, player: int):
     world.set_rule(world.get_location(AspirationNames.base_aspiration_prudent_student),
              has_skill(SkillNames.base_skill_logic, 1))
     world.set_rule(world.get_location(AspirationNames.base_aspiration_jack_of_some_trades),
-             count_skills_over(2) >= 4)
+             JackOfNTradesRule(2, 4))
     world.set_rule(world.get_location(AspirationNames.base_aspiration_pantologist),
-             count_skills_over(3) >= 5)
+             JackOfNTradesRule(3, 5))
     world.set_rule(world.get_location(AspirationNames.base_aspiration_renaissance_sim),
-             count_skills_over(6) >= 6)
+             JackOfNTradesRule(6, 6))
     world.set_rule(world.get_location(EventNames.renaissance_sim),
              lambda state: state.can_reach(
                  world.get_location(AspirationNames.base_aspiration_renaissance_sim), player=player))
@@ -870,49 +914,3 @@ def set_career_rules(world: Sims4World, player: int, options: Sims4Options):
                         world.set_rule(world.get_location(loc_name), rule)
                     else:
                         raise ValueError(f"Unsupported type for {loc_name} rule: {type(rule)}")
-
-def count_skills_over(threshold: int, state, player) -> int:
-    total_count = 0
-
-    if state.has(SkillNames.base_skill_charisma, player, count=threshold):
-        total_count += 1
-    if state.has(SkillNames.base_skill_fitness, player, count=threshold):
-        total_count += 1
-    if state.has(SkillNames.base_skill_mischief, player, count=threshold):
-        total_count += 1
-    if state.has(SkillNames.base_skill_logic, player, count=threshold):
-        total_count += 1
-    if state.has(SkillNames.base_skill_cooking, player, count=threshold):
-        total_count += 1
-    if state.has(SkillNames.base_skill_mixology, player, count=threshold):
-        total_count += 1
-    if state.has(SkillNames.base_skill_comedy, player, count=threshold):
-        total_count += 1
-    if state.has(SkillNames.base_skill_writing, player, count=threshold):
-        total_count += 1
-    if state.has(SkillNames.base_skill_fishing, player, count=threshold):
-        total_count += 1
-    if state.has(SkillNames.base_skill_gardening, player, count=threshold):
-        total_count += 1
-    if state.has(SkillNames.base_skill_video_gaming, player, count=threshold):
-        total_count += 1
-    if state.has(SkillNames.base_skill_programming, player, count=threshold):
-        total_count += 1
-    if state.has(SkillNames.base_skill_photography, player, count=threshold):
-        total_count += 1
-    if state.has(SkillNames.base_skill_handiness, player, count=threshold):
-        total_count += 1
-    if state.has(SkillNames.base_skill_piano, player, count=threshold):
-        total_count += 1
-    if state.has(SkillNames.base_skill_violin, player, count=threshold):
-        total_count += 1
-    if state.has(SkillNames.base_skill_guitar, player, count=threshold):
-        total_count += 1
-    if state.has(SkillNames.base_skill_painting, player, count=threshold):
-        total_count += 1
-    if state.has(SkillNames.base_skill_rocket_science, player, count=threshold):
-        total_count += 1
-    if state.has(SkillNames.base_skill_gourmet, player, count=threshold):
-        total_count += 1
-
-    return total_count
