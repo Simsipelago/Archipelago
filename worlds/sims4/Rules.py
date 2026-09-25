@@ -694,66 +694,37 @@ _career_entertainer = {
         & has_skill(SkillNames.base_skill_charisma, 8),
 }
 
-def _career_painter(world: Sims4World, player: int):
-    world.set_rule(world.get_location(CareerNames.base_career_painter_4),
-             lambda state: state.has(SkillNames.base_skill_painting, player, count=2))
-    world.set_rule(world.get_location(CareerNames.base_career_painter_5),
-             lambda state: state.has(SkillNames.base_skill_painting, player, count=3))
-    world.set_rule(world.get_location(CareerNames.base_career_painter_6),
-             lambda state: state.has(SkillNames.base_skill_painting, player, count=4))
-    world.set_rule(world.get_location(CareerNames.base_career_painter_7A),
-             lambda state: state.has(SkillNames.base_skill_painting, player, count=5))
-    world.set_rule(world.get_location(CareerNames.base_career_painter_7B),
-             lambda state: state.has(SkillNames.base_skill_painting, player, count=5))
-    world.set_rule(world.get_location(CareerNames.base_career_painter_8A),
-             lambda state: state.has(SkillNames.base_skill_painting, player, count=6))
-    world.set_rule(world.get_location(CareerNames.base_career_painter_9A),
-             lambda state: state.has(SkillNames.base_skill_painting, player, count=7)
-                           and state.has(SkillNames.base_skill_logic, player, count=2))
-    world.set_rule(world.get_location(CareerNames.base_career_painter_10A),
-             lambda state: state.has(SkillNames.base_skill_painting, player, count=8)
-                           and state.has(SkillNames.base_skill_logic, player, count=4))
-    world.set_rule(world.get_location(CareerNames.base_career_painter_8B),
-             lambda state: state.has(SkillNames.base_skill_painting, player, count=6))
-    world.set_rule(world.get_location(CareerNames.base_career_painter_9B),
-             lambda state: state.has(SkillNames.base_skill_painting, player, count=7)
-                           and state.has(SkillNames.base_skill_charisma, player, count=2))
-    world.set_rule(world.get_location(CareerNames.base_career_painter_10B),
-             lambda state: state.has(SkillNames.base_skill_painting, player, count=8)
-                           and state.has(SkillNames.base_skill_charisma, player, count=4))
-def _career_secret_agent(world: Sims4World, player: int):
-    world.set_rule(world.get_location(CareerNames.base_career_secret_agent_4),
-             lambda state: state.has(SkillNames.base_skill_logic, player, count=1)
-                           and state.has(SkillNames.base_skill_charisma, player, count=1))
-    world.set_rule(world.get_location(CareerNames.base_career_secret_agent_5),
-             lambda state: state.has(SkillNames.base_skill_logic, player, count=1)
-                           and state.has(SkillNames.base_skill_charisma, player, count=1))
-    world.set_rule(world.get_location(CareerNames.base_career_secret_agent_6),
-             lambda state: state.has(SkillNames.base_skill_logic, player, count=3)
-                           and state.has(SkillNames.base_skill_charisma, player, count=3))
-    world.set_rule(world.get_location(CareerNames.base_career_secret_agent_7),
-             lambda state: state.has(SkillNames.base_skill_logic, player, count=3)
-                           and state.has(SkillNames.base_skill_charisma, player, count=3))
-    world.set_rule(world.get_location(CareerNames.base_career_secret_agent_8A),
-             lambda state: state.has(SkillNames.base_skill_logic, player, count=4)
-                           and state.has(SkillNames.base_skill_charisma, player, count=4))
-    world.set_rule(world.get_location(CareerNames.base_career_secret_agent_8B),
-             lambda state: state.has(SkillNames.base_skill_logic, player, count=4)
-                           and state.has(SkillNames.base_skill_charisma, player, count=4))
-    world.set_rule(world.get_location(CareerNames.base_career_secret_agent_9A),
-             lambda state: state.has(SkillNames.base_skill_logic, player, count=6)
-                           and state.has(SkillNames.base_skill_charisma, player, count=5))
-    world.set_rule(world.get_location(CareerNames.base_career_secret_agent_10A),
-             lambda state: state.has(SkillNames.base_skill_logic, player, count=8)
-                           and state.has(SkillNames.base_skill_charisma, player, count=6))
-    world.set_rule(world.get_location(CareerNames.base_career_secret_agent_9B),
-             lambda state: state.has(SkillNames.base_skill_logic, player, count=6))
-    world.set_rule(world.get_location(CareerNames.base_career_secret_agent_10B),
-             lambda state: state.has(SkillNames.base_skill_logic, player, count=8)
-                           and state.has(SkillNames.base_skill_mischief, player, count=2))
-    world.set_rule(world.get_location(CareerNames.base_career_secret_agent_11B),
-             lambda state: state.has(SkillNames.base_skill_logic, player, count=8)
-                           and state.has(SkillNames.base_skill_mischief, player, count=4))
+_career_painter = {
+    CareerNames.base_career_painter_4: {SkillNames.base_skill_painting: 4},
+    CareerNames.base_career_painter_5: {SkillNames.base_skill_painting: 5},
+    CareerNames.base_career_painter_6: {SkillNames.base_skill_painting: 6},
+    CareerNames.base_career_painter_7A: {SkillNames.base_skill_painting: 7},
+    CareerNames.base_career_painter_7B: {SkillNames.base_skill_painting: 7},
+    CareerNames.base_career_painter_8A: {SkillNames.base_skill_painting: 8, SkillNames.base_skill_logic: 2},
+    CareerNames.base_career_painter_9A: {SkillNames.base_skill_painting: 9, SkillNames.base_skill_logic: 4},
+    CareerNames.base_career_painter_10A: {SkillNames.base_skill_painting: 10, SkillNames.base_skill_logic: 6},
+    CareerNames.base_career_painter_8B: {SkillNames.base_skill_painting: 8, SkillNames.base_skill_charisma: 2},
+    CareerNames.base_career_painter_9B: {SkillNames.base_skill_painting: 9, SkillNames.base_skill_charisma: 4},
+    CareerNames.base_career_painter_10B: {SkillNames.base_skill_painting: 10, SkillNames.base_skill_charisma: 6},
+}
+
+_career_secret_agent = {
+    CareerNames.base_career_secret_agent_4: {SkillNames.base_skill_logic: 2, SkillNames.base_skill_charisma: 2},
+    CareerNames.base_career_secret_agent_5: {SkillNames.base_skill_logic: 3, SkillNames.base_skill_charisma: 3},
+    CareerNames.base_career_secret_agent_6: {SkillNames.base_skill_logic: 5, SkillNames.base_skill_charisma: 5},
+    CareerNames.base_career_secret_agent_7: {SkillNames.base_skill_logic: 5, SkillNames.base_skill_charisma: 5},
+    CareerNames.base_career_secret_agent_8A: {SkillNames.base_skill_logic: 6, SkillNames.base_skill_charisma: 6},
+    CareerNames.base_career_secret_agent_8B: {SkillNames.base_skill_logic: 6, SkillNames.base_skill_charisma: 6},
+    CareerNames.base_career_secret_agent_9A: {SkillNames.base_skill_logic: 8, SkillNames.base_skill_charisma: 7},
+    CareerNames.base_career_secret_agent_10A: {SkillNames.base_skill_logic: 10, SkillNames.base_skill_charisma: 8},
+    CareerNames.base_career_secret_agent_9B: {SkillNames.base_skill_logic: 8, SkillNames.base_skill_charisma: 7},
+    CareerNames.base_career_secret_agent_10B: {
+        SkillNames.base_skill_logic: 10,
+        SkillNames.base_skill_charisma: 8,
+        SkillNames.base_skill_mischief: 4,
+        },
+}
+
 def _career_style_influencer(world: Sims4World, player: int):
     world.set_rule(world.get_location(CareerNames.base_career_style_influencer_4),
              lambda state: state.has(SkillNames.base_skill_writing, player, count=1))
