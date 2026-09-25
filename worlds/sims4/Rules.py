@@ -1,17 +1,19 @@
 from __future__ import annotations
 
 import dataclasses
-from typing import TYPE_CHECKING, Callable, override
+from typing import TYPE_CHECKING
 
+from typing_extensions import override
+
+import rule_builder.rules
 from BaseClasses import CollectionState
 from NetUtils import JSONMessagePart
-import rule_builder.rules
-from rule_builder.rules import Has, CanReachLocation, Rule
+from rule_builder.rules import CanReachLocation, Has, Rule
 
+from .Items import skills_table
 from .Names import AspirationNames, CareerNames, EventNames, SkillNames
 from .Names.DLC import ExpansionNames, GamePackNames, StuffNames
 from .Options import AspirationGoal, Sims4Options
-from .Items import skills_table
 
 if TYPE_CHECKING:
     from . import Sims4World
