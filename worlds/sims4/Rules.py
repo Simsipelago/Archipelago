@@ -17,6 +17,12 @@ if TYPE_CHECKING:
     from . import Sims4World
 
 def has_skill(skill: str, skill_level: int) -> Has:
+    """
+    Design Decision:
+    Skill items in the pool represent progression milestones beyond level 2.
+    Therefore, level N requires (N - 2) skill items.
+    Example: Level 3 requires 1 item, Level 10 requires 8 items.
+    """
     # determines how many skill items are required based on the skill level passed into the function
     skills_required: int = skill_level - 2
     return Has(skill, skills_required)
@@ -946,6 +952,13 @@ CAREER_RULES: dict[str, dict[str, dict[str, int]] | dict[str, Rule]] = {
 }
 
 def set_career_rules(world: Sims4World, options: Sims4Options):
+    """
+        Career locations are sent by the mod once per promotion in game (see the mod's
+        career_event_dispatcher.py). The level in the location name is the level promoted to,
+        so a check's rule must use the skill levels the game requires for that promotion.
+        Example: base_career_writer_4 (Advice Columnist (Writer 4)) is sent upon being promoted
+        from Freelance Article Writer (Writer 3) to Advice Columnist.
+    """
     # TODO relearn how the career locations send, and then refactor this to use has_skill
     selected_careers = options.career
 
