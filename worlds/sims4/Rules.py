@@ -525,79 +525,116 @@ _career_business = {
     },
 }
 
-def _career_criminal(world: Sims4World, player: int):
-    world.set_rule(world.get_location(CareerNames.base_career_criminal_4),
-             lambda state: state.has(SkillNames.base_skill_mischief, player, count=1))
-    world.set_rule(world.get_location(CareerNames.base_career_criminal_5),
-             lambda state: state.has(SkillNames.base_skill_mischief, player, count=3))
-    world.set_rule(world.get_location(CareerNames.base_career_criminal_6A),
-             lambda state: state.has(SkillNames.base_skill_mischief, player, count=4))
-    world.set_rule(world.get_location(CareerNames.base_career_criminal_6B),
-             lambda state: state.has(SkillNames.base_skill_mischief, player, count=4))
-    world.set_rule(world.get_location(CareerNames.base_career_criminal_7A),
-             lambda state: state.has(SkillNames.base_skill_mischief, player, count=5))
-    world.set_rule(world.get_location(CareerNames.base_career_criminal_8A),
-             lambda state: state.has(SkillNames.base_skill_mischief, player, count=6))
-    world.set_rule(world.get_location(CareerNames.base_career_criminal_9A),
-             lambda state: state.has(SkillNames.base_skill_mischief, player, count=7)
-                           and state.has(SkillNames.base_skill_handiness, player, count=2))
-    world.set_rule(world.get_location(CareerNames.base_career_criminal_10A),
-             lambda state: state.has(SkillNames.base_skill_mischief, player, count=8)
-                           and state.has(SkillNames.base_skill_handiness, player, count=4))
-    world.set_rule(world.get_location(CareerNames.base_career_criminal_7B),
-             lambda state: state.has(SkillNames.base_skill_mischief, player, count=5)
-                           and state.has(SkillNames.base_skill_programming, player, count=0))
-    world.set_rule(world.get_location(CareerNames.base_career_criminal_8B),
-             lambda state: state.has(SkillNames.base_skill_mischief, player, count=6)
-                           and state.has(SkillNames.base_skill_programming, player, count=2))
-    world.set_rule(world.get_location(CareerNames.base_career_criminal_9B),
-             lambda state: state.has(SkillNames.base_skill_mischief, player, count=7)
-                           and state.has(SkillNames.base_skill_programming, player, count=4))
-    world.set_rule(world.get_location(CareerNames.base_career_criminal_10B),
-             lambda state: state.has(SkillNames.base_skill_mischief, player, count=8)
-                           and state.has(SkillNames.base_skill_programming, player, count=6))
-def _career_culinary(world: Sims4World, player: int):
-    world.set_rule(world.get_location(CareerNames.base_career_culinary_5),
-             lambda state: state.has(SkillNames.base_skill_cooking, player, count=1)
-                           and state.has(SkillNames.base_skill_mixology, player, count=1))
-    world.set_rule(world.get_location(CareerNames.base_career_culinary_6A),
-             lambda state: state.has(SkillNames.base_skill_cooking, player, count=2)
-                           and state.has(SkillNames.base_skill_mixology, player, count=2))
-    world.set_rule(world.get_location(CareerNames.base_career_culinary_6B),
-             lambda state: state.has(SkillNames.base_skill_cooking, player, count=2)
-                           and state.has(SkillNames.base_skill_mixology, player, count=2))
-    world.set_rule(world.get_location(CareerNames.base_career_culinary_7A),
-             lambda state: state.has(SkillNames.base_skill_cooking, player, count=4)
-                           and state.has(SkillNames.base_skill_gourmet, player, count=0)
-                           and state.has(SkillNames.base_skill_mixology, player, count=2))
-    world.set_rule(world.get_location(CareerNames.base_career_culinary_8A),
-             lambda state: state.has(SkillNames.base_skill_cooking, player, count=6)
-                           and state.has(SkillNames.base_skill_gourmet, player, count=4)
-                           and state.has(SkillNames.base_skill_mixology, player, count=2))
-    world.set_rule(world.get_location(CareerNames.base_career_culinary_9A),
-             lambda state: state.has(SkillNames.base_skill_cooking, player, count=6)
-                           and state.has(SkillNames.base_skill_gourmet, player, count=4)
-                           and state.has(SkillNames.base_skill_mixology, player, count=2))
-    world.set_rule(world.get_location(CareerNames.base_career_culinary_10A),
-             lambda state: state.has(SkillNames.base_skill_cooking, player, count=8)
-                           and state.has(SkillNames.base_skill_gourmet, player, count=6)
-                           and state.has(SkillNames.base_skill_mixology, player, count=2))
-    world.set_rule(world.get_location(CareerNames.base_career_culinary_7B),
-             lambda state: state.has(SkillNames.base_skill_mixology, player, count=3)
-                           and state.has(SkillNames.base_skill_charisma, player, count=0)
-                           and state.has(SkillNames.base_skill_cooking, player, count=2))
-    world.set_rule(world.get_location(CareerNames.base_career_culinary_8B),
-             lambda state: state.has(SkillNames.base_skill_mixology, player, count=5)
-                           and state.has(SkillNames.base_skill_charisma, player, count=2)
-                           and state.has(SkillNames.base_skill_cooking, player, count=2))
-    world.set_rule(world.get_location(CareerNames.base_career_culinary_9B),
-             lambda state: state.has(SkillNames.base_skill_mixology, player, count=6)
-                           and state.has(SkillNames.base_skill_charisma, player, count=4)
-                           and state.has(SkillNames.base_skill_cooking, player, count=2))
-    world.set_rule(world.get_location(CareerNames.base_career_culinary_10B),
-             lambda state: state.has(SkillNames.base_skill_mixology, player, count=8)
-                           and state.has(SkillNames.base_skill_charisma, player, count=6)
-                           and state.has(SkillNames.base_skill_cooking, player, count=2))
+_career_criminal = {
+    CareerNames.base_career_criminal_3: {
+        SkillNames.base_skill_mischief: 2,
+    },
+    CareerNames.base_career_criminal_4: {
+        SkillNames.base_skill_mischief: 3,
+    },
+    CareerNames.base_career_criminal_5: {
+        SkillNames.base_skill_mischief: 5,
+    },
+    CareerNames.base_career_criminal_6A: {
+        SkillNames.base_skill_mischief: 6,
+    },
+    CareerNames.base_career_criminal_6B: {
+        SkillNames.base_skill_mischief: 6,
+    },
+    CareerNames.base_career_criminal_7A: {
+        SkillNames.base_skill_mischief: 7,
+    },
+    CareerNames.base_career_criminal_8A: {
+        SkillNames.base_skill_mischief: 8,
+        SkillNames.base_skill_handiness: 2,
+    },
+    CareerNames.base_career_criminal_9A: {
+        SkillNames.base_skill_mischief: 9,
+        SkillNames.base_skill_handiness: 4,
+    },
+    CareerNames.base_career_criminal_10A: {
+        SkillNames.base_skill_mischief: 10,
+        SkillNames.base_skill_handiness: 6,
+    },
+    CareerNames.base_career_criminal_7B: {
+        SkillNames.base_skill_mischief: 7,
+        SkillNames.base_skill_programming: 2,
+    },
+    CareerNames.base_career_criminal_8B: {
+        SkillNames.base_skill_mischief: 8,
+        SkillNames.base_skill_programming: 4,
+    },
+    CareerNames.base_career_criminal_9B: {
+        SkillNames.base_skill_mischief: 9,
+        SkillNames.base_skill_programming: 6,
+    },
+    CareerNames.base_career_criminal_10B: {
+        SkillNames.base_skill_mischief: 10,
+        SkillNames.base_skill_programming: 8,
+    },
+}
+
+_career_culinary = {
+    CareerNames.base_career_culinary_3: {
+        SkillNames.base_skill_cooking: 2,
+    },
+    CareerNames.base_career_culinary_4: {
+        SkillNames.base_skill_cooking: 2,
+        SkillNames.base_skill_mixology: 2,
+    },
+    CareerNames.base_career_culinary_5: {
+        SkillNames.base_skill_cooking: 3,
+        SkillNames.base_skill_mixology: 3,
+    },
+    CareerNames.base_career_culinary_6A: {
+        SkillNames.base_skill_cooking: 4,
+        SkillNames.base_skill_mixology: 4,
+    },
+    CareerNames.base_career_culinary_6B: {
+        SkillNames.base_skill_cooking: 4,
+        SkillNames.base_skill_mixology: 4,
+    },
+    CareerNames.base_career_culinary_7A: {
+        SkillNames.base_skill_mixology: 4,
+        SkillNames.base_skill_cooking: 5,
+        SkillNames.base_skill_gourmet: 2,
+    },
+    CareerNames.base_career_culinary_8A: {
+        SkillNames.base_skill_mixology: 4,
+        SkillNames.base_skill_cooking: 7,
+        SkillNames.base_skill_gourmet: 4,
+    },
+    CareerNames.base_career_culinary_9A: {
+        SkillNames.base_skill_mixology: 4,
+        SkillNames.base_skill_cooking: 8,
+        SkillNames.base_skill_gourmet: 6,
+    },
+    CareerNames.base_career_culinary_10A: {
+        SkillNames.base_skill_mixology: 4,
+        SkillNames.base_skill_cooking: 10,
+        SkillNames.base_skill_gourmet: 8,
+    },
+    CareerNames.base_career_culinary_7B: {
+        SkillNames.base_skill_cooking: 4,
+        SkillNames.base_skill_mixology: 5,
+        SkillNames.base_skill_charisma: 2,
+    },
+    CareerNames.base_career_culinary_8B: {
+        SkillNames.base_skill_cooking: 4,
+        SkillNames.base_skill_mixology: 7,
+        SkillNames.base_skill_charisma: 4,
+    },
+    CareerNames.base_career_culinary_9B: {
+        SkillNames.base_skill_cooking: 4,
+        SkillNames.base_skill_mixology: 8,
+        SkillNames.base_skill_charisma: 6,
+    },
+    CareerNames.base_career_culinary_10B: {
+        SkillNames.base_skill_cooking: 4,
+        SkillNames.base_skill_mixology: 10,
+        SkillNames.base_skill_charisma: 8,
+    },
+}
 
 def _career_entertainer(world: Sims4World, player: int):
     world.set_rule(world.get_location(CareerNames.base_career_entertainer_5A),
