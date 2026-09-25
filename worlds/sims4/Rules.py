@@ -3,6 +3,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 import rule_builder.rules
+from rule_builder.rules import Has
 
 from .Names import AspirationNames, CareerNames, EventNames, SkillNames
 from .Names.DLC import ExpansionNames, GamePackNames, StuffNames
@@ -24,41 +25,41 @@ def set_completion_condition(world: Sims4World, player: int, options: Sims4Optio
     goal_value = goal.value
 
     if goal_value == goal.option_bodybuilder:
-        world.completion_condition[player] = lambda state: state.has(EventNames.bodybuilder_item, player)
+        world.set_completion_rule(Has(EventNames.bodybuilder_item))
     elif goal_value == goal.option_painter_extraordinaire:
-        world.completion_condition[player] = lambda state: state.has(EventNames.painter_extraordinaire_item, player)
+        world.set_completion_rule(Has(EventNames.painter_extraordinaire_item))
     elif goal_value == goal.option_bestselling_author:
-        world.completion_condition[player] = lambda state: state.has(EventNames.bestselling_author_item, player)
+        world.set_completion_rule(Has(EventNames.bestselling_author_item))
     elif goal_value == goal.option_musical_genius:
-        world.completion_condition[player] = lambda state: state.has(EventNames.musical_genius_item, player)
+        world.set_completion_rule(Has(EventNames.musical_genius_item))
     elif goal_value == goal.option_public_enemy:
-        world.completion_condition[player] = lambda state: state.has(EventNames.public_enemy_item, player)
+        world.set_completion_rule(Has(EventNames.public_enemy_item))
     elif goal_value == goal.option_chief_of_mischief:
-        world.completion_condition[player] = lambda state: state.has(EventNames.chief_of_mischief_item, player)
+        world.set_completion_rule(Has(EventNames.chief_of_mischief_item))
     elif goal_value == goal.option_master_chef:
-        world.completion_condition[player] = lambda state: state.has(EventNames.master_chef_item, player)
+        world.set_completion_rule(Has(EventNames.master_chef_item))
     elif goal_value == goal.option_master_mixologist:
-        world.completion_condition[player] = lambda state: state.has(EventNames.master_mixologist_item, player)
+        world.set_completion_rule(Has(EventNames.master_mixologist_item))
     elif goal_value == goal.option_renaissance_sim:
-        world.completion_condition[player] = lambda state: state.has(EventNames.renaissance_sim_item, player)
+        world.set_completion_rule(Has(EventNames.renaissance_sim_item))
     elif goal_value == goal.option_nerd_brain:
-        world.completion_condition[player] = lambda state: state.has(EventNames.nerd_brain_item, player)
+        world.set_completion_rule(Has(EventNames.nerd_brain_item))
     elif goal_value == goal.option_computer_whiz:
-        world.completion_condition[player] = lambda state: state.has(EventNames.computer_whiz_item, player)
+        world.set_completion_rule(Has(EventNames.computer_whiz_item))
     elif goal_value == goal.option_serial_romantic:
-        world.completion_condition[player] = lambda state: state.has(EventNames.serial_romantic_item, player)
+        world.set_completion_rule(Has(EventNames.serial_romantic_item))
     elif goal_value == goal.option_freelance_botanist:
-        world.completion_condition[player] = lambda state: state.has(EventNames.freelance_botanist_item, player)
+        world.set_completion_rule(Has(EventNames.freelance_botanist_item))
     elif goal_value == goal.option_the_curator:
-        world.completion_condition[player] = lambda state: state.has(EventNames.the_curator_item, player)
+        world.set_completion_rule(Has(EventNames.the_curator_item))
     elif goal_value == goal.option_angling_ace:
-        world.completion_condition[player] = lambda state: state.has(EventNames.angling_ace_item, player)
+        world.set_completion_rule(Has(EventNames.angling_ace_item))
     elif goal_value == goal.option_joke_star:
-        world.completion_condition[player] = lambda state: state.has(EventNames.joke_star_item, player)
+        world.set_completion_rule(Has(EventNames.joke_star_item))
     elif goal_value == goal.option_friend_of_the_world:
-        world.completion_condition[player] = lambda state: state.has(EventNames.friend_of_the_world_item, player)
+        world.set_completion_rule(Has(EventNames.friend_of_the_world_item))
     elif goal_value == goal.option_neighborly_advisor:
-        world.completion_condition[player] = lambda state: state.has(EventNames.neighborly_advisor_item, player)
+        world.set_completion_rule(Has(EventNames.neighborly_advisor_item))
 
 def set_skill_rules(world: Sims4World, options: Sims4Options):
     skills = {
@@ -843,10 +844,10 @@ def count_skills_over(threshold: int, state, player) -> int:
 
     return total_count
 
-def has_skill(skill: str, skill_level: int) -> rule_builder.rules.Has:
+def has_skill(skill: str, skill_level: int) -> Has:
     # determines how many skill items are required based on the skill level passed into the function
     skills_required: int = skill_level - 2
-    return rule_builder.rules.Has(skill, skills_required)
+    return Has(skill, skills_required)
 
 def has_multiple_skills(skills_and_levels: dict[str, int]) -> rule_builder.rules.And:
     skills = list(skills_and_levels.items())
