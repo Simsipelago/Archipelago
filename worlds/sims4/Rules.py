@@ -68,7 +68,7 @@ class JackOfNTradesRule(Rule, game="The Sims 4"):
 
 def set_rules(world: Sims4World, player: int, options: Sims4Options) -> None:
     # TODO: Part Time Jobs?
-    set_career_rules(world, player, options)
+    set_career_rules(world, options)
     set_aspiration_rules(world, player, options)
     set_skill_rules(world, options)
     set_completion_condition(world, player, options)
@@ -885,39 +885,54 @@ _career_tech_guru = {
     },
 }
 
-def _career_writer(world: Sims4World, player: int):
-    world.set_rule(world.get_location(CareerNames.base_career_writer_4),
-             lambda state: state.has(SkillNames.base_skill_writing, player, count=1))
-    world.set_rule(world.get_location(CareerNames.base_career_writer_5),
-             lambda state: state.has(SkillNames.base_skill_writing, player, count=2))
-    world.set_rule(world.get_location(CareerNames.base_career_writer_6A),
-             lambda state: state.has(SkillNames.base_skill_writing, player, count=3))
-    world.set_rule(world.get_location(CareerNames.base_career_writer_6B),
-             lambda state: state.has(SkillNames.base_skill_writing, player, count=3))
-    world.set_rule(world.get_location(CareerNames.base_career_writer_7A),
-             lambda state: state.has(SkillNames.base_skill_writing, player, count=5))
-    world.set_rule(world.get_location(CareerNames.base_career_writer_8A),
-             lambda state: state.has(SkillNames.base_skill_writing, player, count=6)
-                           and state.has(SkillNames.base_skill_logic, player, count=1))
-    world.set_rule(world.get_location(CareerNames.base_career_writer_9A),
-             lambda state: state.has(SkillNames.base_skill_writing, player, count=7)
-                           and state.has(SkillNames.base_skill_logic, player, count=2))
-    world.set_rule(world.get_location(CareerNames.base_career_writer_10A),
-             lambda state: state.has(SkillNames.base_skill_writing, player, count=8)
-                           and state.has(SkillNames.base_skill_logic, player, count=3))
-    world.set_rule(world.get_location(CareerNames.base_career_writer_7B),
-             lambda state: state.has(SkillNames.base_skill_writing, player, count=5))
-    world.set_rule(world.get_location(CareerNames.base_career_writer_8B),
-             lambda state: state.has(SkillNames.base_skill_writing, player, count=6)
-                           and state.has(SkillNames.base_skill_charisma, player, count=1))
-    world.set_rule(world.get_location(CareerNames.base_career_writer_9B),
-             lambda state: state.has(SkillNames.base_skill_writing, player, count=7)
-                           and state.has(SkillNames.base_skill_charisma, player, count=2))
-    world.set_rule(world.get_location(CareerNames.base_career_writer_10B),
-             lambda state: state.has(SkillNames.base_skill_writing, player, count=8)
-                           and state.has(SkillNames.base_skill_charisma, player, count=3))
+_career_writer = {
+    CareerNames.base_career_writer_4: {
+        SkillNames.base_skill_writing: 3,
+    },
+    CareerNames.base_career_writer_5: {
+        SkillNames.base_skill_writing: 4,
+    },
+    CareerNames.base_career_writer_6A: {
+        SkillNames.base_skill_writing: 5,
+    },
+    CareerNames.base_career_writer_6B: {
+        SkillNames.base_skill_writing: 5,
+    },
+    CareerNames.base_career_writer_7A: {
+        SkillNames.base_skill_writing: 6,
+        SkillNames.base_skill_logic: 2,
+    },
+    CareerNames.base_career_writer_8A: {
+        SkillNames.base_skill_writing: 8,
+        SkillNames.base_skill_logic: 3,
+    },
+    CareerNames.base_career_writer_9A: {
+        SkillNames.base_skill_writing: 9,
+        SkillNames.base_skill_logic: 4,
+    },
+    CareerNames.base_career_writer_10A: {
+        SkillNames.base_skill_writing: 10,
+        SkillNames.base_skill_logic: 5,
+    },
+    CareerNames.base_career_writer_7B: {
+        SkillNames.base_skill_writing: 7,
+        SkillNames.base_skill_charisma: 2,
+    },
+    CareerNames.base_career_writer_8B: {
+        SkillNames.base_skill_writing: 8,
+        SkillNames.base_skill_charisma: 3,
+    },
+    CareerNames.base_career_writer_9B: {
+        SkillNames.base_skill_writing: 9,
+        SkillNames.base_skill_charisma: 4,
+    },
+    CareerNames.base_career_writer_10B: {
+        SkillNames.base_skill_writing: 10,
+        SkillNames.base_skill_charisma: 5,
+    },
+}
 
-CAREER_RULES: dict[str, Callable | dict[str, dict[str, int]] | dict[str, Rule]] = {
+CAREER_RULES: dict[str, dict[str, dict[str, int]] | dict[str, Rule]] = {
     CareerNames.base_career_athlete: _career_athlete,
     CareerNames.base_career_astronaut: _career_astronaut,
     CareerNames.base_career_business: _career_business,
@@ -931,19 +946,16 @@ CAREER_RULES: dict[str, Callable | dict[str, dict[str, int]] | dict[str, Rule]] 
     CareerNames.base_career_writer: _career_writer,
 }
 
-def set_career_rules(world: Sims4World, player: int, options: Sims4Options):
+def set_career_rules(world: Sims4World, options: Sims4Options):
     # TODO relearn how the career locations send, and then refactor this to use has_skill
     selected_careers = options.career
 
     for career_name, career_data in CAREER_RULES.items():
         if career_name in selected_careers:
-            if callable(career_data):
-                career_data(world, player)
-            else:
-                for loc_name, rule in career_data.items():
-                    if isinstance(rule, dict):
-                        world.set_rule(world.get_location(loc_name), has_multiple_skills(rule))
-                    elif isinstance(rule, Rule):
-                        world.set_rule(world.get_location(loc_name), rule)
-                    else:
-                        raise ValueError(f"Unsupported type for {loc_name} rule: {type(rule)}")
+            for loc_name, rule in career_data.items():
+                if isinstance(rule, dict):
+                    world.set_rule(world.get_location(loc_name), has_multiple_skills(rule))
+                elif isinstance(rule, Rule):
+                    world.set_rule(world.get_location(loc_name), rule)
+                else:
+                    raise ValueError(f"Unsupported type for {loc_name} rule: {type(rule)}")
