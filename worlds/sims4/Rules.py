@@ -247,7 +247,7 @@ def _master_mixologist(world: Sims4World, player: int):
                            and has_skill(SkillNames.base_skill_cooking, 4))
     world.set_rule(world.get_location(EventNames.master_mixologist),
              CanReachLocation(AspirationNames.base_aspiration_master_mixologist))
-                 world.get_location(AspirationNames.base_aspiration_master_mixologist), player=player))
+
 
 def _renaissance_sim(world: Sims4World, player: int):
     world.set_rule(world.get_location(AspirationNames.base_aspiration_prudent_student),
@@ -372,105 +372,158 @@ def set_aspiration_rules(world: Sims4World, player: int, options: Sims4Options):
     if handler:
         handler(world, player)
 
-def _career_athlete(world: Sims4World, player: int):
-    world.set_rule(world.get_location(CareerNames.base_career_athlete_4),
-             lambda state: state.has(SkillNames.base_skill_charisma, player, count=1)
-                           and state.has(SkillNames.base_skill_fitness, player, count=1))
-    world.set_rule(world.get_location(CareerNames.base_career_athlete_5A),
-             lambda state: state.has(SkillNames.base_skill_charisma, player, count=2)
-                           and state.has(SkillNames.base_skill_fitness, player, count=2))
-    world.set_rule(world.get_location(CareerNames.base_career_athlete_5B),
-             lambda state: state.has(SkillNames.base_skill_charisma, player, count=2)
-                           and state.has(SkillNames.base_skill_fitness, player, count=2))
-    world.set_rule(world.get_location(CareerNames.base_career_athlete_6A),
-             lambda state: state.has(SkillNames.base_skill_charisma, player, count=2)
-                           and state.has(SkillNames.base_skill_fitness, player, count=3))
-    world.set_rule(world.get_location(CareerNames.base_career_athlete_7A),
-             lambda state: state.has(SkillNames.base_skill_charisma, player, count=2)
-                           and state.has(SkillNames.base_skill_fitness, player, count=4))
-    world.set_rule(world.get_location(CareerNames.base_career_athlete_8A),
-             lambda state: state.has(SkillNames.base_skill_charisma, player, count=3)
-                           and state.has(SkillNames.base_skill_fitness, player, count=6))
-    world.set_rule(world.get_location(CareerNames.base_career_athlete_9A),
-             lambda state: state.has(SkillNames.base_skill_charisma, player, count=4)
-                           and state.has(SkillNames.base_skill_fitness, player, count=7))
-    world.set_rule(world.get_location(CareerNames.base_career_athlete_10A),
-             lambda state: state.has(SkillNames.base_skill_charisma, player, count=6)
-                           and state.has(SkillNames.base_skill_fitness, player, count=8))
-    world.set_rule(world.get_location(CareerNames.base_career_athlete_6B),
-             lambda state: state.has(SkillNames.base_skill_charisma, player, count=3)
-                           and state.has(SkillNames.base_skill_fitness, player, count=6))
-    world.set_rule(world.get_location(CareerNames.base_career_athlete_7B),
-             lambda state: state.has(SkillNames.base_skill_charisma, player, count=3)
-                           and state.has(SkillNames.base_skill_fitness, player, count=7))
-    world.set_rule(world.get_location(CareerNames.base_career_athlete_8B),
-             lambda state: state.has(SkillNames.base_skill_charisma, player, count=4)
-                           and state.has(SkillNames.base_skill_fitness, player, count=8))
-    world.set_rule(world.get_location(CareerNames.base_career_athlete_9B),
-             lambda state: state.has(SkillNames.base_skill_charisma, player, count=5)
-                           and state.has(SkillNames.base_skill_fitness, player, count=8))
-    world.set_rule(world.get_location(CareerNames.base_career_athlete_10B),
-             lambda state: state.has(SkillNames.base_skill_charisma, player, count=6)
-                           and state.has(SkillNames.base_skill_fitness, player, count=8))
 
-def _career_astronaut(world: Sims4World, player: int):
-    world.set_rule(world.get_location(CareerNames.base_career_astronaut_4),
-             lambda state: state.has(SkillNames.base_skill_logic, player, count=1))
-    world.set_rule(world.get_location(CareerNames.base_career_astronaut_5),
-             lambda state: state.has(SkillNames.base_skill_logic, player, count=2)
-                           and state.has(SkillNames.base_skill_fitness, player, count=1))
-    world.set_rule(world.get_location(CareerNames.base_career_astronaut_6),
-             lambda state: state.has(SkillNames.base_skill_logic, player, count=3)
-                           and state.has(SkillNames.base_skill_fitness, player, count=2))
-    world.set_rule(world.get_location(CareerNames.base_career_astronaut_7),
-             lambda state: state.has(SkillNames.base_skill_logic, player, count=3)
-                           and state.has(SkillNames.base_skill_fitness, player, count=4))
-    world.set_rule(world.get_location(CareerNames.base_career_astronaut_8A),
-             lambda state: state.has(SkillNames.base_skill_logic, player, count=4)
-                           and state.has(SkillNames.base_skill_fitness, player, count=5))
-    world.set_rule(world.get_location(CareerNames.base_career_astronaut_8B),
-             lambda state: state.has(SkillNames.base_skill_logic, player, count=4)
-                           and state.has(SkillNames.base_skill_fitness, player, count=5))
-    world.set_rule(world.get_location(CareerNames.base_career_astronaut_9A),
-             lambda state: state.has(SkillNames.base_skill_fitness, player, count=6))
-    world.set_rule(world.get_location(CareerNames.base_career_astronaut_10A),
-             lambda state: state.has(SkillNames.base_skill_rocket_science, player, count=2)
-                           and state.has(SkillNames.base_skill_fitness, player, count=8))
-    world.set_rule(world.get_location(CareerNames.base_career_astronaut_9B),
-             lambda state: state.has(SkillNames.base_skill_fitness, player, count=6))
-    world.set_rule(world.get_location(CareerNames.base_career_astronaut_10B),
-             lambda state: state.has(SkillNames.base_skill_rocket_science, player, count=2)
-                           and state.has(SkillNames.base_skill_fitness, player, count=8))
+_career_athlete = {
+    CareerNames.base_career_athlete_3: {
+        SkillNames.base_skill_charisma: 2,
+        SkillNames.base_skill_fitness: 2,
+    },
+    CareerNames.base_career_athlete_4: {
+        SkillNames.base_skill_charisma: 3,
+        SkillNames.base_skill_fitness: 3,
+    },
+    CareerNames.base_career_athlete_5A: {
+        SkillNames.base_skill_charisma: 4,
+        SkillNames.base_skill_fitness: 4,
+    },
+    CareerNames.base_career_athlete_6A: {
+        SkillNames.base_skill_charisma: 4,
+        SkillNames.base_skill_fitness: 5,
+    },
+    CareerNames.base_career_athlete_7A: {
+        SkillNames.base_skill_charisma: 4,
+        SkillNames.base_skill_fitness: 6,
+    },
+    CareerNames.base_career_athlete_8A: {
+        SkillNames.base_skill_charisma: 5,
+        SkillNames.base_skill_fitness: 8,
+    },
+    CareerNames.base_career_athlete_9A: {
+        SkillNames.base_skill_charisma: 6,
+        SkillNames.base_skill_fitness: 9,
+    },
+    CareerNames.base_career_athlete_10A: {
+        SkillNames.base_skill_charisma: 8,
+        SkillNames.base_skill_fitness: 10,
+    },
+    CareerNames.base_career_athlete_5B: {
+        SkillNames.base_skill_charisma: 4,
+        SkillNames.base_skill_fitness: 4,
+    },
+    CareerNames.base_career_athlete_6B: {
+        SkillNames.base_skill_charisma: 5,
+        SkillNames.base_skill_fitness: 8,
+    },
+    CareerNames.base_career_athlete_7B: {
+        SkillNames.base_skill_charisma: 5,
+        SkillNames.base_skill_fitness: 9,
+    },
+    CareerNames.base_career_athlete_8B: {
+        SkillNames.base_skill_charisma: 6,
+        SkillNames.base_skill_fitness: 10,
+    },
+    CareerNames.base_career_athlete_9B: {
+        SkillNames.base_skill_charisma: 7,
+        SkillNames.base_skill_fitness: 10,
+    },
+    CareerNames.base_career_athlete_10B: {
+        SkillNames.base_skill_charisma: 8,
+        SkillNames.base_skill_fitness: 10,
+    },
+}
 
-def _career_business(world: Sims4World, player: int):
-    world.set_rule(world.get_location(CareerNames.base_career_business_5),
-             lambda state: state.has(SkillNames.base_skill_charisma, player, count=1))
-    world.set_rule(world.get_location(CareerNames.base_career_business_6),
-             lambda state: state.has(SkillNames.base_skill_charisma, player, count=2))
-    world.set_rule(world.get_location(CareerNames.base_career_business_7A),
-             lambda state: state.has(SkillNames.base_skill_charisma, player, count=2)
-                           and state.has(SkillNames.base_skill_logic, player, count=2))
-    world.set_rule(world.get_location(CareerNames.base_career_business_7B),
-             lambda state: state.has(SkillNames.base_skill_charisma, player, count=2)
-                           and state.has(SkillNames.base_skill_logic, player, count=2))
-    world.set_rule(world.get_location(CareerNames.base_career_business_8A),
-             lambda state: state.has(SkillNames.base_skill_charisma, player, count=4)
-                           and state.has(SkillNames.base_skill_logic, player, count=3))
-    world.set_rule(world.get_location(CareerNames.base_career_business_9A),
-             lambda state: state.has(SkillNames.base_skill_charisma, player, count=6)
-                           and state.has(SkillNames.base_skill_logic, player, count=4))
-    world.set_rule(world.get_location(CareerNames.base_career_business_10A),
-             lambda state: state.has(SkillNames.base_skill_charisma, player, count=8)
-                           and state.has(SkillNames.base_skill_logic, player, count=6))
-    world.set_rule(world.get_location(CareerNames.base_career_business_8B),
-             lambda state: state.has(SkillNames.base_skill_charisma, player, count=3)
-                           and state.has(SkillNames.base_skill_logic, player, count=4))
-    world.set_rule(world.get_location(CareerNames.base_career_business_9B),
-             lambda state: state.has(SkillNames.base_skill_charisma, player, count=4)
-                           and state.has(SkillNames.base_skill_logic, player, count=6))
-    world.set_rule(world.get_location(CareerNames.base_career_business_10B),
-             lambda state: state.has(SkillNames.base_skill_charisma, player, count=6)
-                           and state.has(SkillNames.base_skill_logic, player, count=8))
+_career_astronaut = {
+    CareerNames.base_career_astronaut_4:{
+             SkillNames.base_skill_logic: 3,
+            SkillNames.base_skill_fitness: 2,
+    },
+    CareerNames.base_career_astronaut_5: {
+        SkillNames.base_skill_logic: 4,
+        SkillNames.base_skill_fitness: 3,
+    },
+    CareerNames.base_career_astronaut_6: {
+        SkillNames.base_skill_logic: 5,
+        SkillNames.base_skill_fitness: 4,
+    },
+    CareerNames.base_career_astronaut_7: {
+        SkillNames.base_skill_logic: 5,
+        SkillNames.base_skill_fitness: 6,
+    },
+    CareerNames.base_career_astronaut_8A: {
+        SkillNames.base_skill_logic: 6,
+        SkillNames.base_skill_fitness: 7,
+    },
+    CareerNames.base_career_astronaut_8B: {
+        SkillNames.base_skill_logic: 6,
+        SkillNames.base_skill_fitness: 7,
+    },
+    CareerNames.base_career_astronaut_9A: {
+        SkillNames.base_skill_rocket_science: 2,
+        SkillNames.base_skill_fitness: 8,
+    },
+    CareerNames.base_career_astronaut_10A: {
+        SkillNames.base_skill_rocket_science: 4,
+        SkillNames.base_skill_fitness: 10,
+    },
+    CareerNames.base_career_astronaut_9B: {
+        SkillNames.base_skill_rocket_science: 2,
+        SkillNames.base_skill_fitness: 8,
+    },
+    CareerNames.base_career_astronaut_10B: {
+        SkillNames.base_skill_rocket_science: 4,
+        SkillNames.base_skill_fitness: 10,
+    },
+}
+
+_career_business = {
+    CareerNames.base_career_business_3: {
+        SkillNames.base_skill_charisma: 2,
+    },
+    CareerNames.base_career_business_4: {
+        SkillNames.base_skill_charisma: 2,
+        SkillNames.base_skill_logic: 2,
+    },
+    CareerNames.base_career_business_5: {
+        SkillNames.base_skill_charisma: 3,
+        SkillNames.base_skill_logic: 2,
+    },
+    CareerNames.base_career_business_6: {
+        SkillNames.base_skill_charisma: 4,
+        SkillNames.base_skill_logic: 2,
+    },
+    CareerNames.base_career_business_7A: {
+        SkillNames.base_skill_charisma: 4,
+        SkillNames.base_skill_logic: 4,
+    },
+    CareerNames.base_career_business_7B: {
+        SkillNames.base_skill_charisma: 4,
+        SkillNames.base_skill_logic: 4,
+    },
+    CareerNames.base_career_business_8A: {
+        SkillNames.base_skill_charisma: 6,
+        SkillNames.base_skill_logic: 5,
+    },
+    CareerNames.base_career_business_9A: {
+        SkillNames.base_skill_charisma: 8,
+        SkillNames.base_skill_logic: 6,
+    },
+    CareerNames.base_career_business_10A: {
+        SkillNames.base_skill_charisma: 10,
+        SkillNames.base_skill_logic: 8,
+    },
+    CareerNames.base_career_business_8B: {
+        SkillNames.base_skill_charisma: 5,
+        SkillNames.base_skill_logic: 6,
+    },
+    CareerNames.base_career_business_9B: {
+        SkillNames.base_skill_charisma: 6,
+        SkillNames.base_skill_logic: 8,
+    },
+    CareerNames.base_career_business_10B: {
+        SkillNames.base_skill_charisma: 8,
+        SkillNames.base_skill_logic: 10,
+    },
+}
 
 def _career_criminal(world: Sims4World, player: int):
     world.set_rule(world.get_location(CareerNames.base_career_criminal_4),
@@ -782,7 +835,11 @@ def set_career_rules(world: Sims4World, player: int, options: Sims4Options):
 
     for career_name, handler in CAREER_RULES.items():
         if career_name in career:
-            handler(world, player)
+            if callable(handler):
+                handler(world, player)
+            else:
+                for loc_name, skills in handler.items():
+                    world.set_rule(world.get_location(loc_name), has_multiple_skills(skills))
 
 def count_skills_over(threshold: int, state, player) -> int:
     total_count = 0
