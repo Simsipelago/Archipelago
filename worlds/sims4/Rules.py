@@ -190,16 +190,16 @@ def _bestselling_author(world: Sims4World, player: int):
 def _musical_genius(world: Sims4World, player: int):
     world.set_rule(world.get_location(AspirationNames.base_aspiration_fine_tuned),
              has_skill(SkillNames.base_skill_guitar, 4)
-                           or has_skill(SkillNames.base_skill_violin, 4)
-                           or has_skill(SkillNames.base_skill_piano, 4))
+                           | has_skill(SkillNames.base_skill_violin, 4)
+                           | has_skill(SkillNames.base_skill_piano, 4))
     world.set_rule(world.get_location(AspirationNames.base_aspiration_harmonious),
              has_skill(SkillNames.base_skill_guitar, 8)
-                           or has_skill(SkillNames.base_skill_violin, 8)
-                           or has_skill(SkillNames.base_skill_piano, 8))
+                           | has_skill(SkillNames.base_skill_violin, 8)
+                           | has_skill(SkillNames.base_skill_piano, 8))
     world.set_rule(world.get_location(AspirationNames.base_aspiration_musical_genius),
              has_skill(SkillNames.base_skill_guitar, 10)
-                           or has_skill(SkillNames.base_skill_violin, 10)
-                           or has_skill(SkillNames.base_skill_piano, 10))
+                           | has_skill(SkillNames.base_skill_violin, 10)
+                           | has_skill(SkillNames.base_skill_piano, 10))
     world.set_rule(world.get_location(EventNames.musical_genius),
              CanReachLocation(AspirationNames.base_aspiration_musical_genius))
 
@@ -229,10 +229,10 @@ def _master_chef(world: Sims4World, player: int):
              has_skill(SkillNames.base_skill_cooking, 5))
     world.set_rule(world.get_location(AspirationNames.base_aspiration_master_chef),
              (has_skill(SkillNames.base_skill_gourmet, 6)
-                            and has_skill(SkillNames.base_skill_cooking, 8))
-                           or (has_skill(SkillNames.base_skill_gourmet, 5)
-                               and has_skill(SkillNames.base_skill_mixology, 7)
-                               and has_skill(SkillNames.base_skill_charisma, 4)))
+                            & has_skill(SkillNames.base_skill_cooking, 8))
+                           | (has_skill(SkillNames.base_skill_gourmet, 5)
+                               & has_skill(SkillNames.base_skill_mixology, 7)
+                               & has_skill(SkillNames.base_skill_charisma, 4)))
     world.set_rule(world.get_location(EventNames.master_chef),
              CanReachLocation(AspirationNames.base_aspiration_master_chef))
 
@@ -241,10 +241,10 @@ def _master_mixologist(world: Sims4World, player: int):
              has_skill(SkillNames.base_skill_mixology, 4))
     world.set_rule(world.get_location(AspirationNames.base_aspiration_beverage_boss),
              has_skill(SkillNames.base_skill_mixology, 7)
-                           and has_skill(SkillNames.base_skill_cooking, 4))
+                           & has_skill(SkillNames.base_skill_cooking, 4))
     world.set_rule(world.get_location(AspirationNames.base_aspiration_master_mixologist),
              has_skill(SkillNames.base_skill_mixology, 10)
-                           and has_skill(SkillNames.base_skill_cooking, 4))
+                           & has_skill(SkillNames.base_skill_cooking, 4))
     world.set_rule(world.get_location(EventNames.master_mixologist),
              CanReachLocation(AspirationNames.base_aspiration_master_mixologist))
 
@@ -271,7 +271,7 @@ def _nerd_brain(world: Sims4World, player: int):
              has_skill(SkillNames.base_skill_handiness, 5))
     world.set_rule(world.get_location(AspirationNames.base_aspiration_nerd_brain),
              has_skill(SkillNames.base_skill_logic, 10)
-                           and has_skill(SkillNames.base_skill_handiness, 5))
+                           & has_skill(SkillNames.base_skill_handiness, 5))
     world.set_rule(world.get_location(EventNames.nerd_brain),
              CanReachLocation(AspirationNames.base_aspiration_nerd_brain))
 
@@ -282,7 +282,7 @@ def _computer_whiz(world: Sims4World, player: int):
              has_skill(SkillNames.base_skill_programming, 7))
     world.set_rule(world.get_location(AspirationNames.base_aspiration_computer_whiz),
              has_skill(SkillNames.base_skill_programming, 7)
-                           and has_skill(SkillNames.base_skill_video_gaming, 4))
+                           & has_skill(SkillNames.base_skill_video_gaming, 4))
     world.set_rule(world.get_location(EventNames.computer_whiz),
              CanReachLocation(AspirationNames.base_aspiration_computer_whiz))
 
