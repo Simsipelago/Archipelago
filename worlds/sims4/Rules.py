@@ -313,8 +313,7 @@ def _renaissance_sim(world: Sims4World, player: int):
     world.set_rule(world.get_location(AspirationNames.base_aspiration_renaissance_sim),
              JackOfNTradesRule(6, 6))
     world.set_rule(world.get_location(EventNames.renaissance_sim),
-             lambda state: state.can_reach(
-                 world.get_location(AspirationNames.base_aspiration_renaissance_sim), player=player))
+             CanReachLocation(AspirationNames.base_aspiration_renaissance_sim))
 
 def _nerd_brain(world: Sims4World, player: int):
     world.set_rule(world.get_location(AspirationNames.base_aspiration_prudent_student),
