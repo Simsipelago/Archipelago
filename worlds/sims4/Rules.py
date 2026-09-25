@@ -769,88 +769,121 @@ _career_secret_agent = {
         },
 }
 
-def _career_style_influencer(world: Sims4World, player: int):
-    world.set_rule(world.get_location(CareerNames.base_career_style_influencer_4),
-             lambda state: state.has(SkillNames.base_skill_writing, player, count=1))
-    world.set_rule(world.get_location(CareerNames.base_career_style_influencer_5),
-             lambda state: state.has(SkillNames.base_skill_writing, player, count=2))
-    world.set_rule(world.get_location(CareerNames.base_career_style_influencer_6A),
-             lambda state: state.has(SkillNames.base_skill_writing, player, count=3)
-                           and state.has(SkillNames.base_skill_charisma, player, count=1)
-                           and state.has(SkillNames.base_skill_painting, player, count=1))
-    world.set_rule(world.get_location(CareerNames.base_career_style_influencer_7A),
-             lambda state: state.has(SkillNames.base_skill_writing, player, count=4)
-                           and state.has(SkillNames.base_skill_charisma, player, count=3)
-                           and state.has(SkillNames.base_skill_painting, player, count=2)
-                           and state.has(SkillNames.base_skill_photography, player, count=1))
-    world.set_rule(world.get_location(CareerNames.base_career_style_influencer_8A),
-             lambda state: state.has(SkillNames.base_skill_writing, player, count=5)
-                           and state.has(SkillNames.base_skill_charisma, player, count=4)
-                           and state.has(SkillNames.base_skill_painting, player, count=3))
-    world.set_rule(world.get_location(CareerNames.base_career_style_influencer_9A),
-             lambda state: state.has(SkillNames.base_skill_writing, player, count=6)
-                           and state.has(SkillNames.base_skill_charisma, player, count=5)
-                           and state.has(SkillNames.base_skill_painting, player, count=6))
-    world.set_rule(world.get_location(CareerNames.base_career_style_influencer_10A),
-             lambda state: state.has(SkillNames.base_skill_writing, player, count=7)
-                           and state.has(SkillNames.base_skill_charisma, player, count=6)
-                           and state.has(SkillNames.base_skill_painting, player, count=5))
-    world.set_rule(world.get_location(CareerNames.base_career_style_influencer_6B),
-             lambda state: state.has(SkillNames.base_skill_writing, player, count=3)
-                           and state.has(SkillNames.base_skill_charisma, player, count=1)
-                           and state.has(SkillNames.base_skill_painting, player, count=1))
-    world.set_rule(world.get_location(CareerNames.base_career_style_influencer_7B),
-             lambda state: state.has(SkillNames.base_skill_writing, player, count=4)
-                           and state.has(SkillNames.base_skill_charisma, player, count=3)
-                           and state.has(SkillNames.base_skill_painting, player, count=2)
-                           and state.has(SkillNames.base_skill_photography, player, count=1))
-    world.set_rule(world.get_location(CareerNames.base_career_style_influencer_8B),
-             lambda state: state.has(SkillNames.base_skill_writing, player, count=5)
-                           and state.has(SkillNames.base_skill_charisma, player, count=4)
-                           and state.has(SkillNames.base_skill_painting, player, count=3))
-    world.set_rule(world.get_location(CareerNames.base_career_style_influencer_9B),
-             lambda state: state.has(SkillNames.base_skill_writing, player, count=6)
-                           and state.has(SkillNames.base_skill_charisma, player, count=5)
-                           and state.has(SkillNames.base_skill_painting, player, count=6))
-    world.set_rule(world.get_location(CareerNames.base_career_style_influencer_10B),
-             lambda state: state.has(SkillNames.base_skill_writing, player, count=7)
-                           and state.has(SkillNames.base_skill_charisma, player, count=6)
-                           and state.has(SkillNames.base_skill_painting, player, count=5))
+_career_style_influencer = {
+    CareerNames.base_career_style_influencer_3: {SkillNames.base_skill_writing: 2},
+    CareerNames.base_career_style_influencer_4: {SkillNames.base_skill_writing: 3, SkillNames.base_skill_charisma: 2},
+    CareerNames.base_career_style_influencer_5: {SkillNames.base_skill_writing: 4, SkillNames.base_skill_photography: 2},
+    CareerNames.base_career_style_influencer_6A: {
+        SkillNames.base_skill_writing: 5,
+        SkillNames.base_skill_charisma: 3,
+        SkillNames.base_skill_painting: 3
+    },
+    CareerNames.base_career_style_influencer_6B: {
+            SkillNames.base_skill_writing: 5,
+            SkillNames.base_skill_charisma: 3,
+            SkillNames.base_skill_painting: 3
+    },
+    CareerNames.base_career_style_influencer_7A: {
+        SkillNames.base_skill_writing: 6,
+        SkillNames.base_skill_charisma: 5,
+        SkillNames.base_skill_painting: 4,
+        SkillNames.base_skill_photography: 3,
+    },
+    CareerNames.base_career_style_influencer_8A: {
+        SkillNames.base_skill_writing: 7,
+        SkillNames.base_skill_charisma: 6,
+        SkillNames.base_skill_painting: 5,
+        SkillNames.base_skill_photography: 3,
+    },
+    CareerNames.base_career_style_influencer_9A: {
+        SkillNames.base_skill_writing: 8,
+        SkillNames.base_skill_charisma: 7,
+        SkillNames.base_skill_painting: 6,
+        SkillNames.base_skill_photography: 3,
+    },
+    CareerNames.base_career_style_influencer_10A: {
+        SkillNames.base_skill_writing: 9,
+        SkillNames.base_skill_charisma: 8,
+        SkillNames.base_skill_painting: 7,
+        SkillNames.base_skill_photography: 3,
+    },
+    CareerNames.base_career_style_influencer_7B: {
+            SkillNames.base_skill_writing: 6,
+            SkillNames.base_skill_charisma: 5,
+            SkillNames.base_skill_painting: 4,
+            SkillNames.base_skill_photography: 3
+    },
+    CareerNames.base_career_style_influencer_8B: {
+            SkillNames.base_skill_writing: 7,
+            SkillNames.base_skill_charisma: 6,
+            SkillNames.base_skill_painting: 5,
+            SkillNames.base_skill_photography: 3
+    },
+    CareerNames.base_career_style_influencer_9B: {
+            SkillNames.base_skill_writing: 8,
+            SkillNames.base_skill_charisma: 7,
+            SkillNames.base_skill_painting: 6,
+            SkillNames.base_skill_photography: 3
+    },
+    CareerNames.base_career_style_influencer_10B: {
+            SkillNames.base_skill_writing: 9,
+            SkillNames.base_skill_charisma: 8,
+            SkillNames.base_skill_painting: 7,
+            SkillNames.base_skill_photography: 3
+    },
+}
 
-def _career_tech_guru(world: Sims4World, player: int):
-    # TODO check project manager career logic https://discord.com/channels/731205301247803413/1079002955262480424/1403764728177758252
-    world.set_rule(world.get_location(CareerNames.base_career_tech_guru_4),
-             has_skill(SkillNames.base_skill_programming, 3))
-    world.set_rule(world.get_location(CareerNames.base_career_tech_guru_5),
-             has_skill(SkillNames.base_skill_programming, 4)
-             & has_skill(SkillNames.base_skill_video_gaming, 3))
-    world.set_rule(world.get_location(CareerNames.base_career_tech_guru_6),
-             lambda state: state.has(SkillNames.base_skill_programming, player, count=3)
-                           and state.has(SkillNames.base_skill_video_gaming, player, count=4))
-    world.set_rule(world.get_location(CareerNames.base_career_tech_guru_7A),
-             lambda state: state.has(SkillNames.base_skill_programming, player, count=4)
-                           and state.has(SkillNames.base_skill_video_gaming, player, count=3))
-    world.set_rule(world.get_location(CareerNames.base_career_tech_guru_7B),
-             lambda state: state.has(SkillNames.base_skill_programming, player, count=4)
-                           and state.has(SkillNames.base_skill_video_gaming, player, count=3))
-    world.set_rule(world.get_location(CareerNames.base_career_tech_guru_8A),
-             lambda state: state.has(SkillNames.base_skill_programming, player, count=4)
-                           and state.has(SkillNames.base_skill_video_gaming, player, count=4))
-    world.set_rule(world.get_location(CareerNames.base_career_tech_guru_9A),
-             lambda state: state.has(SkillNames.base_skill_programming, player, count=5)
-                           and state.has(SkillNames.base_skill_video_gaming, player, count=6))
-    world.set_rule(world.get_location(CareerNames.base_career_tech_guru_10A),
-             lambda state: state.has(SkillNames.base_skill_programming, player, count=6)
-                           and state.has(SkillNames.base_skill_video_gaming, player, count=8))
-    world.set_rule(world.get_location(CareerNames.base_career_tech_guru_8B),
-             lambda state: state.has(SkillNames.base_skill_programming, player, count=6)
-                           and state.has(SkillNames.base_skill_charisma, player, count=0))
-    world.set_rule(world.get_location(CareerNames.base_career_tech_guru_9B),
-             lambda state: state.has(SkillNames.base_skill_programming, player, count=7)
-                           and state.has(SkillNames.base_skill_charisma, player, count=2))
-    world.set_rule(world.get_location(CareerNames.base_career_tech_guru_10B),
-             lambda state: state.has(SkillNames.base_skill_programming, player, count=8)
-                           and state.has(SkillNames.base_skill_charisma, player, count=4))
+_career_tech_guru = {
+    CareerNames.base_career_tech_guru_3: {
+        SkillNames.base_skill_programming: 2
+    },
+    CareerNames.base_career_tech_guru_4: {
+        SkillNames.base_skill_programming: 3
+    },
+    CareerNames.base_career_tech_guru_5: {
+        SkillNames.base_skill_programming: 4,
+        SkillNames.base_skill_video_gaming: 3
+    },
+    CareerNames.base_career_tech_guru_6: {
+        SkillNames.base_skill_programming: 5,
+        SkillNames.base_skill_video_gaming: 4
+    },
+    CareerNames.base_career_tech_guru_7A: {
+        SkillNames.base_skill_programming: 6,
+        SkillNames.base_skill_video_gaming: 5
+    },
+    CareerNames.base_career_tech_guru_7B: {
+        SkillNames.base_skill_programming: 6,
+        SkillNames.base_skill_video_gaming: 5,
+    },
+    CareerNames.base_career_tech_guru_8A: {
+        SkillNames.base_skill_programming: 6,
+        SkillNames.base_skill_video_gaming: 6,
+    },
+    CareerNames.base_career_tech_guru_9A: {
+        SkillNames.base_skill_programming: 7,
+        SkillNames.base_skill_video_gaming: 8
+    },
+    CareerNames.base_career_tech_guru_10A: {
+        SkillNames.base_skill_programming: 8,
+        SkillNames.base_skill_video_gaming: 10
+    },
+    CareerNames.base_career_tech_guru_8B: {
+        SkillNames.base_skill_programming: 8,
+        SkillNames.base_skill_video_gaming: 5,
+        SkillNames.base_skill_charisma: 2
+    },
+    CareerNames.base_career_tech_guru_9B: {
+        SkillNames.base_skill_programming: 9,
+        SkillNames.base_skill_video_gaming: 5,
+        SkillNames.base_skill_charisma: 4
+    },
+    CareerNames.base_career_tech_guru_10B: {
+        SkillNames.base_skill_programming: 10,
+        SkillNames.base_skill_video_gaming: 5,
+        SkillNames.base_skill_charisma: 6
+    },
+}
 
 def _career_writer(world: Sims4World, player: int):
     world.set_rule(world.get_location(CareerNames.base_career_writer_4),
