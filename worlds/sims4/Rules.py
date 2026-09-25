@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 import rule_builder.rules
-from rule_builder.rules import Has
+from rule_builder.rules import Has, CanReachLocation
 
 from .Names import AspirationNames, CareerNames, EventNames, SkillNames
 from .Names.DLC import ExpansionNames, GamePackNames, StuffNames
@@ -165,7 +165,7 @@ def _bodybuilder(world: Sims4World, player: int):
     world.set_rule(world.get_location(AspirationNames.base_aspiration_bodybuilder),
              has_skill(SkillNames.base_skill_fitness, 10))
     world.set_rule(world.get_location(EventNames.bodybuilder),
-             lambda state: state.can_reach(world.get_location(AspirationNames.base_aspiration_bodybuilder), player=player))
+             CanReachLocation(AspirationNames.base_aspiration_bodybuilder))
 
 def _painter_extraordinaire(world: Sims4World, player: int):
     world.set_rule(world.get_location(AspirationNames.base_aspiration_fine_artist),
@@ -175,8 +175,7 @@ def _painter_extraordinaire(world: Sims4World, player: int):
     world.set_rule(world.get_location(AspirationNames.base_aspiration_painter_extraordinaire),
              has_skill(SkillNames.base_skill_painting, 10))
     world.set_rule(world.get_location(EventNames.painter_extraordinaire),
-             lambda state: state.can_reach(world.get_location(AspirationNames.base_aspiration_painter_extraordinaire),
-                                           player=player))
+             CanReachLocation(AspirationNames.base_aspiration_painter_extraordinaire))
 
 def _bestselling_author(world: Sims4World, player: int):
     world.set_rule(world.get_location(AspirationNames.base_aspiration_competent_wordsmith),
@@ -186,8 +185,7 @@ def _bestselling_author(world: Sims4World, player: int):
     world.set_rule(world.get_location(AspirationNames.base_aspiration_bestselling_author),
              has_skill(SkillNames.base_skill_writing, 10))
     world.set_rule(world.get_location(EventNames.bestselling_author),
-             lambda state: state.can_reach(
-                 world.get_location(AspirationNames.base_aspiration_bestselling_author), player=player))
+             CanReachLocation(AspirationNames.base_aspiration_bestselling_author))
 
 def _musical_genius(world: Sims4World, player: int):
     world.set_rule(world.get_location(AspirationNames.base_aspiration_fine_tuned),
@@ -203,8 +201,7 @@ def _musical_genius(world: Sims4World, player: int):
                            or has_skill(SkillNames.base_skill_violin, 10)
                            or has_skill(SkillNames.base_skill_piano, 10))
     world.set_rule(world.get_location(EventNames.musical_genius),
-             lambda state: state.can_reach(
-                 world.get_location(AspirationNames.base_aspiration_musical_genius), player=player))
+             CanReachLocation(AspirationNames.base_aspiration_musical_genius))
 
 def _public_enemy(world: Sims4World, player: int):
     world.set_rule(world.get_location(AspirationNames.base_aspiration_criminal_mind),
@@ -213,8 +210,7 @@ def _public_enemy(world: Sims4World, player: int):
              has_skill(SkillNames.base_skill_mischief, 8)
                            and has_skill(SkillNames.base_skill_programming, 4))
     world.set_rule(world.get_location(EventNames.public_enemy),
-             lambda state: state.can_reach(
-                 world.get_location(AspirationNames.base_aspiration_public_enemy), player=player))
+             CanReachLocation(AspirationNames.base_aspiration_public_enemy))
 
 def _chief_of_mischief(world: Sims4World, player: int):
     world.set_rule(world.get_location(AspirationNames.base_aspiration_artful_trickster),
@@ -224,8 +220,7 @@ def _chief_of_mischief(world: Sims4World, player: int):
     world.set_rule(world.get_location(AspirationNames.base_aspiration_chief_of_mischief),
              has_skill(SkillNames.base_skill_mischief, 10))
     world.set_rule(world.get_location(EventNames.chief_of_mischief),
-             lambda state: state.can_reach(
-                 world.get_location(AspirationNames.base_aspiration_chief_of_mischief), player=player))
+             CanReachLocation(AspirationNames.base_aspiration_chief_of_mischief))
 
 def _master_chef(world: Sims4World, player: int):
     world.set_rule(world.get_location(AspirationNames.base_aspiration_captain_cook),
@@ -239,8 +234,7 @@ def _master_chef(world: Sims4World, player: int):
                                and has_skill(SkillNames.base_skill_mixology, 7)
                                and has_skill(SkillNames.base_skill_charisma, 4)))
     world.set_rule(world.get_location(EventNames.master_chef),
-             lambda state: state.can_reach(
-                 world.get_location(AspirationNames.base_aspiration_master_chef), player=player))
+             CanReachLocation(AspirationNames.base_aspiration_master_chef))
 
 def _master_mixologist(world: Sims4World, player: int):
     world.set_rule(world.get_location(AspirationNames.base_aspiration_electric_mixer),
@@ -252,7 +246,7 @@ def _master_mixologist(world: Sims4World, player: int):
              has_skill(SkillNames.base_skill_mixology, 10)
                            and has_skill(SkillNames.base_skill_cooking, 4))
     world.set_rule(world.get_location(EventNames.master_mixologist),
-             lambda state: state.can_reach(
+             CanReachLocation(AspirationNames.base_aspiration_master_mixologist))
                  world.get_location(AspirationNames.base_aspiration_master_mixologist), player=player))
 
 def _renaissance_sim(world: Sims4World, player: int):
@@ -279,8 +273,7 @@ def _nerd_brain(world: Sims4World, player: int):
              has_skill(SkillNames.base_skill_logic, 10)
                            and has_skill(SkillNames.base_skill_handiness, 5))
     world.set_rule(world.get_location(EventNames.nerd_brain),
-             lambda state: state.can_reach(
-                 world.get_location(AspirationNames.base_aspiration_nerd_brain), player=player))
+             CanReachLocation(AspirationNames.base_aspiration_nerd_brain))
 
 def _computer_whiz(world: Sims4World, player: int):
     world.set_rule(world.get_location(AspirationNames.base_aspiration_technically_adept),
@@ -291,8 +284,7 @@ def _computer_whiz(world: Sims4World, player: int):
              has_skill(SkillNames.base_skill_programming, 7)
                            and has_skill(SkillNames.base_skill_video_gaming, 4))
     world.set_rule(world.get_location(EventNames.computer_whiz),
-             lambda state: state.can_reach(
-                 world.get_location(AspirationNames.base_aspiration_computer_whiz), player=player))
+             CanReachLocation(AspirationNames.base_aspiration_computer_whiz))
 
 def _serial_romantic(world: Sims4World, player: int):
     world.set_rule(world.get_location(AspirationNames.base_aspiration_up_to_date),
@@ -302,8 +294,7 @@ def _serial_romantic(world: Sims4World, player: int):
     world.set_rule(world.get_location(AspirationNames.base_aspiration_serial_romantic),
              has_skill(SkillNames.base_skill_charisma, 6))
     world.set_rule(world.get_location(EventNames.serial_romantic),
-             lambda state: state.can_reach(
-                 world.get_location(AspirationNames.base_aspiration_serial_romantic), player=player))
+             CanReachLocation(AspirationNames.base_aspiration_serial_romantic))
 
 def _freelance_botanist(world: Sims4World, player: int):
     world.set_rule(world.get_location(AspirationNames.base_aspiration_garden_variety),
@@ -313,8 +304,7 @@ def _freelance_botanist(world: Sims4World, player: int):
     world.set_rule(world.get_location(AspirationNames.base_aspiration_freelance_botanist),
              has_skill(SkillNames.base_skill_gardening, 10))
     world.set_rule(world.get_location(EventNames.freelance_botanist),
-             lambda state: state.can_reach(
-                 world.get_location(AspirationNames.base_aspiration_freelance_botanist), player=player))
+             CanReachLocation(AspirationNames.base_aspiration_freelance_botanist))
 
 def _angling_ace(world: Sims4World, player: int):
     world.set_rule(world.get_location(AspirationNames.base_aspiration_hooked),
@@ -324,8 +314,7 @@ def _angling_ace(world: Sims4World, player: int):
     world.set_rule(world.get_location(AspirationNames.base_aspiration_angling_ace),
              has_skill(SkillNames.base_skill_fishing, 10))
     world.set_rule(world.get_location(EventNames.angling_ace),
-             lambda state: state.can_reach(
-                 world.get_location(AspirationNames.base_aspiration_angling_ace), player=player))
+             CanReachLocation(AspirationNames.base_aspiration_angling_ace))
 
 def _joke_star(world: Sims4World, player: int):
     world.set_rule(world.get_location(AspirationNames.base_aspiration_practical_joker),
@@ -340,8 +329,7 @@ def _joke_star(world: Sims4World, player: int):
              (has_skill(SkillNames.base_skill_guitar, 3)
               | has_skill(SkillNames.base_skill_violin, 3)))
     world.set_rule(world.get_location(EventNames.joke_star),
-             lambda state: state.can_reach(
-                 world.get_location(AspirationNames.base_aspiration_joke_star), player=player))
+             CanReachLocation(AspirationNames.base_aspiration_joke_star))
 
 def _friend_of_the_world(world: Sims4World, player: int):
     world.set_rule(world.get_location(AspirationNames.base_aspiration_well_liked),
@@ -351,15 +339,13 @@ def _friend_of_the_world(world: Sims4World, player: int):
     world.set_rule(world.get_location(AspirationNames.base_aspiration_friend_of_the_world),
              has_skill(SkillNames.base_skill_charisma, 10))
     world.set_rule(world.get_location(EventNames.friend_of_the_world),
-             lambda state: state.can_reach(
-                 world.get_location(AspirationNames.base_aspiration_friend_of_the_world), player=player))
+             CanReachLocation(AspirationNames.base_aspiration_friend_of_the_world))
 
 def _neighborly_advisor(world: Sims4World, player: int):
     world.set_rule(world.get_location(AspirationNames.base_aspiration_neighborly_advisor),
              has_skill(SkillNames.base_skill_charisma, 7))
     world.set_rule(world.get_location(EventNames.neighborly_advisor),
-             lambda state: state.can_reach(
-                 world.get_location(AspirationNames.base_aspiration_neighborly_advisor), player=player))
+             CanReachLocation(AspirationNames.base_aspiration_neighborly_advisor))
 
 ASPIRATION_RULES = {
         AspirationGoal.option_bodybuilder: _bodybuilder,
