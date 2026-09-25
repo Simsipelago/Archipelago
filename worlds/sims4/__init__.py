@@ -171,7 +171,7 @@ class Sims4World(World, UTMixin):
         self.multiworld.regions.append(menu)
 
     def set_rules(self) -> None:
-        set_rules(self.multiworld, self.player, self.options)
+        set_rules(self, self.player, self.options)
 
     def fill_slot_data(self) -> Mapping[str, Any]:
         slot_data = {
