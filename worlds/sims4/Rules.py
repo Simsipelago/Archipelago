@@ -1,73 +1,129 @@
 from __future__ import annotations
 
+import dataclasses
 from typing import TYPE_CHECKING
 
-from BaseClasses import CollectionState, MultiWorld
-from worlds.AutoWorld import LogicMixin
-from .Names.DLC import ExpansionNames, GamePackNames, StuffNames
-from ..generic.Rules import set_rule
+from typing_extensions import override
 
-from .Names import EventNames, SkillNames, CareerNames, AspirationNames
+import rule_builder.rules
+from BaseClasses import CollectionState
+from NetUtils import JSONMessagePart
+from rule_builder.rules import CanReachLocation, Has, Rule
+
+from .Items import skills_table
+from .Names import AspirationNames, CareerNames, EventNames, SkillNames
+from .Names.DLC import ExpansionNames, GamePackNames, StuffNames
 from .Options import AspirationGoal, Sims4Options
 
 if TYPE_CHECKING:
     from . import Sims4World
 
+def has_skill(skill: str, skill_level: int) -> Has:
+    """
+    Design Decision:
+    Skill items in the pool represent progression milestones beyond level 2.
+    Therefore, level N requires (N - 2) skill items.
+    Example: Level 3 requires 1 item, Level 10 requires 8 items.
+    """
+    # determines how many skill items are required based on the skill level passed into the function
+    skills_required: int = skill_level - 2
+    return Has(skill, skills_required)
 
-class Sims4Logic(LogicMixin):
-    def _sims4_rule(self, player: int):
-        return True
+def has_multiple_skills(skills_and_levels: dict[str, int]) -> rule_builder.rules.And:
+    skills = list(skills_and_levels.items())
+    return rule_builder.rules.And(*(has_skill(skill, level) for skill, level in skills))
 
-def set_rules(world: MultiWorld, player: int, options: Sims4Options):
+
+@dataclasses.dataclass()
+class JackOfNTradesRule(Rule, game="The Sims 4"):
+    skill_threshold: int
+    skill_count: int
+
+    @override
+    def _instantiate(self, world: rule_builder.rules.World) -> Rule.Resolved:
+        return self.Resolved(skill_threshold=self.skill_threshold, skill_count=self.skill_count, player=world.player)
+
+    class Resolved(Rule.Resolved):
+        skill_threshold: int
+        skill_count: int
+
+        @override
+        def _evaluate(self, state: CollectionState) -> bool:
+            count = 0
+            for skill in skills_table.values():
+                if state.has(skill["name"], self.player, self.skill_threshold):
+                    count += 1
+            return count >= self.skill_count
+
+        @override
+        def explain_json(self, state: CollectionState | None = None) -> list[JSONMessagePart]:
+            text: list[JSONMessagePart] = [
+                {"type": "text", "text": "Have at least "},
+                {"type": "text", "text": str(self.skill_count)},
+                {"type": "text", "text": " skills at level "},
+                {"type": "text", "text": str(self.skill_threshold)},
+                {"type": "text", "text": "."},
+            ]
+            if state is not None:
+                count = 0
+                for skill in skills_table.values():
+                    if state.has(skill["name"], self.player, self.skill_threshold):
+                        count += 1
+                text.append({"type": "text", "text": f" (Currently have {count})",
+                             "color": "green" if count >= self.skill_count else "red"})
+            return text
+
+
+def set_rules(world: Sims4World, player: int, options: Sims4Options) -> None:
     # TODO: Part Time Jobs?
-    set_career_rules(world, player, options)
+    set_career_rules(world, options)
     set_aspiration_rules(world, player, options)
-    set_skill_rules(world, player, options)
+    set_skill_rules(world, options)
     set_completion_condition(world, player, options)
 
 # TODO: use events for the completion condition in order to facilitate easier goal stuff, and presence in spoiler (also permits future goals to be more dynamic)
-def set_completion_condition(world: MultiWorld, player: int, options: Sims4Options):
+def set_completion_condition(world: Sims4World, player: int, options: Sims4Options):
     goal = options.goal
     goal_value = goal.value
 
     if goal_value == goal.option_bodybuilder:
-        world.completion_condition[player] = lambda state: state.has(EventNames.bodybuilder_item, player)
+        world.set_completion_rule(Has(EventNames.bodybuilder_item))
     elif goal_value == goal.option_painter_extraordinaire:
-        world.completion_condition[player] = lambda state: state.has(EventNames.painter_extraordinaire_item, player)
+        world.set_completion_rule(Has(EventNames.painter_extraordinaire_item))
     elif goal_value == goal.option_bestselling_author:
-        world.completion_condition[player] = lambda state: state.has(EventNames.bestselling_author_item, player)
+        world.set_completion_rule(Has(EventNames.bestselling_author_item))
     elif goal_value == goal.option_musical_genius:
-        world.completion_condition[player] = lambda state: state.has(EventNames.musical_genius_item, player)
+        world.set_completion_rule(Has(EventNames.musical_genius_item))
     elif goal_value == goal.option_public_enemy:
-        world.completion_condition[player] = lambda state: state.has(EventNames.public_enemy_item, player)
+        world.set_completion_rule(Has(EventNames.public_enemy_item))
     elif goal_value == goal.option_chief_of_mischief:
-        world.completion_condition[player] = lambda state: state.has(EventNames.chief_of_mischief_item, player)
+        world.set_completion_rule(Has(EventNames.chief_of_mischief_item))
     elif goal_value == goal.option_master_chef:
-        world.completion_condition[player] = lambda state: state.has(EventNames.master_chef_item, player)
+        world.set_completion_rule(Has(EventNames.master_chef_item))
     elif goal_value == goal.option_master_mixologist:
-        world.completion_condition[player] = lambda state: state.has(EventNames.master_mixologist_item, player)
+        world.set_completion_rule(Has(EventNames.master_mixologist_item))
     elif goal_value == goal.option_renaissance_sim:
-        world.completion_condition[player] = lambda state: state.has(EventNames.renaissance_sim_item, player)
+        world.set_completion_rule(Has(EventNames.renaissance_sim_item))
     elif goal_value == goal.option_nerd_brain:
-        world.completion_condition[player] = lambda state: state.has(EventNames.nerd_brain_item, player)
+        world.set_completion_rule(Has(EventNames.nerd_brain_item))
     elif goal_value == goal.option_computer_whiz:
-        world.completion_condition[player] = lambda state: state.has(EventNames.computer_whiz_item, player)
+        world.set_completion_rule(Has(EventNames.computer_whiz_item))
     elif goal_value == goal.option_serial_romantic:
-        world.completion_condition[player] = lambda state: state.has(EventNames.serial_romantic_item, player)
+        world.set_completion_rule(Has(EventNames.serial_romantic_item))
     elif goal_value == goal.option_freelance_botanist:
-        world.completion_condition[player] = lambda state: state.has(EventNames.freelance_botanist_item, player)
+        world.set_completion_rule(Has(EventNames.freelance_botanist_item))
     elif goal_value == goal.option_the_curator:
-        world.completion_condition[player] = lambda state: state.has(EventNames.the_curator_item, player)
+        world.set_completion_rule(Has(EventNames.the_curator_item))
     elif goal_value == goal.option_angling_ace:
-        world.completion_condition[player] = lambda state: state.has(EventNames.angling_ace_item, player)
+        world.set_completion_rule(Has(EventNames.angling_ace_item))
     elif goal_value == goal.option_joke_star:
-        world.completion_condition[player] = lambda state: state.has(EventNames.joke_star_item, player)
+        world.set_completion_rule(Has(EventNames.joke_star_item))
     elif goal_value == goal.option_friend_of_the_world:
-        world.completion_condition[player] = lambda state: state.has(EventNames.friend_of_the_world_item, player)
+        world.set_completion_rule(Has(EventNames.friend_of_the_world_item))
     elif goal_value == goal.option_neighborly_advisor:
-        world.completion_condition[player] = lambda state: state.has(EventNames.neighborly_advisor_item, player)
+        world.set_completion_rule(Has(EventNames.neighborly_advisor_item))
 
-def set_skill_rules(world: MultiWorld, player: int, options: Sims4Options):
+def set_skill_rules(world: Sims4World, options: Sims4Options):
     skills = {
         SkillNames.base_skill_comedy: (3, 11),
         SkillNames.base_skill_charisma: (3, 11),
@@ -161,212 +217,196 @@ def set_skill_rules(world: MultiWorld, player: int, options: Sims4Options):
     for skill, (low, high) in skills.items():
         for level in range(low, high):
             # print(skill, level)
-            set_rule(world.get_location(f"{skill} {level}", player),
-                     lambda state, s=skill, l=level: has_skill(state, s, player, l))
+            world.set_rule(world.get_location(f"{skill} {level}"), has_skill(skill, level))
 
-def _bodybuilder(world: MultiWorld, player: int):
-    set_rule(world.get_location(AspirationNames.base_aspiration_exercise_demon, player),
-             lambda state: has_skill(state, SkillNames.base_skill_fitness, player, 4))
-    set_rule(world.get_location(AspirationNames.base_aspiration_fit_to_a_t, player),
-             lambda state: has_skill(state, SkillNames.base_skill_fitness, player, 6))
-    set_rule(world.get_location(AspirationNames.base_aspiration_bodybuilder, player),
-             lambda state: has_skill(state, SkillNames.base_skill_fitness, player, 10))
-    set_rule(world.get_location(EventNames.bodybuilder, player),
-             lambda state: state.can_reach(world.get_location(AspirationNames.base_aspiration_bodybuilder, player), player=player))
+def _bodybuilder(world: Sims4World, player: int):
+    world.set_rule(world.get_location(AspirationNames.base_aspiration_exercise_demon),
+             has_skill(SkillNames.base_skill_fitness, 4))
+    world.set_rule(world.get_location(AspirationNames.base_aspiration_fit_to_a_t),
+             has_skill(SkillNames.base_skill_fitness, 6))
+    world.set_rule(world.get_location(AspirationNames.base_aspiration_bodybuilder),
+             has_skill(SkillNames.base_skill_fitness, 10))
+    world.set_rule(world.get_location(EventNames.bodybuilder),
+             CanReachLocation(AspirationNames.base_aspiration_bodybuilder))
 
-def _painter_extraordinaire(world: MultiWorld, player: int):
-    set_rule(world.get_location(AspirationNames.base_aspiration_fine_artist, player),
-             lambda state: has_skill(state, SkillNames.base_skill_painting, player, 4))
-    set_rule(world.get_location(AspirationNames.base_aspiration_brushing_with_greatness, player),
-             lambda state: has_skill(state, SkillNames.base_skill_painting, player, 6))
-    set_rule(world.get_location(AspirationNames.base_aspiration_painter_extraordinaire, player),
-             lambda state: has_skill(state, SkillNames.base_skill_painting, player, 10))
-    set_rule(world.get_location(EventNames.painter_extraordinaire, player),
-             lambda state: state.can_reach(world.get_location(AspirationNames.base_aspiration_painter_extraordinaire, player),
-                                           player=player))
+def _painter_extraordinaire(world: Sims4World, player: int):
+    world.set_rule(world.get_location(AspirationNames.base_aspiration_fine_artist),
+             has_skill(SkillNames.base_skill_painting, 4))
+    world.set_rule(world.get_location(AspirationNames.base_aspiration_brushing_with_greatness),
+             has_skill(SkillNames.base_skill_painting, 6))
+    world.set_rule(world.get_location(AspirationNames.base_aspiration_painter_extraordinaire),
+             has_skill(SkillNames.base_skill_painting, 10))
+    world.set_rule(world.get_location(EventNames.painter_extraordinaire),
+             CanReachLocation(AspirationNames.base_aspiration_painter_extraordinaire))
 
-def _bestselling_author(world: MultiWorld, player: int):
-    set_rule(world.get_location(AspirationNames.base_aspiration_competent_wordsmith, player),
-             lambda state: has_skill(state, SkillNames.base_skill_writing, player, 4))
-    set_rule(world.get_location(AspirationNames.base_aspiration_novelest_novelist, player),
-             lambda state: has_skill(state, SkillNames.base_skill_writing, player, 6))
-    set_rule(world.get_location(AspirationNames.base_aspiration_bestselling_author, player),
-             lambda state: has_skill(state, SkillNames.base_skill_writing, player, 10))
-    set_rule(world.get_location(EventNames.bestselling_author, player),
-             lambda state: state.can_reach(
-                 world.get_location(AspirationNames.base_aspiration_bestselling_author, player), player=player))
+def _bestselling_author(world: Sims4World, player: int):
+    world.set_rule(world.get_location(AspirationNames.base_aspiration_competent_wordsmith),
+             has_skill(SkillNames.base_skill_writing, 4))
+    world.set_rule(world.get_location(AspirationNames.base_aspiration_novelest_novelist),
+             has_skill(SkillNames.base_skill_writing, 6))
+    world.set_rule(world.get_location(AspirationNames.base_aspiration_bestselling_author),
+             has_skill(SkillNames.base_skill_writing, 10))
+    world.set_rule(world.get_location(EventNames.bestselling_author),
+             CanReachLocation(AspirationNames.base_aspiration_bestselling_author))
 
-def _musical_genius(world: MultiWorld, player: int):
-    set_rule(world.get_location(AspirationNames.base_aspiration_fine_tuned, player),
-             lambda state: has_skill(state, SkillNames.base_skill_guitar, player, 4)
-                           or has_skill(state, SkillNames.base_skill_violin, player, 4)
-                           or has_skill(state, SkillNames.base_skill_piano, player, 4))
-    set_rule(world.get_location(AspirationNames.base_aspiration_harmonious, player),
-             lambda state: has_skill(state, SkillNames.base_skill_guitar, player, 8)
-                           or has_skill(state, SkillNames.base_skill_violin, player, 8)
-                           or has_skill(state, SkillNames.base_skill_piano, player, 8))
-    set_rule(world.get_location(AspirationNames.base_aspiration_musical_genius, player),
-             lambda state: has_skill(state, SkillNames.base_skill_guitar, player, 10)
-                           or has_skill(state, SkillNames.base_skill_violin, player, 10)
-                           or has_skill(state, SkillNames.base_skill_piano, player, 10))
-    set_rule(world.get_location(EventNames.musical_genius, player),
-             lambda state: state.can_reach(
-                 world.get_location(AspirationNames.base_aspiration_musical_genius, player), player=player))
+def _musical_genius(world: Sims4World, player: int):
+    world.set_rule(world.get_location(AspirationNames.base_aspiration_fine_tuned),
+             has_skill(SkillNames.base_skill_guitar, 4)
+                           | has_skill(SkillNames.base_skill_violin, 4)
+                           | has_skill(SkillNames.base_skill_piano, 4))
+    world.set_rule(world.get_location(AspirationNames.base_aspiration_harmonious),
+             has_skill(SkillNames.base_skill_guitar, 8)
+                           | has_skill(SkillNames.base_skill_violin, 8)
+                           | has_skill(SkillNames.base_skill_piano, 8))
+    world.set_rule(world.get_location(AspirationNames.base_aspiration_musical_genius),
+             has_skill(SkillNames.base_skill_guitar, 10)
+                           | has_skill(SkillNames.base_skill_violin, 10)
+                           | has_skill(SkillNames.base_skill_piano, 10))
+    world.set_rule(world.get_location(EventNames.musical_genius),
+             CanReachLocation(AspirationNames.base_aspiration_musical_genius))
 
-def _public_enemy(world: MultiWorld, player: int):
-    set_rule(world.get_location(AspirationNames.base_aspiration_criminal_mind, player),
-             lambda state: has_skill(state, SkillNames.base_skill_mischief, player, 3))
-    set_rule(world.get_location(AspirationNames.base_aspiration_public_enemy, player),
-             lambda state: has_skill(state, SkillNames.base_skill_mischief, player, 8)
-                           and has_skill(state, SkillNames.base_skill_programming, player, 4))
-    set_rule(world.get_location(EventNames.public_enemy, player),
-             lambda state: state.can_reach(
-                 world.get_location(AspirationNames.base_aspiration_public_enemy, player), player=player))
+def _public_enemy(world: Sims4World, player: int):
+    world.set_rule(world.get_location(AspirationNames.base_aspiration_criminal_mind),
+             has_skill(SkillNames.base_skill_mischief, 3))
+    world.set_rule(world.get_location(AspirationNames.base_aspiration_public_enemy),
+             has_skill(SkillNames.base_skill_mischief, 8)
+                           & has_skill(SkillNames.base_skill_programming, 4))
+    world.set_rule(world.get_location(EventNames.public_enemy),
+             CanReachLocation(AspirationNames.base_aspiration_public_enemy))
 
-def _chief_of_mischief(world: MultiWorld, player: int):
-    set_rule(world.get_location(AspirationNames.base_aspiration_artful_trickster, player),
-             lambda state: has_skill(state, SkillNames.base_skill_mischief, player, 3))
-    set_rule(world.get_location(AspirationNames.base_aspiration_professional_prankster, player),
-             lambda state: has_skill(state, SkillNames.base_skill_mischief, player, 6))
-    set_rule(world.get_location(AspirationNames.base_aspiration_chief_of_mischief, player),
-             lambda state: has_skill(state, SkillNames.base_skill_mischief, player, 10))
-    set_rule(world.get_location(EventNames.chief_of_mischief, player),
-             lambda state: state.can_reach(
-                 world.get_location(AspirationNames.base_aspiration_chief_of_mischief, player), player=player))
+def _chief_of_mischief(world: Sims4World, player: int):
+    world.set_rule(world.get_location(AspirationNames.base_aspiration_artful_trickster),
+             has_skill(SkillNames.base_skill_mischief, 3))
+    world.set_rule(world.get_location(AspirationNames.base_aspiration_professional_prankster),
+             has_skill(SkillNames.base_skill_mischief, 6))
+    world.set_rule(world.get_location(AspirationNames.base_aspiration_chief_of_mischief),
+             has_skill(SkillNames.base_skill_mischief, 10))
+    world.set_rule(world.get_location(EventNames.chief_of_mischief),
+             CanReachLocation(AspirationNames.base_aspiration_chief_of_mischief))
 
-def _master_chef(world: MultiWorld, player: int):
-    set_rule(world.get_location(AspirationNames.base_aspiration_captain_cook, player),
-             lambda state: has_skill(state, SkillNames.base_skill_cooking, player, 5))
-    set_rule(world.get_location(AspirationNames.base_aspiration_culinary_artist, player),
-             lambda state: has_skill(state, SkillNames.base_skill_cooking, player, 5))
-    set_rule(world.get_location(AspirationNames.base_aspiration_master_chef, player),
-             lambda state: (has_skill(state, SkillNames.base_skill_gourmet, player, 6)
-                            and has_skill(state, SkillNames.base_skill_cooking, player, 8))
-                           or (has_skill(state, SkillNames.base_skill_gourmet, player, 5)
-                               and has_skill(state, SkillNames.base_skill_mixology, player, 7)
-                               and has_skill(state, SkillNames.base_skill_charisma, player, 4)))
-    set_rule(world.get_location(EventNames.master_chef, player),
-             lambda state: state.can_reach(
-                 world.get_location(AspirationNames.base_aspiration_master_chef, player), player=player))
+def _master_chef(world: Sims4World, player: int):
+    world.set_rule(world.get_location(AspirationNames.base_aspiration_captain_cook),
+             has_skill(SkillNames.base_skill_cooking, 5))
+    world.set_rule(world.get_location(AspirationNames.base_aspiration_culinary_artist),
+             has_skill(SkillNames.base_skill_cooking, 5))
+    world.set_rule(world.get_location(AspirationNames.base_aspiration_master_chef),
+             (has_skill(SkillNames.base_skill_gourmet, 6)
+                            & has_skill(SkillNames.base_skill_cooking, 8))
+                           | (has_skill(SkillNames.base_skill_gourmet, 5)
+                               & has_skill(SkillNames.base_skill_mixology, 7)
+                               & has_skill(SkillNames.base_skill_charisma, 4)))
+    world.set_rule(world.get_location(EventNames.master_chef),
+             CanReachLocation(AspirationNames.base_aspiration_master_chef))
 
-def _master_mixologist(world: MultiWorld, player: int):
-    set_rule(world.get_location(AspirationNames.base_aspiration_electric_mixer, player),
-             lambda state: has_skill(state, SkillNames.base_skill_mixology, player, 4))
-    set_rule(world.get_location(AspirationNames.base_aspiration_beverage_boss, player),
-             lambda state: has_skill(state, SkillNames.base_skill_mixology, player, 7)
-                           and has_skill(state, SkillNames.base_skill_cooking, player, 4))
-    set_rule(world.get_location(AspirationNames.base_aspiration_master_mixologist, player),
-             lambda state: has_skill(state, SkillNames.base_skill_mixology, player, 10)
-                           and has_skill(state, SkillNames.base_skill_cooking, player, 4))
-    set_rule(world.get_location(EventNames.master_mixologist, player),
-             lambda state: state.can_reach(
-                 world.get_location(AspirationNames.base_aspiration_master_mixologist, player), player=player))
-def _renaissance_sim(world: MultiWorld, player: int):
-    set_rule(world.get_location(AspirationNames.base_aspiration_prudent_student, player),
-             lambda state: state.has(SkillNames.base_skill_logic, player, count=1))
-    set_rule(world.get_location(AspirationNames.base_aspiration_jack_of_some_trades, player),
-             lambda state: count_skills_over(2, state, player) >= 4)
-    set_rule(world.get_location(AspirationNames.base_aspiration_pantologist, player),
-             lambda state: count_skills_over(3, state, player) >= 5)
-    set_rule(world.get_location(AspirationNames.base_aspiration_renaissance_sim, player),
-             lambda state: count_skills_over(6, state, player) >= 6)
-    set_rule(world.get_location(EventNames.renaissance_sim, player),
-             lambda state: state.can_reach(
-                 world.get_location(AspirationNames.base_aspiration_renaissance_sim, player), player=player))
+def _master_mixologist(world: Sims4World, player: int):
+    world.set_rule(world.get_location(AspirationNames.base_aspiration_electric_mixer),
+             has_skill(SkillNames.base_skill_mixology, 4))
+    world.set_rule(world.get_location(AspirationNames.base_aspiration_beverage_boss),
+             has_skill(SkillNames.base_skill_mixology, 7)
+                           & has_skill(SkillNames.base_skill_cooking, 4))
+    world.set_rule(world.get_location(AspirationNames.base_aspiration_master_mixologist),
+             has_skill(SkillNames.base_skill_mixology, 10)
+                           & has_skill(SkillNames.base_skill_cooking, 4))
+    world.set_rule(world.get_location(EventNames.master_mixologist),
+             CanReachLocation(AspirationNames.base_aspiration_master_mixologist))
 
-def _nerd_brain(world: MultiWorld, player: int):
-    set_rule(world.get_location(AspirationNames.base_aspiration_prudent_student, player),
-             lambda state: has_skill(state, SkillNames.base_skill_logic, player, 3))
-    set_rule(world.get_location(AspirationNames.base_aspiration_erudite, player),
-             lambda state: has_skill(state, SkillNames.base_skill_logic, player, 6))
-    set_rule(world.get_location(AspirationNames.base_aspiration_rocket_scientist, player),
-             lambda state: has_skill(state, SkillNames.base_skill_handiness, player, 5))
-    set_rule(world.get_location(AspirationNames.base_aspiration_nerd_brain, player),
-             lambda state: has_skill(state, SkillNames.base_skill_logic, player, 10)
-                           and has_skill(state, SkillNames.base_skill_handiness, player, 5))
-    set_rule(world.get_location(EventNames.nerd_brain, player),
-             lambda state: state.can_reach(
-                 world.get_location(AspirationNames.base_aspiration_nerd_brain, player), player=player))
 
-def _computer_whiz(world: MultiWorld, player: int):
-    set_rule(world.get_location(AspirationNames.base_aspiration_technically_adept, player),
-             lambda state: has_skill(state, SkillNames.base_skill_programming, player, 3))
-    set_rule(world.get_location(AspirationNames.base_aspiration_computer_geek, player),
-             lambda state: has_skill(state, SkillNames.base_skill_programming, player, 7))
-    set_rule(world.get_location(AspirationNames.base_aspiration_computer_whiz, player),
-             lambda state: has_skill(state, SkillNames.base_skill_programming, player, 7)
-                           and has_skill(state, SkillNames.base_skill_video_gaming, player, 4))
-    set_rule(world.get_location(EventNames.computer_whiz, player),
-             lambda state: state.can_reach(
-                 world.get_location(AspirationNames.base_aspiration_computer_whiz, player), player=player))
+def _renaissance_sim(world: Sims4World, player: int):
+    world.set_rule(world.get_location(AspirationNames.base_aspiration_prudent_student),
+             has_skill(SkillNames.base_skill_logic, 1))
+    world.set_rule(world.get_location(AspirationNames.base_aspiration_jack_of_some_trades),
+             JackOfNTradesRule(2, 4))
+    world.set_rule(world.get_location(AspirationNames.base_aspiration_pantologist),
+             JackOfNTradesRule(3, 5))
+    world.set_rule(world.get_location(AspirationNames.base_aspiration_renaissance_sim),
+             JackOfNTradesRule(6, 6))
+    world.set_rule(world.get_location(EventNames.renaissance_sim),
+             CanReachLocation(AspirationNames.base_aspiration_renaissance_sim))
 
-def _serial_romantic(world: MultiWorld, player: int):
-    set_rule(world.get_location(AspirationNames.base_aspiration_up_to_date, player),
-             lambda state: has_skill(state, SkillNames.base_skill_charisma, player, 4))
-    set_rule(world.get_location(AspirationNames.base_aspiration_romance_juggler, player),
-             lambda state: has_skill(state, SkillNames.base_skill_charisma, player, 6))
-    set_rule(world.get_location(AspirationNames.base_aspiration_serial_romantic, player),
-             lambda state: has_skill(state, SkillNames.base_skill_charisma, player, 6))
-    set_rule(world.get_location(EventNames.serial_romantic, player),
-             lambda state: state.can_reach(
-                 world.get_location(AspirationNames.base_aspiration_serial_romantic, player), player=player))
+def _nerd_brain(world: Sims4World, player: int):
+    world.set_rule(world.get_location(AspirationNames.base_aspiration_prudent_student),
+             has_skill(SkillNames.base_skill_logic, 3))
+    world.set_rule(world.get_location(AspirationNames.base_aspiration_erudite),
+             has_skill(SkillNames.base_skill_logic, 6))
+    world.set_rule(world.get_location(AspirationNames.base_aspiration_rocket_scientist),
+             has_skill(SkillNames.base_skill_handiness, 5))
+    world.set_rule(world.get_location(AspirationNames.base_aspiration_nerd_brain),
+             has_skill(SkillNames.base_skill_logic, 10)
+                           & has_skill(SkillNames.base_skill_handiness, 5))
+    world.set_rule(world.get_location(EventNames.nerd_brain),
+             CanReachLocation(AspirationNames.base_aspiration_nerd_brain))
 
-def _freelance_botanist (world: MultiWorld, player: int):
-    set_rule(world.get_location(AspirationNames.base_aspiration_garden_variety, player),
-             lambda state: has_skill(state, SkillNames.base_skill_gardening, player, 4))
-    set_rule(world.get_location(AspirationNames.base_aspiration_nature_nurturer, player),
-             lambda state: has_skill(state, SkillNames.base_skill_gardening, player, 6))
-    set_rule(world.get_location(AspirationNames.base_aspiration_freelance_botanist, player),
-             lambda state: has_skill(state, SkillNames.base_skill_gardening, player, 10))
-    set_rule(world.get_location(EventNames.freelance_botanist, player),
-             lambda state: state.can_reach(
-                 world.get_location(AspirationNames.base_aspiration_freelance_botanist, player), player=player))
+def _computer_whiz(world: Sims4World, player: int):
+    world.set_rule(world.get_location(AspirationNames.base_aspiration_technically_adept),
+             has_skill(SkillNames.base_skill_programming, 3))
+    world.set_rule(world.get_location(AspirationNames.base_aspiration_computer_geek),
+             has_skill(SkillNames.base_skill_programming, 7))
+    world.set_rule(world.get_location(AspirationNames.base_aspiration_computer_whiz),
+             has_skill(SkillNames.base_skill_programming, 7)
+                           & has_skill(SkillNames.base_skill_video_gaming, 4))
+    world.set_rule(world.get_location(EventNames.computer_whiz),
+             CanReachLocation(AspirationNames.base_aspiration_computer_whiz))
 
-def _angling_ace(world: MultiWorld, player: int):
-    set_rule(world.get_location(AspirationNames.base_aspiration_hooked, player),
-             lambda state: has_skill(state, SkillNames.base_skill_fishing, player, 4))
-    set_rule(world.get_location(AspirationNames.base_aspiration_reel_smart, player),
-             lambda state: has_skill(state, SkillNames.base_skill_fishing, player, 6))
-    set_rule(world.get_location(AspirationNames.base_aspiration_angling_ace, player),
-             lambda state: has_skill(state, SkillNames.base_skill_fishing, player, 10))
-    set_rule(world.get_location(EventNames.angling_ace, player),
-             lambda state: state.can_reach(
-                 world.get_location(AspirationNames.base_aspiration_angling_ace, player), player=player))
+def _serial_romantic(world: Sims4World, player: int):
+    world.set_rule(world.get_location(AspirationNames.base_aspiration_up_to_date),
+             has_skill(SkillNames.base_skill_charisma, 4))
+    world.set_rule(world.get_location(AspirationNames.base_aspiration_romance_juggler),
+             has_skill(SkillNames.base_skill_charisma, 6))
+    world.set_rule(world.get_location(AspirationNames.base_aspiration_serial_romantic),
+             has_skill(SkillNames.base_skill_charisma, 6))
+    world.set_rule(world.get_location(EventNames.serial_romantic),
+             CanReachLocation(AspirationNames.base_aspiration_serial_romantic))
 
-def _joke_star(world: MultiWorld, player: int):
-    set_rule(world.get_location(AspirationNames.base_aspiration_practical_joker, player),
-             lambda state: has_skill(state, SkillNames.base_skill_comedy, player, 3))
-    set_rule(world.get_location(AspirationNames.base_aspiration_standup_startup, player),
-             lambda state: has_skill(state, SkillNames.base_skill_comedy, player, 3))
-    set_rule(world.get_location(AspirationNames.base_aspiration_funny, player),
-             lambda state: has_skill(state, SkillNames.base_skill_comedy, player, 6)
-                           and (has_skill(state, SkillNames.base_skill_guitar, player, 3)
-                                or has_skill(state, SkillNames.base_skill_violin, player, 3)))
-    set_rule(world.get_location(AspirationNames.base_aspiration_joke_star, player),
-             lambda state: has_skill(state, SkillNames.base_skill_comedy, player, 10)
-                           and (has_skill(state, SkillNames.base_skill_guitar, player, 3)
-                                or has_skill(state, SkillNames.base_skill_violin, player, 3)))
-    set_rule(world.get_location(EventNames.joke_star, player),
-             lambda state: state.can_reach(
-                 world.get_location(AspirationNames.base_aspiration_joke_star, player), player=player))
+def _freelance_botanist(world: Sims4World, player: int):
+    world.set_rule(world.get_location(AspirationNames.base_aspiration_garden_variety),
+             has_skill(SkillNames.base_skill_gardening, 4))
+    world.set_rule(world.get_location(AspirationNames.base_aspiration_nature_nurturer),
+             has_skill(SkillNames.base_skill_gardening, 6))
+    world.set_rule(world.get_location(AspirationNames.base_aspiration_freelance_botanist),
+             has_skill(SkillNames.base_skill_gardening, 10))
+    world.set_rule(world.get_location(EventNames.freelance_botanist),
+             CanReachLocation(AspirationNames.base_aspiration_freelance_botanist))
 
-def _friend_of_the_world(world: MultiWorld, player: int):
-    set_rule(world.get_location(AspirationNames.base_aspiration_well_liked, player),
-             lambda state: has_skill(state, SkillNames.base_skill_charisma, player, 4))
-    set_rule(world.get_location(AspirationNames.base_aspiration_super_friend, player),
-             lambda state: has_skill(state, SkillNames.base_skill_charisma, player, 6))
-    set_rule(world.get_location(AspirationNames.base_aspiration_friend_of_the_world, player),
-             lambda state: has_skill(state, SkillNames.base_skill_charisma, player, 10))
-    set_rule(world.get_location(EventNames.friend_of_the_world, player),
-             lambda state: state.can_reach(
-                 world.get_location(AspirationNames.base_aspiration_friend_of_the_world, player), player=player))
+def _angling_ace(world: Sims4World, player: int):
+    world.set_rule(world.get_location(AspirationNames.base_aspiration_hooked),
+             has_skill(SkillNames.base_skill_fishing, 4))
+    world.set_rule(world.get_location(AspirationNames.base_aspiration_reel_smart),
+             has_skill(SkillNames.base_skill_fishing, 6))
+    world.set_rule(world.get_location(AspirationNames.base_aspiration_angling_ace),
+             has_skill(SkillNames.base_skill_fishing, 10))
+    world.set_rule(world.get_location(EventNames.angling_ace),
+             CanReachLocation(AspirationNames.base_aspiration_angling_ace))
 
-def _neighborly_advisor(world: MultiWorld, player: int):
-    set_rule(world.get_location(AspirationNames.base_aspiration_neighborly_advisor, player),
-             lambda state: has_skill(state, SkillNames.base_skill_charisma, player, 7))
-    set_rule(world.get_location(EventNames.neighborly_advisor, player),
-             lambda state: state.can_reach(
-                 world.get_location(AspirationNames.base_aspiration_neighborly_advisor, player), player=player))
+def _joke_star(world: Sims4World, player: int):
+    world.set_rule(world.get_location(AspirationNames.base_aspiration_practical_joker),
+             has_skill(SkillNames.base_skill_comedy, 3))
+    world.set_rule(world.get_location(AspirationNames.base_aspiration_standup_startup),
+             has_skill(SkillNames.base_skill_comedy, 3))
+    world.set_rule(world.get_location(AspirationNames.base_aspiration_funny),
+             has_skill(SkillNames.base_skill_comedy, 6) &
+             (has_skill(SkillNames.base_skill_guitar, 3) | has_skill(SkillNames.base_skill_violin, 3)))
+    world.set_rule(world.get_location(AspirationNames.base_aspiration_joke_star),
+             has_skill(SkillNames.base_skill_comedy, 10) &
+             (has_skill(SkillNames.base_skill_guitar, 3)
+              | has_skill(SkillNames.base_skill_violin, 3)))
+    world.set_rule(world.get_location(EventNames.joke_star),
+             CanReachLocation(AspirationNames.base_aspiration_joke_star))
+
+def _friend_of_the_world(world: Sims4World, player: int):
+    world.set_rule(world.get_location(AspirationNames.base_aspiration_well_liked),
+             has_skill(SkillNames.base_skill_charisma, 4))
+    world.set_rule(world.get_location(AspirationNames.base_aspiration_super_friend),
+             has_skill(SkillNames.base_skill_charisma, 6))
+    world.set_rule(world.get_location(AspirationNames.base_aspiration_friend_of_the_world),
+             has_skill(SkillNames.base_skill_charisma, 10))
+    world.set_rule(world.get_location(EventNames.friend_of_the_world),
+             CanReachLocation(AspirationNames.base_aspiration_friend_of_the_world))
+
+def _neighborly_advisor(world: Sims4World, player: int):
+    world.set_rule(world.get_location(AspirationNames.base_aspiration_neighborly_advisor),
+             has_skill(SkillNames.base_skill_charisma, 7))
+    world.set_rule(world.get_location(EventNames.neighborly_advisor),
+             CanReachLocation(AspirationNames.base_aspiration_neighborly_advisor))
 
 ASPIRATION_RULES = {
         AspirationGoal.option_bodybuilder: _bodybuilder,
@@ -388,400 +428,518 @@ ASPIRATION_RULES = {
         AspirationGoal.option_neighborly_advisor: _neighborly_advisor,
     }
 
-def set_aspiration_rules(world: MultiWorld, player: int, options: Sims4Options):
+def set_aspiration_rules(world: Sims4World, player: int, options: Sims4Options):
     handler = ASPIRATION_RULES.get(options.goal)
     if handler:
         handler(world, player)
 
-def _career_athlete(world: MultiWorld, player: int):
-    set_rule(world.get_location(CareerNames.base_career_athlete_4, player),
-             lambda state: state.has(SkillNames.base_skill_charisma, player, count=1)
-                           and state.has(SkillNames.base_skill_fitness, player, count=1))
-    set_rule(world.get_location(CareerNames.base_career_athlete_5A, player),
-             lambda state: state.has(SkillNames.base_skill_charisma, player, count=2)
-                           and state.has(SkillNames.base_skill_fitness, player, count=2))
-    set_rule(world.get_location(CareerNames.base_career_athlete_5B, player),
-             lambda state: state.has(SkillNames.base_skill_charisma, player, count=2)
-                           and state.has(SkillNames.base_skill_fitness, player, count=2))
-    set_rule(world.get_location(CareerNames.base_career_athlete_6A, player),
-             lambda state: state.has(SkillNames.base_skill_charisma, player, count=2)
-                           and state.has(SkillNames.base_skill_fitness, player, count=3))
-    set_rule(world.get_location(CareerNames.base_career_athlete_7A, player),
-             lambda state: state.has(SkillNames.base_skill_charisma, player, count=2)
-                           and state.has(SkillNames.base_skill_fitness, player, count=4))
-    set_rule(world.get_location(CareerNames.base_career_athlete_8A, player),
-             lambda state: state.has(SkillNames.base_skill_charisma, player, count=3)
-                           and state.has(SkillNames.base_skill_fitness, player, count=6))
-    set_rule(world.get_location(CareerNames.base_career_athlete_9A, player),
-             lambda state: state.has(SkillNames.base_skill_charisma, player, count=4)
-                           and state.has(SkillNames.base_skill_fitness, player, count=7))
-    set_rule(world.get_location(CareerNames.base_career_athlete_10A, player),
-             lambda state: state.has(SkillNames.base_skill_charisma, player, count=6)
-                           and state.has(SkillNames.base_skill_fitness, player, count=8))
-    set_rule(world.get_location(CareerNames.base_career_athlete_6B, player),
-             lambda state: state.has(SkillNames.base_skill_charisma, player, count=3)
-                           and state.has(SkillNames.base_skill_fitness, player, count=6))
-    set_rule(world.get_location(CareerNames.base_career_athlete_7B, player),
-             lambda state: state.has(SkillNames.base_skill_charisma, player, count=3)
-                           and state.has(SkillNames.base_skill_fitness, player, count=7))
-    set_rule(world.get_location(CareerNames.base_career_athlete_8B, player),
-             lambda state: state.has(SkillNames.base_skill_charisma, player, count=4)
-                           and state.has(SkillNames.base_skill_fitness, player, count=8))
-    set_rule(world.get_location(CareerNames.base_career_athlete_9B, player),
-             lambda state: state.has(SkillNames.base_skill_charisma, player, count=5)
-                           and state.has(SkillNames.base_skill_fitness, player, count=8))
-    set_rule(world.get_location(CareerNames.base_career_athlete_10B, player),
-             lambda state: state.has(SkillNames.base_skill_charisma, player, count=6)
-                           and state.has(SkillNames.base_skill_fitness, player, count=8))
 
-def _career_astronaut(world: MultiWorld, player: int):
-    set_rule(world.get_location(CareerNames.base_career_astronaut_4, player),
-             lambda state: state.has(SkillNames.base_skill_logic, player, count=1))
-    set_rule(world.get_location(CareerNames.base_career_astronaut_5, player),
-             lambda state: state.has(SkillNames.base_skill_logic, player, count=2)
-                           and state.has(SkillNames.base_skill_fitness, player, count=1))
-    set_rule(world.get_location(CareerNames.base_career_astronaut_6, player),
-             lambda state: state.has(SkillNames.base_skill_logic, player, count=3)
-                           and state.has(SkillNames.base_skill_fitness, player, count=2))
-    set_rule(world.get_location(CareerNames.base_career_astronaut_7, player),
-             lambda state: state.has(SkillNames.base_skill_logic, player, count=3)
-                           and state.has(SkillNames.base_skill_fitness, player, count=4))
-    set_rule(world.get_location(CareerNames.base_career_astronaut_8A, player),
-             lambda state: state.has(SkillNames.base_skill_logic, player, count=4)
-                           and state.has(SkillNames.base_skill_fitness, player, count=5))
-    set_rule(world.get_location(CareerNames.base_career_astronaut_8B, player),
-             lambda state: state.has(SkillNames.base_skill_logic, player, count=4)
-                           and state.has(SkillNames.base_skill_fitness, player, count=5))
-    set_rule(world.get_location(CareerNames.base_career_astronaut_9A, player),
-             lambda state: state.has(SkillNames.base_skill_fitness, player, count=6))
-    set_rule(world.get_location(CareerNames.base_career_astronaut_10A, player),
-             lambda state: state.has(SkillNames.base_skill_rocket_science, player, count=2)
-                           and state.has(SkillNames.base_skill_fitness, player, count=8))
-    set_rule(world.get_location(CareerNames.base_career_astronaut_9B, player),
-             lambda state: state.has(SkillNames.base_skill_fitness, player, count=6))
-    set_rule(world.get_location(CareerNames.base_career_astronaut_10B, player),
-             lambda state: state.has(SkillNames.base_skill_rocket_science, player, count=2)
-                           and state.has(SkillNames.base_skill_fitness, player, count=8))
+_career_athlete = {
+    CareerNames.base_career_athlete_3: {
+        SkillNames.base_skill_charisma: 2,
+        SkillNames.base_skill_fitness: 2,
+    },
+    CareerNames.base_career_athlete_4: {
+        SkillNames.base_skill_charisma: 3,
+        SkillNames.base_skill_fitness: 3,
+    },
+    CareerNames.base_career_athlete_5A: {
+        SkillNames.base_skill_charisma: 4,
+        SkillNames.base_skill_fitness: 4,
+    },
+    CareerNames.base_career_athlete_6A: {
+        SkillNames.base_skill_charisma: 4,
+        SkillNames.base_skill_fitness: 5,
+    },
+    CareerNames.base_career_athlete_7A: {
+        SkillNames.base_skill_charisma: 4,
+        SkillNames.base_skill_fitness: 6,
+    },
+    CareerNames.base_career_athlete_8A: {
+        SkillNames.base_skill_charisma: 5,
+        SkillNames.base_skill_fitness: 8,
+    },
+    CareerNames.base_career_athlete_9A: {
+        SkillNames.base_skill_charisma: 6,
+        SkillNames.base_skill_fitness: 9,
+    },
+    CareerNames.base_career_athlete_10A: {
+        SkillNames.base_skill_charisma: 8,
+        SkillNames.base_skill_fitness: 10,
+    },
+    CareerNames.base_career_athlete_5B: {
+        SkillNames.base_skill_charisma: 4,
+        SkillNames.base_skill_fitness: 4,
+    },
+    CareerNames.base_career_athlete_6B: {
+        SkillNames.base_skill_charisma: 5,
+        SkillNames.base_skill_fitness: 8,
+    },
+    CareerNames.base_career_athlete_7B: {
+        SkillNames.base_skill_charisma: 5,
+        SkillNames.base_skill_fitness: 9,
+    },
+    CareerNames.base_career_athlete_8B: {
+        SkillNames.base_skill_charisma: 6,
+        SkillNames.base_skill_fitness: 10,
+    },
+    CareerNames.base_career_athlete_9B: {
+        SkillNames.base_skill_charisma: 7,
+        SkillNames.base_skill_fitness: 10,
+    },
+    CareerNames.base_career_athlete_10B: {
+        SkillNames.base_skill_charisma: 8,
+        SkillNames.base_skill_fitness: 10,
+    },
+}
 
-def _career_business(world: MultiWorld, player: int):
-    set_rule(world.get_location(CareerNames.base_career_business_5, player),
-             lambda state: state.has(SkillNames.base_skill_charisma, player, count=1))
-    set_rule(world.get_location(CareerNames.base_career_business_6, player),
-             lambda state: state.has(SkillNames.base_skill_charisma, player, count=2))
-    set_rule(world.get_location(CareerNames.base_career_business_7A, player),
-             lambda state: state.has(SkillNames.base_skill_charisma, player, count=2)
-                           and state.has(SkillNames.base_skill_logic, player, count=2))
-    set_rule(world.get_location(CareerNames.base_career_business_7B, player),
-             lambda state: state.has(SkillNames.base_skill_charisma, player, count=2)
-                           and state.has(SkillNames.base_skill_logic, player, count=2))
-    set_rule(world.get_location(CareerNames.base_career_business_8A, player),
-             lambda state: state.has(SkillNames.base_skill_charisma, player, count=4)
-                           and state.has(SkillNames.base_skill_logic, player, count=3))
-    set_rule(world.get_location(CareerNames.base_career_business_9A, player),
-             lambda state: state.has(SkillNames.base_skill_charisma, player, count=6)
-                           and state.has(SkillNames.base_skill_logic, player, count=4))
-    set_rule(world.get_location(CareerNames.base_career_business_10A, player),
-             lambda state: state.has(SkillNames.base_skill_charisma, player, count=8)
-                           and state.has(SkillNames.base_skill_logic, player, count=6))
-    set_rule(world.get_location(CareerNames.base_career_business_8B, player),
-             lambda state: state.has(SkillNames.base_skill_charisma, player, count=3)
-                           and state.has(SkillNames.base_skill_logic, player, count=4))
-    set_rule(world.get_location(CareerNames.base_career_business_9B, player),
-             lambda state: state.has(SkillNames.base_skill_charisma, player, count=4)
-                           and state.has(SkillNames.base_skill_logic, player, count=6))
-    set_rule(world.get_location(CareerNames.base_career_business_10B, player),
-             lambda state: state.has(SkillNames.base_skill_charisma, player, count=6)
-                           and state.has(SkillNames.base_skill_logic, player, count=8))
+_career_astronaut = {
+    CareerNames.base_career_astronaut_4:{
+             SkillNames.base_skill_logic: 3,
+            SkillNames.base_skill_fitness: 2,
+    },
+    CareerNames.base_career_astronaut_5: {
+        SkillNames.base_skill_logic: 4,
+        SkillNames.base_skill_fitness: 3,
+    },
+    CareerNames.base_career_astronaut_6: {
+        SkillNames.base_skill_logic: 5,
+        SkillNames.base_skill_fitness: 4,
+    },
+    CareerNames.base_career_astronaut_7: {
+        SkillNames.base_skill_logic: 5,
+        SkillNames.base_skill_fitness: 6,
+    },
+    CareerNames.base_career_astronaut_8A: {
+        SkillNames.base_skill_logic: 6,
+        SkillNames.base_skill_fitness: 7,
+    },
+    CareerNames.base_career_astronaut_8B: {
+        SkillNames.base_skill_logic: 6,
+        SkillNames.base_skill_fitness: 7,
+    },
+    CareerNames.base_career_astronaut_9A: {
+        SkillNames.base_skill_rocket_science: 2,
+        SkillNames.base_skill_fitness: 8,
+    },
+    CareerNames.base_career_astronaut_10A: {
+        SkillNames.base_skill_rocket_science: 4,
+        SkillNames.base_skill_fitness: 10,
+    },
+    CareerNames.base_career_astronaut_9B: {
+        SkillNames.base_skill_rocket_science: 2,
+        SkillNames.base_skill_fitness: 8,
+    },
+    CareerNames.base_career_astronaut_10B: {
+        SkillNames.base_skill_rocket_science: 4,
+        SkillNames.base_skill_fitness: 10,
+    },
+}
 
-def _career_criminal(world: MultiWorld, player: int):
-    set_rule(world.get_location(CareerNames.base_career_criminal_4, player),
-             lambda state: state.has(SkillNames.base_skill_mischief, player, count=1))
-    set_rule(world.get_location(CareerNames.base_career_criminal_5, player),
-             lambda state: state.has(SkillNames.base_skill_mischief, player, count=3))
-    set_rule(world.get_location(CareerNames.base_career_criminal_6A, player),
-             lambda state: state.has(SkillNames.base_skill_mischief, player, count=4))
-    set_rule(world.get_location(CareerNames.base_career_criminal_6B, player),
-             lambda state: state.has(SkillNames.base_skill_mischief, player, count=4))
-    set_rule(world.get_location(CareerNames.base_career_criminal_7A, player),
-             lambda state: state.has(SkillNames.base_skill_mischief, player, count=5))
-    set_rule(world.get_location(CareerNames.base_career_criminal_8A, player),
-             lambda state: state.has(SkillNames.base_skill_mischief, player, count=6))
-    set_rule(world.get_location(CareerNames.base_career_criminal_9A, player),
-             lambda state: state.has(SkillNames.base_skill_mischief, player, count=7)
-                           and state.has(SkillNames.base_skill_handiness, player, count=2))
-    set_rule(world.get_location(CareerNames.base_career_criminal_10A, player),
-             lambda state: state.has(SkillNames.base_skill_mischief, player, count=8)
-                           and state.has(SkillNames.base_skill_handiness, player, count=4))
-    set_rule(world.get_location(CareerNames.base_career_criminal_7B, player),
-             lambda state: state.has(SkillNames.base_skill_mischief, player, count=5)
-                           and state.has(SkillNames.base_skill_programming, player, count=0))
-    set_rule(world.get_location(CareerNames.base_career_criminal_8B, player),
-             lambda state: state.has(SkillNames.base_skill_mischief, player, count=6)
-                           and state.has(SkillNames.base_skill_programming, player, count=2))
-    set_rule(world.get_location(CareerNames.base_career_criminal_9B, player),
-             lambda state: state.has(SkillNames.base_skill_mischief, player, count=7)
-                           and state.has(SkillNames.base_skill_programming, player, count=4))
-    set_rule(world.get_location(CareerNames.base_career_criminal_10B, player),
-             lambda state: state.has(SkillNames.base_skill_mischief, player, count=8)
-                           and state.has(SkillNames.base_skill_programming, player, count=6))
-def _career_culinary(world: MultiWorld, player: int):
-    set_rule(world.get_location(CareerNames.base_career_culinary_5, player),
-             lambda state: state.has(SkillNames.base_skill_cooking, player, count=1)
-                           and state.has(SkillNames.base_skill_mixology, player, count=1))
-    set_rule(world.get_location(CareerNames.base_career_culinary_6A, player),
-             lambda state: state.has(SkillNames.base_skill_cooking, player, count=2)
-                           and state.has(SkillNames.base_skill_mixology, player, count=2))
-    set_rule(world.get_location(CareerNames.base_career_culinary_6B, player),
-             lambda state: state.has(SkillNames.base_skill_cooking, player, count=2)
-                           and state.has(SkillNames.base_skill_mixology, player, count=2))
-    set_rule(world.get_location(CareerNames.base_career_culinary_7A, player),
-             lambda state: state.has(SkillNames.base_skill_cooking, player, count=4)
-                           and state.has(SkillNames.base_skill_gourmet, player, count=0)
-                           and state.has(SkillNames.base_skill_mixology, player, count=2))
-    set_rule(world.get_location(CareerNames.base_career_culinary_8A, player),
-             lambda state: state.has(SkillNames.base_skill_cooking, player, count=6)
-                           and state.has(SkillNames.base_skill_gourmet, player, count=4)
-                           and state.has(SkillNames.base_skill_mixology, player, count=2))
-    set_rule(world.get_location(CareerNames.base_career_culinary_9A, player),
-             lambda state: state.has(SkillNames.base_skill_cooking, player, count=6)
-                           and state.has(SkillNames.base_skill_gourmet, player, count=4)
-                           and state.has(SkillNames.base_skill_mixology, player, count=2))
-    set_rule(world.get_location(CareerNames.base_career_culinary_10A, player),
-             lambda state: state.has(SkillNames.base_skill_cooking, player, count=8)
-                           and state.has(SkillNames.base_skill_gourmet, player, count=6)
-                           and state.has(SkillNames.base_skill_mixology, player, count=2))
-    set_rule(world.get_location(CareerNames.base_career_culinary_7B, player),
-             lambda state: state.has(SkillNames.base_skill_mixology, player, count=3)
-                           and state.has(SkillNames.base_skill_charisma, player, count=0)
-                           and state.has(SkillNames.base_skill_cooking, player, count=2))
-    set_rule(world.get_location(CareerNames.base_career_culinary_8B, player),
-             lambda state: state.has(SkillNames.base_skill_mixology, player, count=5)
-                           and state.has(SkillNames.base_skill_charisma, player, count=2)
-                           and state.has(SkillNames.base_skill_cooking, player, count=2))
-    set_rule(world.get_location(CareerNames.base_career_culinary_9B, player),
-             lambda state: state.has(SkillNames.base_skill_mixology, player, count=6)
-                           and state.has(SkillNames.base_skill_charisma, player, count=4)
-                           and state.has(SkillNames.base_skill_cooking, player, count=2))
-    set_rule(world.get_location(CareerNames.base_career_culinary_10B, player),
-             lambda state: state.has(SkillNames.base_skill_mixology, player, count=8)
-                           and state.has(SkillNames.base_skill_charisma, player, count=6)
-                           and state.has(SkillNames.base_skill_cooking, player, count=2))
+_career_business = {
+    CareerNames.base_career_business_3: {
+        SkillNames.base_skill_charisma: 2,
+    },
+    CareerNames.base_career_business_4: {
+        SkillNames.base_skill_charisma: 2,
+        SkillNames.base_skill_logic: 2,
+    },
+    CareerNames.base_career_business_5: {
+        SkillNames.base_skill_charisma: 3,
+        SkillNames.base_skill_logic: 2,
+    },
+    CareerNames.base_career_business_6: {
+        SkillNames.base_skill_charisma: 4,
+        SkillNames.base_skill_logic: 2,
+    },
+    CareerNames.base_career_business_7A: {
+        SkillNames.base_skill_charisma: 4,
+        SkillNames.base_skill_logic: 4,
+    },
+    CareerNames.base_career_business_7B: {
+        SkillNames.base_skill_charisma: 4,
+        SkillNames.base_skill_logic: 4,
+    },
+    CareerNames.base_career_business_8A: {
+        SkillNames.base_skill_charisma: 6,
+        SkillNames.base_skill_logic: 5,
+    },
+    CareerNames.base_career_business_9A: {
+        SkillNames.base_skill_charisma: 8,
+        SkillNames.base_skill_logic: 6,
+    },
+    CareerNames.base_career_business_10A: {
+        SkillNames.base_skill_charisma: 10,
+        SkillNames.base_skill_logic: 8,
+    },
+    CareerNames.base_career_business_8B: {
+        SkillNames.base_skill_charisma: 5,
+        SkillNames.base_skill_logic: 6,
+    },
+    CareerNames.base_career_business_9B: {
+        SkillNames.base_skill_charisma: 6,
+        SkillNames.base_skill_logic: 8,
+    },
+    CareerNames.base_career_business_10B: {
+        SkillNames.base_skill_charisma: 8,
+        SkillNames.base_skill_logic: 10,
+    },
+}
 
-def _career_entertainer(world: MultiWorld, player: int):
-    set_rule(world.get_location(CareerNames.base_career_entertainer_5A, player),
-             lambda state: (state.has(SkillNames.base_skill_guitar, player, count=1)
-                            or state.has(SkillNames.base_skill_violin, player, count=1))
-                           and state.has(SkillNames.base_skill_comedy, player, count=1))
-    set_rule(world.get_location(CareerNames.base_career_entertainer_5B, player),
-             lambda state: (state.has(SkillNames.base_skill_guitar, player, count=1)
-                            or state.has(SkillNames.base_skill_violin, player, count=1))
-                           and state.has(SkillNames.base_skill_comedy, player, count=1))
-    set_rule(world.get_location(CareerNames.base_career_entertainer_6A, player),
-             lambda state: state.has(SkillNames.base_skill_violin, player, count=2))
-    set_rule(world.get_location(CareerNames.base_career_entertainer_7A, player),
-             lambda state: (state.has(SkillNames.base_skill_guitar, player, count=3)
-                            or state.has(SkillNames.base_skill_violin, player, count=3))
-                           and state.has(SkillNames.base_skill_piano, player, count=2))
-    set_rule(world.get_location(CareerNames.base_career_entertainer_8A, player),
-             lambda state: (state.has(SkillNames.base_skill_guitar, player, count=4)
-                            or state.has(SkillNames.base_skill_violin, player, count=4))
-                           and state.has(SkillNames.base_skill_piano, player, count=4))
-    set_rule(world.get_location(CareerNames.base_career_entertainer_9A, player),
-             lambda state: (state.has(SkillNames.base_skill_guitar, player, count=5)
-                            or state.has(SkillNames.base_skill_violin, player, count=5))
-                           and state.has(SkillNames.base_skill_piano, player, count=6))
-    set_rule(world.get_location(CareerNames.base_career_entertainer_10A, player),
-             lambda state: (state.has(SkillNames.base_skill_guitar, player, count=6)
-                            or state.has(SkillNames.base_skill_violin, player, count=6))
-                           and state.has(SkillNames.base_skill_piano, player, count=8))
-    set_rule(world.get_location(CareerNames.base_career_entertainer_6B, player),
-             lambda state: state.has(SkillNames.base_skill_comedy, player, count=4))
-    set_rule(world.get_location(CareerNames.base_career_entertainer_7B, player),
-             lambda state: state.has(SkillNames.base_skill_comedy, player, count=5))
-    set_rule(world.get_location(CareerNames.base_career_entertainer_8B, player),
-             lambda state: state.has(SkillNames.base_skill_comedy, player, count=6)
-                           and state.has(SkillNames.base_skill_charisma, player, count=2))
-    set_rule(world.get_location(CareerNames.base_career_entertainer_9B, player),
-             lambda state: state.has(SkillNames.base_skill_comedy, player, count=7)
-                           and state.has(SkillNames.base_skill_charisma, player, count=4))
-    set_rule(world.get_location(CareerNames.base_career_entertainer_10B, player),
-             lambda state: state.has(SkillNames.base_skill_comedy, player, count=8)
-                           and state.has(SkillNames.base_skill_charisma, player, count=6))
+_career_criminal = {
+    CareerNames.base_career_criminal_3: {
+        SkillNames.base_skill_mischief: 2,
+    },
+    CareerNames.base_career_criminal_4: {
+        SkillNames.base_skill_mischief: 3,
+    },
+    CareerNames.base_career_criminal_5: {
+        SkillNames.base_skill_mischief: 5,
+    },
+    CareerNames.base_career_criminal_6A: {
+        SkillNames.base_skill_mischief: 6,
+    },
+    CareerNames.base_career_criminal_6B: {
+        SkillNames.base_skill_mischief: 6,
+    },
+    CareerNames.base_career_criminal_7A: {
+        SkillNames.base_skill_mischief: 7,
+    },
+    CareerNames.base_career_criminal_8A: {
+        SkillNames.base_skill_mischief: 8,
+        SkillNames.base_skill_handiness: 2,
+    },
+    CareerNames.base_career_criminal_9A: {
+        SkillNames.base_skill_mischief: 9,
+        SkillNames.base_skill_handiness: 4,
+    },
+    CareerNames.base_career_criminal_10A: {
+        SkillNames.base_skill_mischief: 10,
+        SkillNames.base_skill_handiness: 6,
+    },
+    CareerNames.base_career_criminal_7B: {
+        SkillNames.base_skill_mischief: 7,
+        SkillNames.base_skill_programming: 2,
+    },
+    CareerNames.base_career_criminal_8B: {
+        SkillNames.base_skill_mischief: 8,
+        SkillNames.base_skill_programming: 4,
+    },
+    CareerNames.base_career_criminal_9B: {
+        SkillNames.base_skill_mischief: 9,
+        SkillNames.base_skill_programming: 6,
+    },
+    CareerNames.base_career_criminal_10B: {
+        SkillNames.base_skill_mischief: 10,
+        SkillNames.base_skill_programming: 8,
+    },
+}
 
-def _career_painter(world: MultiWorld, player: int):
-    set_rule(world.get_location(CareerNames.base_career_painter_4, player),
-             lambda state: state.has(SkillNames.base_skill_painting, player, count=2))
-    set_rule(world.get_location(CareerNames.base_career_painter_5, player),
-             lambda state: state.has(SkillNames.base_skill_painting, player, count=3))
-    set_rule(world.get_location(CareerNames.base_career_painter_6, player),
-             lambda state: state.has(SkillNames.base_skill_painting, player, count=4))
-    set_rule(world.get_location(CareerNames.base_career_painter_7A, player),
-             lambda state: state.has(SkillNames.base_skill_painting, player, count=5))
-    set_rule(world.get_location(CareerNames.base_career_painter_7B, player),
-             lambda state: state.has(SkillNames.base_skill_painting, player, count=5))
-    set_rule(world.get_location(CareerNames.base_career_painter_8A, player),
-             lambda state: state.has(SkillNames.base_skill_painting, player, count=6))
-    set_rule(world.get_location(CareerNames.base_career_painter_9A, player),
-             lambda state: state.has(SkillNames.base_skill_painting, player, count=7)
-                           and state.has(SkillNames.base_skill_logic, player, count=2))
-    set_rule(world.get_location(CareerNames.base_career_painter_10A, player),
-             lambda state: state.has(SkillNames.base_skill_painting, player, count=8)
-                           and state.has(SkillNames.base_skill_logic, player, count=4))
-    set_rule(world.get_location(CareerNames.base_career_painter_8B, player),
-             lambda state: state.has(SkillNames.base_skill_painting, player, count=6))
-    set_rule(world.get_location(CareerNames.base_career_painter_9B, player),
-             lambda state: state.has(SkillNames.base_skill_painting, player, count=7)
-                           and state.has(SkillNames.base_skill_charisma, player, count=2))
-    set_rule(world.get_location(CareerNames.base_career_painter_10B, player),
-             lambda state: state.has(SkillNames.base_skill_painting, player, count=8)
-                           and state.has(SkillNames.base_skill_charisma, player, count=4))
-def _career_secret_agent(world: MultiWorld, player: int):
-    set_rule(world.get_location(CareerNames.base_career_secret_agent_4, player),
-             lambda state: state.has(SkillNames.base_skill_logic, player, count=1)
-                           and state.has(SkillNames.base_skill_charisma, player, count=1))
-    set_rule(world.get_location(CareerNames.base_career_secret_agent_5, player),
-             lambda state: state.has(SkillNames.base_skill_logic, player, count=1)
-                           and state.has(SkillNames.base_skill_charisma, player, count=1))
-    set_rule(world.get_location(CareerNames.base_career_secret_agent_6, player),
-             lambda state: state.has(SkillNames.base_skill_logic, player, count=3)
-                           and state.has(SkillNames.base_skill_charisma, player, count=3))
-    set_rule(world.get_location(CareerNames.base_career_secret_agent_7, player),
-             lambda state: state.has(SkillNames.base_skill_logic, player, count=3)
-                           and state.has(SkillNames.base_skill_charisma, player, count=3))
-    set_rule(world.get_location(CareerNames.base_career_secret_agent_8A, player),
-             lambda state: state.has(SkillNames.base_skill_logic, player, count=4)
-                           and state.has(SkillNames.base_skill_charisma, player, count=4))
-    set_rule(world.get_location(CareerNames.base_career_secret_agent_8B, player),
-             lambda state: state.has(SkillNames.base_skill_logic, player, count=4)
-                           and state.has(SkillNames.base_skill_charisma, player, count=4))
-    set_rule(world.get_location(CareerNames.base_career_secret_agent_9A, player),
-             lambda state: state.has(SkillNames.base_skill_logic, player, count=6)
-                           and state.has(SkillNames.base_skill_charisma, player, count=5))
-    set_rule(world.get_location(CareerNames.base_career_secret_agent_10A, player),
-             lambda state: state.has(SkillNames.base_skill_logic, player, count=8)
-                           and state.has(SkillNames.base_skill_charisma, player, count=6))
-    set_rule(world.get_location(CareerNames.base_career_secret_agent_9B, player),
-             lambda state: state.has(SkillNames.base_skill_logic, player, count=6))
-    set_rule(world.get_location(CareerNames.base_career_secret_agent_10B, player),
-             lambda state: state.has(SkillNames.base_skill_logic, player, count=8)
-                           and state.has(SkillNames.base_skill_mischief, player, count=2))
-    set_rule(world.get_location(CareerNames.base_career_secret_agent_11B, player),
-             lambda state: state.has(SkillNames.base_skill_logic, player, count=8)
-                           and state.has(SkillNames.base_skill_mischief, player, count=4))
-def _career_style_influencer(world: MultiWorld, player: int):
-    set_rule(world.get_location(CareerNames.base_career_style_influencer_4, player),
-             lambda state: state.has(SkillNames.base_skill_writing, player, count=1))
-    set_rule(world.get_location(CareerNames.base_career_style_influencer_5, player),
-             lambda state: state.has(SkillNames.base_skill_writing, player, count=2))
-    set_rule(world.get_location(CareerNames.base_career_style_influencer_6A, player),
-             lambda state: state.has(SkillNames.base_skill_writing, player, count=3)
-                           and state.has(SkillNames.base_skill_charisma, player, count=1)
-                           and state.has(SkillNames.base_skill_painting, player, count=1))
-    set_rule(world.get_location(CareerNames.base_career_style_influencer_7A, player),
-             lambda state: state.has(SkillNames.base_skill_writing, player, count=4)
-                           and state.has(SkillNames.base_skill_charisma, player, count=3)
-                           and state.has(SkillNames.base_skill_painting, player, count=2)
-                           and state.has(SkillNames.base_skill_photography, player, count=1))
-    set_rule(world.get_location(CareerNames.base_career_style_influencer_8A, player),
-             lambda state: state.has(SkillNames.base_skill_writing, player, count=5)
-                           and state.has(SkillNames.base_skill_charisma, player, count=4)
-                           and state.has(SkillNames.base_skill_painting, player, count=3))
-    set_rule(world.get_location(CareerNames.base_career_style_influencer_9A, player),
-             lambda state: state.has(SkillNames.base_skill_writing, player, count=6)
-                           and state.has(SkillNames.base_skill_charisma, player, count=5)
-                           and state.has(SkillNames.base_skill_painting, player, count=6))
-    set_rule(world.get_location(CareerNames.base_career_style_influencer_10A, player),
-             lambda state: state.has(SkillNames.base_skill_writing, player, count=7)
-                           and state.has(SkillNames.base_skill_charisma, player, count=6)
-                           and state.has(SkillNames.base_skill_painting, player, count=5))
-    set_rule(world.get_location(CareerNames.base_career_style_influencer_6B, player),
-             lambda state: state.has(SkillNames.base_skill_writing, player, count=3)
-                           and state.has(SkillNames.base_skill_charisma, player, count=1)
-                           and state.has(SkillNames.base_skill_painting, player, count=1))
-    set_rule(world.get_location(CareerNames.base_career_style_influencer_7B, player),
-             lambda state: state.has(SkillNames.base_skill_writing, player, count=4)
-                           and state.has(SkillNames.base_skill_charisma, player, count=3)
-                           and state.has(SkillNames.base_skill_painting, player, count=2)
-                           and state.has(SkillNames.base_skill_photography, player, count=1))
-    set_rule(world.get_location(CareerNames.base_career_style_influencer_8B, player),
-             lambda state: state.has(SkillNames.base_skill_writing, player, count=5)
-                           and state.has(SkillNames.base_skill_charisma, player, count=4)
-                           and state.has(SkillNames.base_skill_painting, player, count=3))
-    set_rule(world.get_location(CareerNames.base_career_style_influencer_9B, player),
-             lambda state: state.has(SkillNames.base_skill_writing, player, count=6)
-                           and state.has(SkillNames.base_skill_charisma, player, count=5)
-                           and state.has(SkillNames.base_skill_painting, player, count=6))
-    set_rule(world.get_location(CareerNames.base_career_style_influencer_10B, player),
-             lambda state: state.has(SkillNames.base_skill_writing, player, count=7)
-                           and state.has(SkillNames.base_skill_charisma, player, count=6)
-                           and state.has(SkillNames.base_skill_painting, player, count=5))
-def _career_tech_guru(world: MultiWorld, player: int):
-    # TODO check project manager career logic https://discord.com/channels/731205301247803413/1079002955262480424/1403764728177758252
-    set_rule(world.get_location(CareerNames.base_career_tech_guru_4, player),
-             lambda state: has_skill(state, SkillNames.base_skill_programming, player, 3))
-    set_rule(world.get_location(CareerNames.base_career_tech_guru_5, player),
-             lambda state: has_skill(state, SkillNames.base_skill_programming, player, 4)
-                           and has_skill(state, SkillNames.base_skill_video_gaming, player, 3))
-    set_rule(world.get_location(CareerNames.base_career_tech_guru_6, player),
-             lambda state: state.has(SkillNames.base_skill_programming, player, count=3)
-                           and state.has(SkillNames.base_skill_video_gaming, player, count=4))
-    set_rule(world.get_location(CareerNames.base_career_tech_guru_7A, player),
-             lambda state: state.has(SkillNames.base_skill_programming, player, count=4)
-                           and state.has(SkillNames.base_skill_video_gaming, player, count=3))
-    set_rule(world.get_location(CareerNames.base_career_tech_guru_7B, player),
-             lambda state: state.has(SkillNames.base_skill_programming, player, count=4)
-                           and state.has(SkillNames.base_skill_video_gaming, player, count=3))
-    set_rule(world.get_location(CareerNames.base_career_tech_guru_8A, player),
-             lambda state: state.has(SkillNames.base_skill_programming, player, count=4)
-                           and state.has(SkillNames.base_skill_video_gaming, player, count=4))
-    set_rule(world.get_location(CareerNames.base_career_tech_guru_9A, player),
-             lambda state: state.has(SkillNames.base_skill_programming, player, count=5)
-                           and state.has(SkillNames.base_skill_video_gaming, player, count=6))
-    set_rule(world.get_location(CareerNames.base_career_tech_guru_10A, player),
-             lambda state: state.has(SkillNames.base_skill_programming, player, count=6)
-                           and state.has(SkillNames.base_skill_video_gaming, player, count=8))
-    set_rule(world.get_location(CareerNames.base_career_tech_guru_8B, player),
-             lambda state: state.has(SkillNames.base_skill_programming, player, count=6)
-                           and state.has(SkillNames.base_skill_charisma, player, count=0))
-    set_rule(world.get_location(CareerNames.base_career_tech_guru_9B, player),
-             lambda state: state.has(SkillNames.base_skill_programming, player, count=7)
-                           and state.has(SkillNames.base_skill_charisma, player, count=2))
-    set_rule(world.get_location(CareerNames.base_career_tech_guru_10B, player),
-             lambda state: state.has(SkillNames.base_skill_programming, player, count=8)
-                           and state.has(SkillNames.base_skill_charisma, player, count=4))
-def _career_writer(world: MultiWorld, player: int):
-    set_rule(world.get_location(CareerNames.base_career_writer_4, player),
-             lambda state: state.has(SkillNames.base_skill_writing, player, count=1))
-    set_rule(world.get_location(CareerNames.base_career_writer_5, player),
-             lambda state: state.has(SkillNames.base_skill_writing, player, count=2))
-    set_rule(world.get_location(CareerNames.base_career_writer_6A, player),
-             lambda state: state.has(SkillNames.base_skill_writing, player, count=3))
-    set_rule(world.get_location(CareerNames.base_career_writer_6B, player),
-             lambda state: state.has(SkillNames.base_skill_writing, player, count=3))
-    set_rule(world.get_location(CareerNames.base_career_writer_7A, player),
-             lambda state: state.has(SkillNames.base_skill_writing, player, count=5))
-    set_rule(world.get_location(CareerNames.base_career_writer_8A, player),
-             lambda state: state.has(SkillNames.base_skill_writing, player, count=6)
-                           and state.has(SkillNames.base_skill_logic, player, count=1))
-    set_rule(world.get_location(CareerNames.base_career_writer_9A, player),
-             lambda state: state.has(SkillNames.base_skill_writing, player, count=7)
-                           and state.has(SkillNames.base_skill_logic, player, count=2))
-    set_rule(world.get_location(CareerNames.base_career_writer_10A, player),
-             lambda state: state.has(SkillNames.base_skill_writing, player, count=8)
-                           and state.has(SkillNames.base_skill_logic, player, count=3))
-    set_rule(world.get_location(CareerNames.base_career_writer_7B, player),
-             lambda state: state.has(SkillNames.base_skill_writing, player, count=5))
-    set_rule(world.get_location(CareerNames.base_career_writer_8B, player),
-             lambda state: state.has(SkillNames.base_skill_writing, player, count=6)
-                           and state.has(SkillNames.base_skill_charisma, player, count=1))
-    set_rule(world.get_location(CareerNames.base_career_writer_9B, player),
-             lambda state: state.has(SkillNames.base_skill_writing, player, count=7)
-                           and state.has(SkillNames.base_skill_charisma, player, count=2))
-    set_rule(world.get_location(CareerNames.base_career_writer_10B, player),
-             lambda state: state.has(SkillNames.base_skill_writing, player, count=8)
-                           and state.has(SkillNames.base_skill_charisma, player, count=3))
+_career_culinary = {
+    CareerNames.base_career_culinary_3: {
+        SkillNames.base_skill_cooking: 2,
+    },
+    CareerNames.base_career_culinary_4: {
+        SkillNames.base_skill_cooking: 2,
+        SkillNames.base_skill_mixology: 2,
+    },
+    CareerNames.base_career_culinary_5: {
+        SkillNames.base_skill_cooking: 3,
+        SkillNames.base_skill_mixology: 3,
+    },
+    CareerNames.base_career_culinary_6A: {
+        SkillNames.base_skill_cooking: 4,
+        SkillNames.base_skill_mixology: 4,
+    },
+    CareerNames.base_career_culinary_6B: {
+        SkillNames.base_skill_cooking: 4,
+        SkillNames.base_skill_mixology: 4,
+    },
+    CareerNames.base_career_culinary_7A: {
+        SkillNames.base_skill_mixology: 4,
+        SkillNames.base_skill_cooking: 5,
+        SkillNames.base_skill_gourmet: 2,
+    },
+    CareerNames.base_career_culinary_8A: {
+        SkillNames.base_skill_mixology: 4,
+        SkillNames.base_skill_cooking: 7,
+        SkillNames.base_skill_gourmet: 4,
+    },
+    CareerNames.base_career_culinary_9A: {
+        SkillNames.base_skill_mixology: 4,
+        SkillNames.base_skill_cooking: 8,
+        SkillNames.base_skill_gourmet: 6,
+    },
+    CareerNames.base_career_culinary_10A: {
+        SkillNames.base_skill_mixology: 4,
+        SkillNames.base_skill_cooking: 10,
+        SkillNames.base_skill_gourmet: 8,
+    },
+    CareerNames.base_career_culinary_7B: {
+        SkillNames.base_skill_cooking: 4,
+        SkillNames.base_skill_mixology: 5,
+        SkillNames.base_skill_charisma: 2,
+    },
+    CareerNames.base_career_culinary_8B: {
+        SkillNames.base_skill_cooking: 4,
+        SkillNames.base_skill_mixology: 7,
+        SkillNames.base_skill_charisma: 4,
+    },
+    CareerNames.base_career_culinary_9B: {
+        SkillNames.base_skill_cooking: 4,
+        SkillNames.base_skill_mixology: 8,
+        SkillNames.base_skill_charisma: 6,
+    },
+    CareerNames.base_career_culinary_10B: {
+        SkillNames.base_skill_cooking: 4,
+        SkillNames.base_skill_mixology: 10,
+        SkillNames.base_skill_charisma: 8,
+    },
+}
 
-CAREER_RULES = {
+_career_entertainer = {
+    CareerNames.base_career_entertainer_5A:
+        (has_skill(SkillNames.base_skill_guitar, 3) | has_skill(SkillNames.base_skill_violin, 3))
+        & has_skill(SkillNames.base_skill_comedy, 3),
+    CareerNames.base_career_entertainer_5B:
+        (has_skill(SkillNames.base_skill_guitar, 3) | has_skill(SkillNames.base_skill_violin, 3))
+        & has_skill(SkillNames.base_skill_comedy, 3),
+    CareerNames.base_career_entertainer_6A:
+        (has_skill(SkillNames.base_skill_guitar, 4) | has_skill(SkillNames.base_skill_violin, 4))
+        & has_skill(SkillNames.base_skill_piano, 2)
+        & has_skill(SkillNames.base_skill_comedy, 3),
+    CareerNames.base_career_entertainer_7A:
+        (has_skill(SkillNames.base_skill_guitar, 5) | has_skill(SkillNames.base_skill_violin, 5))
+        & has_skill(SkillNames.base_skill_piano, 4)
+        & has_skill(SkillNames.base_skill_comedy, 3),
+    CareerNames.base_career_entertainer_8A:
+        (has_skill(SkillNames.base_skill_guitar, 6) | has_skill(SkillNames.base_skill_violin, 6))
+        & has_skill(SkillNames.base_skill_piano, 6)
+        & has_skill(SkillNames.base_skill_comedy, 3),
+    CareerNames.base_career_entertainer_9A:
+        (has_skill(SkillNames.base_skill_guitar, 7) | has_skill(SkillNames.base_skill_violin, 7))
+        & has_skill(SkillNames.base_skill_piano, 8)
+        & has_skill(SkillNames.base_skill_comedy, 3),
+    CareerNames.base_career_entertainer_10A:
+        (has_skill(SkillNames.base_skill_guitar, 8) | has_skill(SkillNames.base_skill_violin, 8))
+        & has_skill(SkillNames.base_skill_piano, 10)
+        & has_skill(SkillNames.base_skill_comedy, 3),
+    CareerNames.base_career_entertainer_6B:
+        (has_skill(SkillNames.base_skill_guitar, 3) | has_skill(SkillNames.base_skill_violin, 3))
+        & has_skill(SkillNames.base_skill_comedy, 6),
+    CareerNames.base_career_entertainer_7B:
+        (has_skill(SkillNames.base_skill_guitar, 3) | has_skill(SkillNames.base_skill_violin, 3))
+        & has_skill(SkillNames.base_skill_comedy, 7)
+        & has_skill(SkillNames.base_skill_charisma, 2),
+    CareerNames.base_career_entertainer_8B:
+        (has_skill(SkillNames.base_skill_guitar, 3) | has_skill(SkillNames.base_skill_violin, 3))
+        & has_skill(SkillNames.base_skill_comedy, 8)
+        & has_skill(SkillNames.base_skill_charisma, 4),
+    CareerNames.base_career_entertainer_9B:
+        (has_skill(SkillNames.base_skill_guitar, 3) | has_skill(SkillNames.base_skill_violin, 3))
+        & has_skill(SkillNames.base_skill_comedy, 9)
+        & has_skill(SkillNames.base_skill_charisma, 6),
+    CareerNames.base_career_entertainer_10B:
+        (has_skill(SkillNames.base_skill_guitar, 3) | has_skill(SkillNames.base_skill_violin, 3))
+        & has_skill(SkillNames.base_skill_comedy, 10)
+        & has_skill(SkillNames.base_skill_charisma, 8),
+}
+
+_career_painter = {
+    CareerNames.base_career_painter_4: {SkillNames.base_skill_painting: 4},
+    CareerNames.base_career_painter_5: {SkillNames.base_skill_painting: 5},
+    CareerNames.base_career_painter_6: {SkillNames.base_skill_painting: 6},
+    CareerNames.base_career_painter_7A: {SkillNames.base_skill_painting: 7},
+    CareerNames.base_career_painter_7B: {SkillNames.base_skill_painting: 7},
+    CareerNames.base_career_painter_8A: {SkillNames.base_skill_painting: 8, SkillNames.base_skill_logic: 2},
+    CareerNames.base_career_painter_9A: {SkillNames.base_skill_painting: 9, SkillNames.base_skill_logic: 4},
+    CareerNames.base_career_painter_10A: {SkillNames.base_skill_painting: 10, SkillNames.base_skill_logic: 6},
+    CareerNames.base_career_painter_8B: {SkillNames.base_skill_painting: 8, SkillNames.base_skill_charisma: 2},
+    CareerNames.base_career_painter_9B: {SkillNames.base_skill_painting: 9, SkillNames.base_skill_charisma: 4},
+    CareerNames.base_career_painter_10B: {SkillNames.base_skill_painting: 10, SkillNames.base_skill_charisma: 6},
+}
+
+_career_secret_agent = {
+    CareerNames.base_career_secret_agent_4: {SkillNames.base_skill_logic: 2, SkillNames.base_skill_charisma: 2},
+    CareerNames.base_career_secret_agent_5: {SkillNames.base_skill_logic: 3, SkillNames.base_skill_charisma: 3},
+    CareerNames.base_career_secret_agent_6: {SkillNames.base_skill_logic: 5, SkillNames.base_skill_charisma: 5},
+    CareerNames.base_career_secret_agent_7: {SkillNames.base_skill_logic: 5, SkillNames.base_skill_charisma: 5},
+    CareerNames.base_career_secret_agent_8A: {SkillNames.base_skill_logic: 6, SkillNames.base_skill_charisma: 6},
+    CareerNames.base_career_secret_agent_8B: {SkillNames.base_skill_logic: 6, SkillNames.base_skill_charisma: 6},
+    CareerNames.base_career_secret_agent_9A: {SkillNames.base_skill_logic: 8, SkillNames.base_skill_charisma: 7},
+    CareerNames.base_career_secret_agent_10A: {SkillNames.base_skill_logic: 10, SkillNames.base_skill_charisma: 8},
+    CareerNames.base_career_secret_agent_9B: {SkillNames.base_skill_logic: 8, SkillNames.base_skill_charisma: 7},
+    CareerNames.base_career_secret_agent_10B: {
+        SkillNames.base_skill_logic: 10,
+        SkillNames.base_skill_charisma: 8,
+        SkillNames.base_skill_mischief: 4,
+        },
+}
+
+_career_style_influencer = {
+    CareerNames.base_career_style_influencer_3: {SkillNames.base_skill_writing: 2},
+    CareerNames.base_career_style_influencer_4: {SkillNames.base_skill_writing: 3, SkillNames.base_skill_charisma: 2},
+    CareerNames.base_career_style_influencer_5: {SkillNames.base_skill_writing: 4, SkillNames.base_skill_photography: 2},
+    CareerNames.base_career_style_influencer_6A: {
+        SkillNames.base_skill_writing: 5,
+        SkillNames.base_skill_charisma: 3,
+        SkillNames.base_skill_painting: 3
+    },
+    CareerNames.base_career_style_influencer_6B: {
+            SkillNames.base_skill_writing: 5,
+            SkillNames.base_skill_charisma: 3,
+            SkillNames.base_skill_painting: 3
+    },
+    CareerNames.base_career_style_influencer_7A: {
+        SkillNames.base_skill_writing: 6,
+        SkillNames.base_skill_charisma: 5,
+        SkillNames.base_skill_painting: 4,
+        SkillNames.base_skill_photography: 3,
+    },
+    CareerNames.base_career_style_influencer_8A: {
+        SkillNames.base_skill_writing: 7,
+        SkillNames.base_skill_charisma: 6,
+        SkillNames.base_skill_painting: 5,
+        SkillNames.base_skill_photography: 3,
+    },
+    CareerNames.base_career_style_influencer_9A: {
+        SkillNames.base_skill_writing: 8,
+        SkillNames.base_skill_charisma: 7,
+        SkillNames.base_skill_painting: 6,
+        SkillNames.base_skill_photography: 3,
+    },
+    CareerNames.base_career_style_influencer_10A: {
+        SkillNames.base_skill_writing: 9,
+        SkillNames.base_skill_charisma: 8,
+        SkillNames.base_skill_painting: 7,
+        SkillNames.base_skill_photography: 3,
+    },
+    CareerNames.base_career_style_influencer_7B: {
+            SkillNames.base_skill_writing: 6,
+            SkillNames.base_skill_charisma: 5,
+            SkillNames.base_skill_painting: 4,
+            SkillNames.base_skill_photography: 3
+    },
+    CareerNames.base_career_style_influencer_8B: {
+            SkillNames.base_skill_writing: 7,
+            SkillNames.base_skill_charisma: 6,
+            SkillNames.base_skill_painting: 5,
+            SkillNames.base_skill_photography: 3
+    },
+    CareerNames.base_career_style_influencer_9B: {
+            SkillNames.base_skill_writing: 8,
+            SkillNames.base_skill_charisma: 7,
+            SkillNames.base_skill_painting: 6,
+            SkillNames.base_skill_photography: 3
+    },
+    CareerNames.base_career_style_influencer_10B: {
+            SkillNames.base_skill_writing: 9,
+            SkillNames.base_skill_charisma: 8,
+            SkillNames.base_skill_painting: 7,
+            SkillNames.base_skill_photography: 3
+    },
+}
+
+_career_tech_guru = {
+    CareerNames.base_career_tech_guru_3: {
+        SkillNames.base_skill_programming: 2
+    },
+    CareerNames.base_career_tech_guru_4: {
+        SkillNames.base_skill_programming: 3
+    },
+    CareerNames.base_career_tech_guru_5: {
+        SkillNames.base_skill_programming: 4,
+        SkillNames.base_skill_video_gaming: 3
+    },
+    CareerNames.base_career_tech_guru_6: {
+        SkillNames.base_skill_programming: 5,
+        SkillNames.base_skill_video_gaming: 4
+    },
+    CareerNames.base_career_tech_guru_7A: {
+        SkillNames.base_skill_programming: 6,
+        SkillNames.base_skill_video_gaming: 5
+    },
+    CareerNames.base_career_tech_guru_7B: {
+        SkillNames.base_skill_programming: 6,
+        SkillNames.base_skill_video_gaming: 5,
+    },
+    CareerNames.base_career_tech_guru_8A: {
+        SkillNames.base_skill_programming: 6,
+        SkillNames.base_skill_video_gaming: 6,
+    },
+    CareerNames.base_career_tech_guru_9A: {
+        SkillNames.base_skill_programming: 7,
+        SkillNames.base_skill_video_gaming: 8
+    },
+    CareerNames.base_career_tech_guru_10A: {
+        SkillNames.base_skill_programming: 8,
+        SkillNames.base_skill_video_gaming: 10
+    },
+    CareerNames.base_career_tech_guru_8B: {
+        SkillNames.base_skill_programming: 8,
+        SkillNames.base_skill_video_gaming: 5,
+        SkillNames.base_skill_charisma: 2
+    },
+    CareerNames.base_career_tech_guru_9B: {
+        SkillNames.base_skill_programming: 9,
+        SkillNames.base_skill_video_gaming: 5,
+        SkillNames.base_skill_charisma: 4
+    },
+    CareerNames.base_career_tech_guru_10B: {
+        SkillNames.base_skill_programming: 10,
+        SkillNames.base_skill_video_gaming: 5,
+        SkillNames.base_skill_charisma: 6
+    },
+}
+
+_career_writer = {
+    CareerNames.base_career_writer_4: {
+        SkillNames.base_skill_writing: 3,
+    },
+    CareerNames.base_career_writer_5: {
+        SkillNames.base_skill_writing: 4,
+    },
+    CareerNames.base_career_writer_6A: {
+        SkillNames.base_skill_writing: 5,
+    },
+    CareerNames.base_career_writer_6B: {
+        SkillNames.base_skill_writing: 5,
+    },
+    CareerNames.base_career_writer_7A: {
+        SkillNames.base_skill_writing: 6,
+        SkillNames.base_skill_logic: 2,
+    },
+    CareerNames.base_career_writer_8A: {
+        SkillNames.base_skill_writing: 8,
+        SkillNames.base_skill_logic: 3,
+    },
+    CareerNames.base_career_writer_9A: {
+        SkillNames.base_skill_writing: 9,
+        SkillNames.base_skill_logic: 4,
+    },
+    CareerNames.base_career_writer_10A: {
+        SkillNames.base_skill_writing: 10,
+        SkillNames.base_skill_logic: 5,
+    },
+    CareerNames.base_career_writer_7B: {
+        SkillNames.base_skill_writing: 7,
+        SkillNames.base_skill_charisma: 2,
+    },
+    CareerNames.base_career_writer_8B: {
+        SkillNames.base_skill_writing: 8,
+        SkillNames.base_skill_charisma: 3,
+    },
+    CareerNames.base_career_writer_9B: {
+        SkillNames.base_skill_writing: 9,
+        SkillNames.base_skill_charisma: 4,
+    },
+    CareerNames.base_career_writer_10B: {
+        SkillNames.base_skill_writing: 10,
+        SkillNames.base_skill_charisma: 5,
+    },
+}
+
+CAREER_RULES: dict[str, dict[str, dict[str, int]] | dict[str, Rule]] = {
     CareerNames.base_career_athlete: _career_athlete,
     CareerNames.base_career_astronaut: _career_astronaut,
     CareerNames.base_career_business: _career_business,
@@ -795,78 +953,23 @@ CAREER_RULES = {
     CareerNames.base_career_writer: _career_writer,
 }
 
-def set_career_rules(world: MultiWorld, player: int, options: Sims4Options):
-    # TODO refactor the remaining career rules to use has_skill
+def set_career_rules(world: Sims4World, options: Sims4Options):
     """
-    Career locations are sent by the mod once per promotion in game (see the mod's
-    career_event_dispatcher.py). The level in the location name is the level promoted to,
-    so a check's rule must use the skill levels the game requires for that promotion.
-    Example: base_career_writer_4 (Advice Columnist (Writer 4)) is sent upon being promoted
-    from Freelance Article Writer (Writer 3) to Advice Columnist.
+        Career locations are sent by the mod once per promotion in game (see the mod's
+        career_event_dispatcher.py). The level in the location name is the level promoted to,
+        so a check's rule must use the skill levels the game requires for that promotion.
+        Example: base_career_writer_4 (Advice Columnist (Writer 4)) is sent upon being promoted
+        from Freelance Article Writer (Writer 3) to Advice Columnist.
     """
-    career = options.career
+    # TODO relearn how the career locations send, and then refactor this to use has_skill
+    selected_careers = options.career
 
-    for career_name, handler in CAREER_RULES.items():
-        if career_name in career:
-            handler(world, player)
-
-def count_skills_over(threshold: int, state, player) -> int:
-    total_count = 0
-
-    if state.has(SkillNames.base_skill_charisma, player, count=threshold):
-        total_count += 1
-    if state.has(SkillNames.base_skill_fitness, player, count=threshold):
-        total_count += 1
-    if state.has(SkillNames.base_skill_mischief, player, count=threshold):
-        total_count += 1
-    if state.has(SkillNames.base_skill_logic, player, count=threshold):
-        total_count += 1
-    if state.has(SkillNames.base_skill_cooking, player, count=threshold):
-        total_count += 1
-    if state.has(SkillNames.base_skill_mixology, player, count=threshold):
-        total_count += 1
-    if state.has(SkillNames.base_skill_comedy, player, count=threshold):
-        total_count += 1
-    if state.has(SkillNames.base_skill_writing, player, count=threshold):
-        total_count += 1
-    if state.has(SkillNames.base_skill_fishing, player, count=threshold):
-        total_count += 1
-    if state.has(SkillNames.base_skill_gardening, player, count=threshold):
-        total_count += 1
-    if state.has(SkillNames.base_skill_video_gaming, player, count=threshold):
-        total_count += 1
-    if state.has(SkillNames.base_skill_programming, player, count=threshold):
-        total_count += 1
-    if state.has(SkillNames.base_skill_photography, player, count=threshold):
-        total_count += 1
-    if state.has(SkillNames.base_skill_handiness, player, count=threshold):
-        total_count += 1
-    if state.has(SkillNames.base_skill_piano, player, count=threshold):
-        total_count += 1
-    if state.has(SkillNames.base_skill_violin, player, count=threshold):
-        total_count += 1
-    if state.has(SkillNames.base_skill_guitar, player, count=threshold):
-        total_count += 1
-    if state.has(SkillNames.base_skill_painting, player, count=threshold):
-        total_count += 1
-    if state.has(SkillNames.base_skill_rocket_science, player, count=threshold):
-        total_count += 1
-    if state.has(SkillNames.base_skill_gourmet, player, count=threshold):
-        total_count += 1
-
-    return total_count
-
-def has_skill(state: CollectionState, skill: str, player: int, skill_level: int) -> bool:
-    # determines how many skill items are required based on the skill level passed into the function
-    """
-    Design Decision:
-    Skill items in the pool represent progression milestones beyond level 2.
-    Therefore, level N requires (N - 2) skill items.
-    Example: Level 3 requires 1 item, Level 10 requires 8 items.
-    """
-    skills_required: int = skill_level - 2
-    return state.has(skill, player, skills_required)
-
-def has_multiple_skills(state: CollectionState, skills_and_levels: dict[str, int], player: int):
-    skills = list(skills_and_levels.keys())
-    return has_skill(state, skills[0], player, skills_and_levels[skills[0]]) and has_skill(state, skills[1], player, skills_and_levels[skills[1]])
+    for career_name, career_data in CAREER_RULES.items():
+        if career_name in selected_careers:
+            for loc_name, rule in career_data.items():
+                if isinstance(rule, dict):
+                    world.set_rule(world.get_location(loc_name), has_multiple_skills(rule))
+                elif isinstance(rule, Rule):
+                    world.set_rule(world.get_location(loc_name), rule)
+                else:
+                    raise ValueError(f"Unsupported type for {loc_name} rule: {type(rule)}")
