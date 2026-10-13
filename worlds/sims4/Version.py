@@ -9,7 +9,7 @@
 #
 # Copyright (c) 2026 Benny Dreamly. All rights reserved.
 
-VERSION: tuple[int, int, int] | tuple[int, int, int, str] = (2, 0, 1)
+VERSION: tuple[int, int, int] | tuple[int, int, int, str] = (2, 1, 0, "beta1")
 
 
 class Sims4Version:
